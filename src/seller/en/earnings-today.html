@@ -21,24 +21,85 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 pb-20 min-h-screen">
-    <!-- Mobile Header -->
-    <header class="bg-white p-4 shadow-sm sticky top-0 z-50">
-        <div class="flex justify-between items-center">
-            <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">← Back</button>
-            <h1 class="text-lg font-semibold">Today's Earnings</h1>
-            <button class="bg-transparent border-none text-xl cursor-pointer rounded-lg p-2 hover:bg-gray-100 transition-colors" onclick="refreshToday()" title="Refresh">
-                🔄
-            </button>
+<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen">
+    <!-- Desktop Header with Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <!-- Mobile Header -->
+        <div class="md:hidden p-4">
+            <div class="flex justify-between items-center">
+                <div class="text-lg font-bold text-primary">🎯 Campaign Portal</div>
+                <div class="flex gap-2 items-center">
+                    <button class="relative bg-transparent border-none text-2xl p-2 cursor-pointer rounded-xl transition-colors active:bg-gray-100" onclick="location.href='notifications.html'">
+                        🔔
+                        <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">3</span>
+                    </button>
+                    <button class="bg-transparent border-none text-2xl p-2 cursor-pointer rounded-xl transition-colors active:bg-gray-100" onclick="location.href='profile.html'">
+                        👤
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-8">
+                        <a href="dashboard.html" class="text-xl font-bold text-primary flex items-center gap-2">
+                            🎯 Campaign Portal
+                        </a>
+                        <!-- Desktop Navigation -->
+                        <nav class="flex items-center gap-1">
+                            <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏠 Home
+                            </a>
+                            <a href="leaderboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏆 Leaderboard
+                            </a>
+                            <a href="spin-wheel.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🎰 Spin Wheel
+                            </a>
+                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary transition-colors">
+                                💰 Earnings
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="relative p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="location.href='notifications.html'">
+                            🔔
+                            <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">3</span>
+                        </button>
+                        <a href="profile.html" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">👤</div>
+                            <span class="text-sm font-medium text-gray-700">Profile</span>
+                        </a>
+                        <!-- Language Switcher -->
+                        <a href="../fa/earnings-today.html" class="px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors border border-gray-200">
+                            🌐 فارسی
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="p-4 max-w-2xl mx-auto">
+    <main class="p-4 max-w-2xl md:max-w-6xl mx-auto">
         
+        <!-- Page Header -->
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Today's Earnings</h1>
+                <p class="text-sm text-gray-500">Auto-refreshes every 30 seconds</p>
+            </div>
+            <button class="p-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors" onclick="refreshToday()" title="Refresh">
+                🔄
+            </button>
+        </div>
+
         <!-- Summary Cards -->
         <section class="mb-6">
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-4 rounded-xl shadow-md">
                     <div class="text-3xl mb-2">💰</div>
                     <div class="text-2xl font-bold mb-1" id="todayTotal">3,000,000</div>
@@ -82,8 +143,7 @@
 
         <!-- Sales Timeline -->
         <section class="mb-6">
-            <h2 class="text-xl font-bold mb-1">Sales Timeline</h2>
-            <p class="text-sm text-gray-600 mb-4">Auto-refreshes every 30 seconds</p>
+            <h2 class="text-xl font-bold mb-4">Sales Timeline</h2>
 
             <div class="space-y-4" id="timelineList">
                 
@@ -236,44 +296,6 @@
                     </div>
                 </div>
 
-                <!-- Sale Item 5 - Not Qualifying (Already earned) -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border-r-4 border-blue-500 flex gap-4" data-type="non-qualifying">
-                    <div class="text-sm font-semibold text-gray-600 whitespace-nowrap">06:30 AM</div>
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-2xl">ℹ️</span>
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">No Reward</span>
-                        </div>
-                        <div class="space-y-1 mb-3 text-sm">
-                            <div class="flex gap-2">
-                                <span class="text-gray-600">Company:</span>
-                                <span class="font-medium">Asia (آسیا)</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <span class="text-gray-600">Category:</span>
-                                <span class="font-medium">Third-party • 12 months</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <span class="text-gray-600">Payment:</span>
-                                <span class="font-medium">Cash</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <span class="text-gray-600">Status:</span>
-                                <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">Settled</span>
-                            </div>
-                        </div>
-                        <div class="pt-3 border-t border-gray-200 space-y-2">
-                            <div class="flex items-start gap-2 text-sm">
-                                <span class="text-xl">ℹ️</span>
-                                <span class="text-gray-700">Already earned from Asia today (First purchase only rule)</span>
-                            </div>
-                            <div class="text-sm bg-yellow-50 p-2 rounded border border-yellow-200">
-                                <strong>Tip:</strong> Try selling from Saman or Razi for more rewards today
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
             <!-- Empty State -->
@@ -287,35 +309,39 @@
 
         <!-- Quick Actions -->
         <section class="grid grid-cols-2 gap-3">
-            <button class="bg-white border border-gray-300 p-4 rounded-xl flex flex-col items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors" onclick="location.href='dashboard.html'">
+            <a href="dashboard.html" class="bg-white border border-gray-300 p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-gray-50 transition-colors">
                 <span class="text-2xl">🏠</span>
                 <span class="font-medium">Back to Campaigns</span>
-            </button>
-            <button class="bg-white border border-gray-300 p-4 rounded-xl flex flex-col items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors" onclick="location.href='earnings-history.html'">
+            </a>
+            <a href="earnings-history.html" class="bg-white border border-gray-300 p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-gray-50 transition-colors">
                 <span class="text-2xl">💰</span>
                 <span class="font-medium">View All Earnings</span>
-            </button>
+            </a>
         </section>
 
     </main>
 
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
-        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
             <span class="text-2xl">🏠</span>
             <span class="text-[11px] font-medium">Home</span>
         </a>
-        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
-            <span class="text-2xl">📊</span>
-            <span class="text-[11px] font-medium">Today</span>
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🏆</span>
+            <span class="text-[11px] font-medium">Leaderboard</span>
         </a>
-        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">Spin</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
             <span class="text-2xl">💰</span>
             <span class="text-[11px] font-medium">Earnings</span>
         </a>
-        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
-            <span class="text-2xl">⚙️</span>
-            <span class="text-[11px] font-medium">Settings</span>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">👤</span>
+            <span class="text-[11px] font-medium">Profile</span>
         </a>
     </nav>
 

@@ -68,9 +68,13 @@
         <!-- Mobile Header -->
         <div class="md:hidden p-4">
             <div class="flex justify-between items-center">
-                <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">← Back</button>
-                <h1 class="text-lg font-semibold">Profile & Settings</h1>
-                <div></div>
+                <div class="text-lg font-bold text-primary">🎯 Campaign Portal</div>
+                <div class="flex gap-2 items-center">
+                    <button class="relative bg-transparent border-none text-2xl p-2 cursor-pointer rounded-xl transition-colors active:bg-gray-100" onclick="location.href='notifications.html'">
+                        🔔
+                        <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">3</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -79,19 +83,22 @@
             <div class="max-w-6xl mx-auto px-6">
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center gap-8">
-                        <div class="text-xl font-bold text-primary flex items-center gap-2">
+                        <a href="dashboard.html" class="text-xl font-bold text-primary flex items-center gap-2">
                             🎯 Campaign Portal
-                        </div>
+                        </a>
                         <!-- Desktop Navigation -->
                         <nav class="flex items-center gap-1">
                             <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
                                 🏠 Home
                             </a>
-                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
-                                📊 Today's Earnings
+                            <a href="leaderboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏆 Leaderboard
                             </a>
-                            <a href="earnings-history.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
-                                💰 Earnings History
+                            <a href="spin-wheel.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🎰 Spin Wheel
+                            </a>
+                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                💰 Earnings
                             </a>
                         </nav>
                     </div>
@@ -274,7 +281,7 @@
                     </label>
                 </div>
 
-                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <div class="p-4 flex justify-between items-center">
                     <div class="flex gap-4 items-center flex-1">
                         <div class="text-2xl">⏰</div>
                         <div class="flex-1">
@@ -284,64 +291,6 @@
                     </div>
                     <label class="toggle-switch">
                         <input type="checkbox" checked>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
-                <div class="p-4 flex justify-between items-center">
-                    <div class="flex gap-4 items-center flex-1">
-                        <div class="text-2xl">ℹ️</div>
-                        <div class="flex-1">
-                            <div class="font-semibold mb-1">Sale Updates</div>
-                            <div class="text-xs text-gray-600">Notify about qualifying and non-qualifying sales</div>
-                        </div>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
-            </div>
-
-            <h3 class="text-lg font-semibold mb-4 mt-6">Notification Channels</h3>
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                
-                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                    <div class="flex gap-4 items-center flex-1">
-                        <div class="text-2xl">📱</div>
-                        <div class="flex-1">
-                            <div class="font-semibold">Push Notifications</div>
-                        </div>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
-                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                    <div class="flex gap-4 items-center flex-1">
-                        <div class="text-2xl">💬</div>
-                        <div class="flex-1">
-                            <div class="font-semibold">SMS Notifications</div>
-                        </div>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
-                <div class="p-4 flex justify-between items-center">
-                    <div class="flex gap-4 items-center flex-1">
-                        <div class="text-2xl">📧</div>
-                        <div class="flex-1">
-                            <div class="font-semibold">Email Notifications</div>
-                        </div>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
@@ -443,17 +392,21 @@
             <span class="text-2xl">🏠</span>
             <span class="text-[11px] font-medium">Home</span>
         </a>
-        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
-            <span class="text-2xl">📊</span>
-            <span class="text-[11px] font-medium">Today</span>
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🏆</span>
+            <span class="text-[11px] font-medium">Leaderboard</span>
         </a>
-        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">Spin</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
             <span class="text-2xl">💰</span>
             <span class="text-[11px] font-medium">Earnings</span>
         </a>
         <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
-            <span class="text-2xl">⚙️</span>
-            <span class="text-[11px] font-medium">Settings</span>
+            <span class="text-2xl">👤</span>
+            <span class="text-[11px] font-medium">Profile</span>
         </a>
     </nav>
 
