@@ -4,26 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اعلان‌ها - پنل فروشنده</title>
-    <link rel="stylesheet" href="../styles-rtl.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                    fontFamily: {
+                        persian: ['DanaVF', 'Tahoma', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+        }
+        body {
+            font-family: 'DanaVF', Tahoma, Arial, sans-serif;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: #E2E8F0;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            right: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #2563EB;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(-20px);
+        }
+        @keyframes slideOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(100%); }
+        }
+    </style>
 </head>
-<body class="seller-app">
-    <!-- Mobile Header -->
-    <header class="seller-header">
-        <div class="seller-header-content">
-            <button class="btn-back" onclick="history.back()">→ بازگشت</button>
-            <h1 class="page-title">اعلان‌ها</h1>
-            <button class="clear-all-btn" onclick="clearAllNotifications()">
-                پاک کردن همه
-            </button>
+<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen font-persian">
+    <!-- Desktop Header with Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <!-- Mobile Header -->
+        <div class="md:hidden p-4">
+            <div class="flex justify-between items-center">
+                <div class="text-lg font-bold text-primary">🎯 پنل کمپین</div>
+                <div class="flex gap-2 items-center">
+                    <button class="relative bg-transparent border-none text-2xl p-2 cursor-pointer rounded-xl transition-colors active:bg-gray-100">
+                        🔔
+                        <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center" id="mobileNotifCount">۳</span>
+                    </button>
+                    <button class="bg-transparent border-none text-2xl p-2 cursor-pointer rounded-xl transition-colors active:bg-gray-100" onclick="location.href='profile.html'">
+                        👤
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-8">
+                        <a href="dashboard.html" class="text-xl font-bold text-primary flex items-center gap-2">
+                            🎯 پنل کمپین
+                        </a>
+                        <!-- Desktop Navigation -->
+                        <nav class="flex items-center gap-1">
+                            <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏠 خانه
+                            </a>
+                            <a href="leaderboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏆 رتبه‌بندی
+                            </a>
+                            <a href="spin-wheel.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🎰 گردونه شانس
+                            </a>
+                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                💰 درآمد
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="relative p-2 rounded-lg bg-primary/10 text-primary transition-colors">
+                            🔔
+                            <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center" id="desktopNotifCount">۳</span>
+                        </button>
+                        <a href="profile.html" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">👤</div>
+                            <span class="text-sm font-medium text-gray-700">پروفایل</span>
+                        </a>
+                        <!-- Language Switcher -->
+                        <a href="../en/notifications.html" class="px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors border border-gray-200">
+                            🌐 English
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
+    <!-- Page Title & Actions (Mobile) -->
+    <div class="md:hidden bg-white border-b border-gray-200 px-4 py-3">
+        <div class="flex justify-between items-center">
+            <h1 class="text-lg font-semibold">اعلان‌ها</h1>
+            <button class="text-sm text-primary font-medium" onclick="clearAllNotifications()">
+                پاک کردن همه
+            </button>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main class="seller-main">
+    <main class="p-4 max-w-2xl md:max-w-4xl mx-auto">
         
+        <!-- Desktop Page Title -->
+        <div class="hidden md:flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">اعلان‌ها</h1>
+            <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors" onclick="clearAllNotifications()">
+                🗑️ پاک کردن همه
+            </button>
+        </div>
+
         <!-- Notification Settings Toggle -->
-        <section class="notification-settings-bar">
-            <span>🔔 اعلان‌ها فعال است</span>
+        <section class="bg-white rounded-xl shadow-sm p-4 mb-4 flex justify-between items-center">
+            <span class="font-medium">🔔 اعلان‌ها فعال است</span>
             <label class="toggle-switch">
                 <input type="checkbox" checked onchange="toggleNotifications(this)">
                 <span class="toggle-slider"></span>
@@ -31,216 +169,228 @@
         </section>
 
         <!-- Notifications List -->
-        <section class="notifications-list">
+        <section class="space-y-3" id="notificationsList">
             
             <!-- New Campaign Notification -->
-            <div class="notification-item unread new-campaign">
-                <div class="notification-icon">🎉</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">کمپین جدید در دسترس است!</span>
-                        <span class="notification-badge unread-badge">جدید</span>
-                    </div>
-                    <div class="notification-message">
-                        <strong>ویژه زمستان ۱۴۰۴</strong> - تا ۲,۰۰۰,۰۰۰ تومان برای هر فروش کسب کنید!
-                        کمپین از ۱ آذر تا ۱۰ اسفند اجرا می‌شود.
-                    </div>
-                    <div class="notification-actions">
-                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=4'">
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-blue-500 relative" data-unread="true">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">🎉</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">کمپین جدید در دسترس است!</span>
+                            <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">جدید</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            <strong>ویژه زمستان ۱۴۰۴</strong> - تا ۲,۰۰۰,۰۰۰ تومان برای هر فروش کسب کنید!
+                            کمپین از ۱ آذر تا ۱۰ اسفند اجرا می‌شود.
+                        </p>
+                        <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors" onclick="location.href='campaign-detail.html?id=4'">
                             مشاهده کمپین
                         </button>
+                        <div class="text-xs text-gray-400 mt-3">۲ ساعت پیش</div>
                     </div>
-                    <div class="notification-time">۲ ساعت پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Reward Earned Notification 1 -->
-            <div class="notification-item unread reward-earned">
-                <div class="notification-icon">💰</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">پاداش دریافت شد!</span>
-                        <span class="notification-badge unread-badge">جدید</span>
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-green-500 relative" data-unread="true">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">💰</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">پاداش دریافت شد!</span>
+                            <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">جدید</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">
+                            شما <strong>۲,۰۰۰,۰۰۰ تومان</strong> از فروش آسیا شخص ثالث ۱۲ماهه خود کسب کردید!
+                        </p>
+                        <div class="text-xs text-gray-500 mb-2">
+                            <span>کمپین: کمپین ویژه تابستانی</span>
+                            <span class="mx-2">•</span>
+                            <span>شناسه فروش: #12345</span>
+                        </div>
+                        <div class="text-xs text-gray-400">۴ ساعت پیش</div>
                     </div>
-                    <div class="notification-message">
-                        شما <strong>۲,۰۰۰,۰۰۰ تومان</strong> از فروش آسیا شخص ثالث ۱۲ماهه خود کسب کردید!
-                    </div>
-                    <div class="notification-meta">
-                        <span>کمپین: کمپین ویژه تابستانی</span>
-                        <span>•</span>
-                        <span>شناسه فروش: #12345</span>
-                    </div>
-                    <div class="notification-time">۴ ساعت پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Reward Earned Notification 2 -->
-            <div class="notification-item unread reward-earned">
-                <div class="notification-icon">💰</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">پاداش دریافت شد!</span>
-                        <span class="notification-badge unread-badge">جدید</span>
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-green-500 relative" data-unread="true">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">💰</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">پاداش دریافت شد!</span>
+                            <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">جدید</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">
+                            شما <strong>۱,۵۰۰,۰۰۰ تومان</strong> از فروش سامان شخص ثالث ۶ماهه خود کسب کردید!
+                        </p>
+                        <div class="text-xs text-gray-500 mb-2">
+                            <span>کمپین: کمپین ویژه تابستانی</span>
+                            <span class="mx-2">•</span>
+                            <span>شناسه فروش: #12344</span>
+                        </div>
+                        <div class="text-xs text-gray-400">۶ ساعت پیش</div>
                     </div>
-                    <div class="notification-message">
-                        شما <strong>۱,۵۰۰,۰۰۰ تومان</strong> از فروش سامان شخص ثالث ۶ماهه خود کسب کردید!
-                    </div>
-                    <div class="notification-meta">
-                        <span>کمپین: کمپین ویژه تابستانی</span>
-                        <span>•</span>
-                        <span>شناسه فروش: #12344</span>
-                    </div>
-                    <div class="notification-time">۶ ساعت پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Payment Processed Notification -->
-            <div class="notification-item read payment-processed">
-                <div class="notification-icon">✅</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">پرداخت انجام شد</span>
-                    </div>
-                    <div class="notification-message">
-                        پرداخت <strong>۱۰,۰۰۰,۰۰۰ تومان</strong> به حساب شما ارسال شده است.
-                    </div>
-                    <div class="notification-meta">
-                        <span>تراکنش: TX-2025-11-20-001</span>
-                        <span>•</span>
-                        <span>۸ فروش واجد شرایط</span>
-                    </div>
-                    <div class="notification-actions">
-                        <button class="btn-notification-action" onclick="alert('دانلود رسید')">
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-gray-300 relative">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">✅</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">پرداخت انجام شد</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">
+                            پرداخت <strong>۱۰,۰۰۰,۰۰۰ تومان</strong> به حساب شما ارسال شده است.
+                        </p>
+                        <div class="text-xs text-gray-500 mb-3">
+                            <span>تراکنش: TX-2025-11-20-001</span>
+                            <span class="mx-2">•</span>
+                            <span>۸ فروش واجد شرایط</span>
+                        </div>
+                        <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors" onclick="alert('دانلود رسید')">
                             📄 دانلود رسید
                         </button>
+                        <div class="text-xs text-gray-400 mt-3">دیروز</div>
                     </div>
-                    <div class="notification-time">دیروز</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Campaign Ending Soon -->
-            <div class="notification-item read campaign-ending">
-                <div class="notification-icon">⏰</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">کمپین در حال پایان است!</span>
-                    </div>
-                    <div class="notification-message">
-                        کمپین <strong>فروش سریع شخص ثالث</strong> تا ۳ روز دیگر پایان می‌یابد. فروش‌های نهایی خود را انجام دهید!
-                    </div>
-                    <div class="notification-actions">
-                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=3'">
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-orange-500 relative">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">⏰</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">کمپین در حال پایان است!</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            کمپین <strong>فروش سریع شخص ثالث</strong> تا ۳ روز دیگر پایان می‌یابد. فروش‌های نهایی خود را انجام دهید!
+                        </p>
+                        <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors" onclick="location.href='campaign-detail.html?id=3'">
                             مشاهده کمپین
                         </button>
+                        <div class="text-xs text-gray-400 mt-3">۲ روز پیش</div>
                     </div>
-                    <div class="notification-time">۲ روز پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Sale Didn't Qualify -->
-            <div class="notification-item read sale-info">
-                <div class="notification-icon">ℹ️</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">فروش ثبت شد - بدون پاداش</span>
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-gray-300 relative">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">ℹ️</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">فروش ثبت شد - بدون پاداش</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">
+                            فروش آسیا شخص ثالث شما واجد شرایط نبود چون قبلاً امروز از آسیا کسب کرده‌اید (قانون فقط اولین خرید).
+                        </p>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800">
+                            <strong>💡 نکته:</strong> برای کسب پاداش بیشتر امروز، از سامان یا رازی بفروشید
+                        </div>
+                        <div class="text-xs text-gray-400 mt-3">۳ روز پیش</div>
                     </div>
-                    <div class="notification-message">
-                        فروش آسیا شخص ثالث شما واجد شرایط نبود چون قبلاً امروز از آسیا کسب کرده‌اید (قانون فقط اولین خرید).
-                    </div>
-                    <div class="notification-tip">
-                        <strong>💡 نکته:</strong> برای کسب پاداش بیشتر امروز، از سامان یا رازی بفروشید
-                    </div>
-                    <div class="notification-time">۳ روز پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Payment Scheduled -->
-            <div class="notification-item read payment-info">
-                <div class="notification-icon">📅</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">پرداخت برنامه‌ریزی شده</span>
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-gray-300 relative">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">📅</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">پرداخت برنامه‌ریزی شده</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">
+                            پرداخت بعدی شما به مبلغ <strong>۵,۵۰۰,۰۰۰ تومان</strong> برای دوشنبه، ۷ آذر برنامه‌ریزی شده است.
+                        </p>
+                        <div class="text-xs text-gray-500">۴ پاداش در انتظار</div>
+                        <div class="text-xs text-gray-400 mt-3">۳ روز پیش</div>
                     </div>
-                    <div class="notification-message">
-                        پرداخت بعدی شما به مبلغ <strong>۵,۵۰۰,۰۰۰ تومان</strong> برای دوشنبه، ۷ آذر برنامه‌ریزی شده است.
-                    </div>
-                    <div class="notification-meta">
-                        <span>۴ پاداش در انتظار</span>
-                    </div>
-                    <div class="notification-time">۳ روز پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Achievement/Milestone -->
-            <div class="notification-item read achievement">
-                <div class="notification-icon">🏆</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">تبریک!</span>
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-yellow-500 relative">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">🏆</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">تبریک!</span>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            شما به <strong>۱۰ فروش</strong> در کمپین ویژه تابستانی رسیده‌اید! به کار عالی ادامه دهید!
+                        </p>
+                        <div class="text-xs text-gray-400 mt-3">۱ هفته پیش</div>
                     </div>
-                    <div class="notification-message">
-                        شما به <strong>۱۰ فروش</strong> در کمپین ویژه تابستانی رسیده‌اید! به کار عالی ادامه دهید!
-                    </div>
-                    <div class="notification-time">۱ هفته پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
             <!-- Added to Campaign -->
-            <div class="notification-item read new-campaign">
-                <div class="notification-icon">➕</div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <span class="notification-title">افزوده شده به کمپین</span>
-                    </div>
-                    <div class="notification-message">
-                        شما به کمپین <strong>پاداش بیمه درمان</strong> اضافه شده‌اید.
-                    </div>
-                    <div class="notification-actions">
-                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=2'">
+            <div class="notification-item bg-white p-4 rounded-xl shadow-sm border-r-4 border-gray-300 relative">
+                <button class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-xl" onclick="dismissNotification(this)">×</button>
+                <div class="flex gap-4">
+                    <div class="text-3xl">➕</div>
+                    <div class="flex-1 pl-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="font-bold text-gray-900">افزوده شده به کمپین</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            شما به کمپین <strong>پاداش بیمه درمان</strong> اضافه شده‌اید.
+                        </p>
+                        <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors" onclick="location.href='campaign-detail.html?id=2'">
                             مشاهده کمپین
                         </button>
+                        <div class="text-xs text-gray-400 mt-3">۲ هفته پیش</div>
                     </div>
-                    <div class="notification-time">۲ هفته پیش</div>
                 </div>
-                <button class="notification-close" onclick="dismissNotification(this)">×</button>
             </div>
 
         </section>
 
         <!-- Empty State (Hidden by default) -->
-        <div class="empty-state" id="emptyNotifications" style="display: none;">
-            <div class="empty-icon">🔔</div>
-            <h3>اعلانی وجود ندارد</h3>
-            <p>همه چیز به‌روز است! اعلان‌های جدید اینجا نمایش داده می‌شوند.</p>
+        <div class="hidden text-center py-16 px-6 bg-white rounded-xl shadow-sm" id="emptyNotifications">
+            <div class="text-6xl mb-4">🔔</div>
+            <h3 class="text-lg font-semibold mb-2">اعلانی وجود ندارد</h3>
+            <p class="text-gray-600">همه چیز به‌روز است! اعلان‌های جدید اینجا نمایش داده می‌شوند.</p>
         </div>
 
     </main>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item">
-            <span class="nav-icon">🏠</span>
-            <span class="nav-label">خانه</span>
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">خانه</span>
         </a>
-        <a href="earnings-today.html" class="nav-item">
-            <span class="nav-icon">📊</span>
-            <span class="nav-label">امروز</span>
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🏆</span>
+            <span class="text-[11px] font-medium">رتبه‌بندی</span>
         </a>
-        <a href="earnings-history.html" class="nav-item">
-            <span class="nav-icon">💰</span>
-            <span class="nav-label">درآمدها</span>
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">گردونه</span>
         </a>
-        <a href="profile.html" class="nav-item">
-            <span class="nav-icon">⚙️</span>
-            <span class="nav-label">تنظیمات</span>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">💰</span>
+            <span class="text-[11px] font-medium">درآمد</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">👤</span>
+            <span class="text-[11px] font-medium">پروفایل</span>
         </a>
     </nav>
 
@@ -281,23 +431,29 @@
         }
 
         function checkEmpty() {
-            const list = document.querySelector('.notifications-list');
+            const list = document.getElementById('notificationsList');
             const empty = document.getElementById('emptyNotifications');
             const items = document.querySelectorAll('.notification-item');
             
             if (items.length === 0) {
-                list.style.display = 'none';
-                empty.style.display = 'block';
+                list.classList.add('hidden');
+                empty.classList.remove('hidden');
             }
         }
 
         function showEmptyState() {
-            document.querySelector('.notifications-list').style.display = 'none';
-            document.getElementById('emptyNotifications').style.display = 'block';
+            document.getElementById('notificationsList').classList.add('hidden');
+            document.getElementById('emptyNotifications').classList.remove('hidden');
         }
 
         function updateNotificationCount() {
-            const unreadCount = document.querySelectorAll('.notification-item.unread').length;
+            const unreadCount = document.querySelectorAll('.notification-item[data-unread="true"]').length;
+            const mobileCount = document.getElementById('mobileNotifCount');
+            const desktopCount = document.getElementById('desktopNotifCount');
+            
+            if (mobileCount) mobileCount.textContent = unreadCount > 0 ? unreadCount.toString().replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : '';
+            if (desktopCount) desktopCount.textContent = unreadCount > 0 ? unreadCount.toString().replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : '';
+            
             // Update badge in other pages
             localStorage.setItem('unreadNotifications', unreadCount);
         }
@@ -306,7 +462,7 @@
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.textContent = message;
-            toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            toast.style.cssText = 'position:fixed;bottom:100px;right:50%;transform:translateX(50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
             document.body.appendChild(toast);
             
             setTimeout(() => {
@@ -317,11 +473,13 @@
         // Mark all as read when page loads
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
-                const unreadItems = document.querySelectorAll('.notification-item.unread');
+                const unreadItems = document.querySelectorAll('.notification-item[data-unread="true"]');
                 unreadItems.forEach(item => {
-                    item.classList.remove('unread');
-                    const badge = item.querySelector('.unread-badge');
-                    if (badge) badge.remove();
+                    item.setAttribute('data-unread', 'false');
+                    const badge = item.querySelector('.bg-blue-100, .bg-green-100');
+                    if (badge && badge.textContent.includes('جدید')) {
+                        badge.remove();
+                    }
                 });
                 updateNotificationCount();
             }, 2000);
@@ -329,4 +487,3 @@
     </script>
 </body>
 </html>
-

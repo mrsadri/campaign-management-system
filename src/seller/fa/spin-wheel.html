@@ -182,9 +182,10 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen pb-20 md:pb-0" dir="rtl">
-    <!-- Header -->
-    <header class="bg-white/10 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-white/10">
-        <div class="max-w-4xl mx-auto px-4 md:px-6 py-4">
+    <!-- Desktop Header with Navigation -->
+    <header class="bg-slate-900/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-white/10">
+        <!-- Mobile Header -->
+        <div class="md:hidden px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <button onclick="history.back()" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-white">
@@ -196,8 +197,50 @@
                     </div>
                 </div>
                 <a href="leaderboard.html" class="px-4 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium hover:bg-amber-600 transition-colors">
-                    🏆 جدول رتبه‌بندی
+                    🏆
                 </a>
+            </div>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-8">
+                        <a href="dashboard.html" class="text-xl font-bold text-amber-500 flex items-center gap-2">
+                            🎯 پنل کمپین
+                        </a>
+                        <!-- Desktop Navigation -->
+                        <nav class="flex items-center gap-1">
+                            <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 transition-colors">
+                                🏠 خانه
+                            </a>
+                            <a href="leaderboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 transition-colors">
+                                🏆 رتبه‌بندی
+                            </a>
+                            <a href="spin-wheel.html" class="px-4 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-amber-400 transition-colors">
+                                🎰 گردونه شانس
+                            </a>
+                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 transition-colors">
+                                💰 درآمد
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="relative p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300" onclick="location.href='notifications.html'">
+                            🔔
+                            <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">۳</span>
+                        </button>
+                        <a href="profile.html" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-gray-300">👤</div>
+                            <span class="text-sm font-medium text-gray-300">پروفایل</span>
+                        </a>
+                        <!-- Language Switcher -->
+                        <a href="../en/spin-wheel.html" class="px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-white/10 transition-colors border border-white/20">
+                            🌐 English
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -291,11 +334,11 @@
 
     <!-- Bottom Navigation (Mobile Only) -->
     <nav class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-white/10 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.3)] z-50 md:hidden">
-        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors hover:text-white">
             <span class="text-2xl">🏠</span>
             <span class="text-[11px] font-medium">خانه</span>
         </a>
-        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors">
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors hover:text-white">
             <span class="text-2xl">🏆</span>
             <span class="text-[11px] font-medium">رتبه‌بندی</span>
         </a>
@@ -303,9 +346,13 @@
             <span class="text-2xl">🎰</span>
             <span class="text-[11px] font-medium">گردونه</span>
         </a>
-        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors">
-            <span class="text-2xl">⚙️</span>
-            <span class="text-[11px] font-medium">تنظیمات</span>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors hover:text-white">
+            <span class="text-2xl">💰</span>
+            <span class="text-[11px] font-medium">درآمد</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors hover:text-white">
+            <span class="text-2xl">👤</span>
+            <span class="text-[11px] font-medium">پروفایل</span>
         </a>
     </nav>
 

@@ -33,17 +33,72 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 pb-20 min-h-screen font-persian">
-    <!-- Mobile Header -->
-    <header class="bg-white p-4 shadow-sm sticky top-0 z-50">
-        <div class="flex justify-between items-center">
-            <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">→ بازگشت</button>
-            <h1 class="text-lg font-semibold">تاریخچه درآمد</h1>
-            <button class="bg-transparent border-none text-xl cursor-pointer rounded-lg p-2 hover:bg-gray-100 transition-colors" onclick="exportEarnings()" title="خروجی">
-                📥
-            </button>
+<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen font-persian">
+    <!-- Desktop Header with Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <!-- Mobile Header -->
+        <div class="md:hidden p-4">
+            <div class="flex justify-between items-center">
+                <div class="text-lg font-bold text-primary">🎯 پنل کمپین</div>
+                <div class="flex gap-2 items-center">
+                    <button class="relative bg-transparent border-none text-2xl p-2 cursor-pointer rounded-xl transition-colors active:bg-gray-100" onclick="location.href='notifications.html'">
+                        🔔
+                        <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">۳</span>
+                    </button>
+                    <button class="bg-transparent border-none text-2xl p-2 cursor-pointer rounded-xl transition-colors active:bg-gray-100" onclick="location.href='profile.html'">
+                        👤
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-8">
+                        <a href="dashboard.html" class="text-xl font-bold text-primary flex items-center gap-2">
+                            🎯 پنل کمپین
+                        </a>
+                        <!-- Desktop Navigation -->
+                        <nav class="flex items-center gap-1">
+                            <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏠 خانه
+                            </a>
+                            <a href="leaderboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏆 رتبه‌بندی
+                            </a>
+                            <a href="spin-wheel.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🎰 گردونه شانس
+                            </a>
+                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary transition-colors">
+                                💰 درآمد
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="relative p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="location.href='notifications.html'">
+                            🔔
+                            <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">۳</span>
+                        </button>
+                        <a href="profile.html" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">👤</div>
+                            <span class="text-sm font-medium text-gray-700">پروفایل</span>
+                        </a>
+                        <!-- Language Switcher -->
+                        <a href="../en/earnings-history.html" class="px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors border border-gray-200">
+                            🌐 English
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
+
+    <!-- Page Title (Mobile) -->
+    <div class="md:hidden bg-white border-b border-gray-200 px-4 py-3">
+        <h1 class="text-lg font-semibold text-center">تاریخچه درآمد</h1>
+    </div>
 
     <!-- Main Content -->
     <main class="p-4 max-w-2xl mx-auto">
@@ -364,23 +419,27 @@
 
     </main>
 
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
-        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
             <span class="text-2xl">🏠</span>
             <span class="text-[11px] font-medium">خانه</span>
         </a>
-        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
-            <span class="text-2xl">📊</span>
-            <span class="text-[11px] font-medium">امروز</span>
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🏆</span>
+            <span class="text-[11px] font-medium">رتبه‌بندی</span>
         </a>
-        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">گردونه</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
             <span class="text-2xl">💰</span>
-            <span class="text-[11px] font-medium">درآمدها</span>
+            <span class="text-[11px] font-medium">درآمد</span>
         </a>
-        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
-            <span class="text-2xl">⚙️</span>
-            <span class="text-[11px] font-medium">تنظیمات</span>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">👤</span>
+            <span class="text-[11px] font-medium">پروفایل</span>
         </a>
     </nav>
 
