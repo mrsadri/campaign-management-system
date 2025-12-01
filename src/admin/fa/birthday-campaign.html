@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت کمپین تولد - پنل ادمین</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                    fontFamily: {
+                        persian: ['DanaVF', 'Tahoma', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+        }
+        body {
+            font-family: 'DanaVF', Tahoma, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50" dir="rtl">
+    <div class="max-w-7xl mx-auto px-6 py-6">
+        <!-- Header -->
+        <header class="bg-white rounded-xl p-6 mb-6 shadow-sm">
+            <div class="flex justify-between items-center gap-4 flex-wrap">
+                <button class="bg-transparent border border-gray-300 px-4 py-2 rounded-lg text-sm cursor-pointer transition-all hover:bg-gray-50" onclick="location.href='dashboard.html'">← بازگشت</button>
+                <h1 class="text-2xl font-semibold text-gray-900">🎂 مدیریت کمپین تولد</h1>
+                <div class="flex gap-2">
+                    <button class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-colors" onclick="exportData()">📥 خروجی</button>
+                    <button class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" id="campaignStatusBtn" onclick="toggleCampaignStatus()">فعال</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Campaign Status Card -->
+        <div class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white p-6 rounded-xl mb-6 shadow-lg">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">وضعیت کمپین</h2>
+                    <p class="opacity-90" id="campaignDates">شروع: ۱۴۰۳/۱۰/۱۲ | پایان: ۱۴۰۳/۱۰/۲۶</p>
+                </div>
+                <div class="text-left">
+                    <div class="text-sm opacity-90 mb-1">زمان باقی‌مانده</div>
+                    <div class="text-3xl font-bold" id="timeRemaining">در حال بارگذاری...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="text-sm text-gray-600 mb-1">کل سفارشات</div>
+                <div class="text-3xl font-bold text-gray-900" id="totalOrders">۰</div>
+                <div class="text-xs text-gray-500 mt-1">در طول کمپین</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="text-sm text-gray-600 mb-1">کل NMV</div>
+                <div class="text-3xl font-bold text-gray-900" id="totalNMV">۰</div>
+                <div class="text-xs text-gray-500 mt-1">تومان</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="text-sm text-gray-600 mb-1">شرکای فعال</div>
+                <div class="text-3xl font-bold text-gray-900" id="activePartners">۰</div>
+                <div class="text-xs text-gray-500 mt-1">در ۱۰۰ نفر برتر</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="text-sm text-gray-600 mb-1">کل چرخش‌ها</div>
+                <div class="text-3xl font-bold text-gray-900" id="totalSpins">۰</div>
+                <div class="text-xs text-gray-500 mt-1">چرخش‌های استفاده شده</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-white rounded-xl shadow-sm mb-6">
+            <div class="border-b border-gray-200">
+                <nav class="flex -mb-px">
+                    <button onclick="switchTab('leaderboard')" class="tab-button active px-6 py-4 text-sm font-medium border-b-2 border-primary text-primary" data-tab="leaderboard">
+                        🏆 جدول رتبه‌بندی
+                    </button>
+                    <button onclick="switchTab('spins')" class="tab-button px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="spins">
+                        🎰 گردونه شانس
+                    </button>
+                    <button onclick="switchTab('prizes')" class="tab-button px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="prizes">
+                        🎁 جوایز
+                    </button>
+                    <button onclick="switchTab('settings')" class="tab-button px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="settings">
+                        ⚙️ تنظیمات
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                <!-- Leaderboard Tab -->
+                <div id="tab-leaderboard" class="tab-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">جدول رتبه‌بندی ۱۰۰ نفر برتر</h3>
+                        <div class="flex gap-2">
+                            <input type="text" id="searchLeaderboard" placeholder="جستجوی شریک..." 
+                                   class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary">
+                            <button onclick="refreshLeaderboard()" class="px-4 py-2 bg-gray-100 text-gray-900 rounded-lg hover:bg-gray-200 transition-colors">
+                                🔄 به‌روزرسانی
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">رتبه</th>
+                                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">شریک</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">سفارش</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">NMV</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">جایزه طلا</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">ارزش نقدی</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboardTable" class="divide-y divide-gray-200">
+                                <!-- Leaderboard rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Spins Tab -->
+                <div id="tab-spins" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">آمار گردونه شانس</h3>
+                        <button onclick="refreshSpins()" class="px-4 py-2 bg-gray-100 text-gray-900 rounded-lg hover:bg-gray-200 transition-colors">
+                            🔄 به‌روزرسانی
+                        </button>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h4 class="font-semibold mb-4">توزیع جوایز</h4>
+                            <div class="space-y-2" id="prizeDistribution">
+                                <!-- Prize stats -->
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h4 class="font-semibold mb-4">چرخش‌های اخیر</h4>
+                            <div class="space-y-2 max-h-64 overflow-y-auto" id="recentSpins">
+                                <!-- Recent spins -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prizes Tab -->
+                <div id="tab-prizes" class="tab-content hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">موجودی جوایز پریمیوم</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white border border-gray-200 p-4 rounded-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-semibold">آیفون ۱۷ پرو</span>
+                                    <span class="text-sm text-gray-500">اولیه: ۱</span>
+                                </div>
+                                <div class="text-2xl font-bold text-primary" id="iphoneCount">۱</div>
+                                <div class="text-xs text-gray-500">موجود</div>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-4 rounded-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-semibold">آیپد ایر M3</span>
+                                    <span class="text-sm text-gray-500">اولیه: ۱</span>
+                                </div>
+                                <div class="text-2xl font-bold text-primary" id="ipadCount">۱</div>
+                                <div class="text-xs text-gray-500">موجود</div>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-4 rounded-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-semibold">اپل واچ سری ۱۱</span>
+                                    <span class="text-sm text-gray-500">اولیه: ۱</span>
+                                </div>
+                                <div class="text-2xl font-bold text-primary" id="watchCount">۱</div>
+                                <div class="text-xs text-gray-500">موجود</div>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-4 rounded-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-semibold">ایرپادز سری ۴</span>
+                                    <span class="text-sm text-gray-500">اولیه: ۱</span>
+                                </div>
+                                <div class="text-2xl font-bold text-primary" id="airpodsCount">۱</div>
+                                <div class="text-xs text-gray-500">موجود</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">برندگان جوایز پریمیوم</h3>
+                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">جایزه</th>
+                                        <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">برنده</th>
+                                        <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">تاریخ</th>
+                                        <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">وضعیت</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="winnersTable" class="divide-y divide-gray-200">
+                                    <!-- Winners -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="tab-settings" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                            <h3 class="text-lg font-bold mb-4">تاریخ‌های کمپین</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">تاریخ شروع</label>
+                                    <input type="date" id="startDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="2025-01-01">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">تاریخ پایان</label>
+                                    <input type="date" id="endDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="2025-01-15">
+                                </div>
+                            </div>
+                            <button onclick="updateDates()" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                                به‌روزرسانی تاریخ‌ها
+                            </button>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                            <h3 class="text-lg font-bold mb-4">تنظیمات قیمت طلا</h3>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-2">قیمت فعلی طلا (۱۸ عیار) به ازای هر گرم</label>
+                                <input type="number" id="goldPrice" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="11830000">
+                                <p class="text-xs text-gray-500 mt-1">قیمت به تومان. برای محاسبه نهایی جایزه استفاده می‌شود.</p>
+                            </div>
+                            <button onclick="updateGoldPrice()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                                به‌روزرسانی قیمت طلا
+                            </button>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                            <h3 class="text-lg font-bold mb-4">رتبه‌بندی نهایی و پرداخت</h3>
+                            <p class="text-sm text-gray-600 mb-4">
+                                رتبه‌بندی نهایی در ساعت ۲۳:۵۹ تاریخ پایان قفل می‌شود. 
+                                پس از آن می‌توانید پرداخت‌ها را بر اساس رتبه‌بندی نهایی انجام دهید.
+                            </p>
+                            <button onclick="processFinalRankings()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                پردازش رتبه‌بندی نهایی
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../birthday-campaign-utils.js"></script>
+    <script>
+        // Mock data
+        const mockData = {
+            campaignStart: '2025-01-01',
+            campaignEnd: '2025-01-15',
+            isActive: true,
+            totalOrders: 1245,
+            totalNMV: 12500000000,
+            activePartners: 98,
+            totalSpins: 856,
+            goldPrice: 11830000,
+            premiumPrizes: {
+                iphone: { initial: 1, won: 0 },
+                ipad: { initial: 1, won: 0 },
+                watch: { initial: 1, won: 0 },
+                airpods: { initial: 1, won: 0 }
+            },
+            partners: Array.from({ length: 150 }, (_, i) => ({
+                id: `P-${1000 + i}`,
+                name: `شریک ${1000 + i}`,
+                code: `P-${1000 + i}`,
+                orders: Math.floor(Math.random() * 50) + 1,
+                nmv: Math.floor(Math.random() * 50000000) + 1000000
+            }))
+        };
+
+        function loadDashboard() {
+            // Update stats
+            document.getElementById('totalOrders').textContent = mockData.totalOrders.toLocaleString('fa-IR');
+            document.getElementById('totalNMV').textContent = formatCurrency(mockData.totalNMV);
+            document.getElementById('activePartners').textContent = mockData.activePartners.toLocaleString('fa-IR');
+            document.getElementById('totalSpins').textContent = mockData.totalSpins.toLocaleString('fa-IR');
+            
+            // Update campaign dates
+            document.getElementById('campaignDates').textContent = 
+                `شروع: ${mockData.campaignStart} | پایان: ${mockData.campaignEnd}`;
+            
+            // Update time remaining
+            updateTimeRemaining();
+            
+            // Update premium prize counts
+            document.getElementById('iphoneCount').textContent = 
+                (mockData.premiumPrizes.iphone.initial - mockData.premiumPrizes.iphone.won).toLocaleString('fa-IR');
+            document.getElementById('ipadCount').textContent = 
+                (mockData.premiumPrizes.ipad.initial - mockData.premiumPrizes.ipad.won).toLocaleString('fa-IR');
+            document.getElementById('watchCount').textContent = 
+                (mockData.premiumPrizes.watch.initial - mockData.premiumPrizes.watch.won).toLocaleString('fa-IR');
+            document.getElementById('airpodsCount').textContent = 
+                (mockData.premiumPrizes.airpods.initial - mockData.premiumPrizes.airpods.won).toLocaleString('fa-IR');
+            
+            // Load leaderboard
+            loadLeaderboard();
+        }
+
+        function loadLeaderboard() {
+            const leaderboard = BirthdayCampaignUtils.calculateLeaderboard(mockData.partners);
+            const top100 = leaderboard.slice(0, 100);
+            
+            const tableBody = document.getElementById('leaderboardTable');
+            tableBody.innerHTML = top100.map(partner => {
+                const goldPrize = BirthdayCampaignUtils.getGoldPrizeForRank(partner.rank);
+                const cashValue = BirthdayCampaignUtils.calculateCashEquivalent(goldPrize.grams, mockData.goldPrice);
+                
+                return `
+                    <tr>
+                        <td class="px-4 py-3">
+                            <span class="font-bold">#${partner.rank.toLocaleString('fa-IR')}</span>
+                        </td>
+                        <td class="px-4 py-3 text-right">
+                            <div class="font-medium">${partner.name}</div>
+                            <div class="text-xs text-gray-500">${partner.code}</div>
+                        </td>
+                        <td class="px-4 py-3 text-left font-medium">${partner.orders.toLocaleString('fa-IR')}</td>
+                        <td class="px-4 py-3 text-left font-bold">${formatCurrency(partner.nmv)}</td>
+                        <td class="px-4 py-3 text-left">
+                            <div class="font-semibold text-yellow-600">${BirthdayCampaignUtils.formatGoldAmount(goldPrize.grams)}</div>
+                        </td>
+                        <td class="px-4 py-3 text-left">
+                            <div class="font-semibold text-green-600">${formatCurrency(cashValue)}</div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active', 'border-primary', 'text-primary');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            // Add active class to button
+            const button = document.querySelector(`[data-tab="${tabName}"]`);
+            button.classList.add('active', 'border-primary', 'text-primary');
+            button.classList.remove('border-transparent', 'text-gray-500');
+            
+            // Load tab-specific data
+            if (tabName === 'spins') {
+                loadSpinsData();
+            } else if (tabName === 'prizes') {
+                loadPrizesData();
+            }
+        }
+
+        function loadSpinsData() {
+            // Load prize distribution
+            const prizes = BirthdayCampaignUtils.getAllPrizes();
+            const distribution = document.getElementById('prizeDistribution');
+            distribution.innerHTML = prizes.map(prize => `
+                <div class="flex justify-between items-center p-2 bg-white rounded">
+                    <span class="text-sm">${prize.label}</span>
+                    <span class="text-sm font-semibold">${prize.probability}٪</span>
+                </div>
+            `).join('');
+        }
+
+        function loadPrizesData() {
+            // Load winners (mock data)
+            const winnersTable = document.getElementById('winnersTable');
+            winnersTable.innerHTML = '<tr><td colspan="4" class="px-4 py-3 text-center text-gray-500">هنوز جایزه پریمیومی برنده نشده است</td></tr>';
+        }
+
+        function updateTimeRemaining() {
+            const timeRemaining = BirthdayCampaignUtils.getTimeUntilEnd(mockData.campaignEnd);
+            const timeEl = document.getElementById('timeRemaining');
+            
+            if (timeRemaining.ended) {
+                timeEl.textContent = 'کمپین به پایان رسید';
+            } else {
+                timeEl.textContent = `${timeRemaining.days} روز ${timeRemaining.hours} ساعت ${timeRemaining.minutes} دقیقه`;
+            }
+        }
+
+        function toggleCampaignStatus() {
+            mockData.isActive = !mockData.isActive;
+            const btn = document.getElementById('campaignStatusBtn');
+            btn.textContent = mockData.isActive ? 'فعال' : 'غیرفعال';
+            btn.className = mockData.isActive 
+                ? 'inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors shadow-sm hover:shadow-md'
+                : 'inline-flex items-center gap-2 px-5 py-2.5 bg-gray-400 text-white rounded-lg font-medium hover:bg-gray-500 transition-colors shadow-sm hover:shadow-md';
+        }
+
+        function refreshLeaderboard() {
+            loadLeaderboard();
+            alert('جدول رتبه‌بندی به‌روزرسانی شد!');
+        }
+
+        function refreshSpins() {
+            loadSpinsData();
+            alert('اطلاعات چرخش به‌روزرسانی شد!');
+        }
+
+        function updateDates() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            mockData.campaignStart = startDate;
+            mockData.campaignEnd = endDate;
+            loadDashboard();
+            alert('تاریخ‌های کمپین به‌روزرسانی شد!');
+        }
+
+        function updateGoldPrice() {
+            const price = parseFloat(document.getElementById('goldPrice').value);
+            mockData.goldPrice = price;
+            loadLeaderboard();
+            alert('قیمت طلا به‌روزرسانی شد!');
+        }
+
+        function processFinalRankings() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید رتبه‌بندی نهایی را پردازش کنید؟ این کار تمام رتبه‌بندی‌ها را قفل می‌کند و جوایز نهایی را محاسبه می‌کند.')) {
+                // In real app, this would call an API
+                alert('رتبه‌بندی نهایی پردازش شد! لیست پرداخت ایجاد شد.');
+            }
+        }
+
+        function exportData() {
+            alert('قابلیت خروجی در نسخه تولیدی در دسترس خواهد بود. جدول رتبه‌بندی، آمار چرخش و برندگان جوایز را خروجی می‌گیرد.');
+        }
+
+        function formatCurrency(amount) {
+            return amount.toLocaleString('fa-IR');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+            setInterval(updateTimeRemaining, 60000);
+        });
+    </script>
+</body>
+</html>
+

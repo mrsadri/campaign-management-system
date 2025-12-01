@@ -49,15 +49,16 @@
 <body class="bg-gray-50 pb-20 md:pb-0 min-h-screen">
     <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 py-4">
+        <!-- Mobile Header -->
+        <div class="md:hidden p-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <button onclick="history.back()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                         ←
                     </button>
                     <div>
-                        <h1 class="text-xl font-bold text-gray-900">🏆 Leaderboard</h1>
-                        <p class="text-xs text-gray-500">Top 100 Partners - Birthday Campaign</p>
+                        <h1 class="text-lg font-bold text-gray-900">🏆 Leaderboard</h1>
+                        <p class="text-xs text-gray-500">Top 100 Partners</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -65,6 +66,48 @@
                     <button onclick="refreshLeaderboard()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                         🔄
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-8">
+                        <div class="text-xl font-bold text-primary flex items-center gap-2">
+                            🎯 Campaign Portal
+                        </div>
+                        <!-- Desktop Navigation -->
+                        <nav class="flex items-center gap-1">
+                            <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏠 Home
+                            </a>
+                            <a href="leaderboard.html" class="px-4 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary transition-colors">
+                                🏆 Leaderboard
+                            </a>
+                            <a href="spin-wheel.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🎰 Spin Wheel
+                            </a>
+                            <a href="birthday-campaign.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🎂 Campaign
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-gray-500" id="lastUpdateDesktop">Updating...</span>
+                        <button onclick="refreshLeaderboard()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                            🔄
+                        </button>
+                        <a href="profile.html" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">👤</div>
+                            <span class="text-sm font-medium text-gray-700">Profile</span>
+                        </a>
+                        <!-- Language Switcher -->
+                        <a href="../fa/leaderboard.html" class="px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors border border-gray-200">
+                            🌐 فارسی
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -199,9 +242,9 @@
             <span class="text-2xl">🎰</span>
             <span class="text-[11px] font-medium">Spin Wheel</span>
         </a>
-        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
-            <span class="text-2xl">⚙️</span>
-            <span class="text-[11px] font-medium">Settings</span>
+        <a href="birthday-campaign.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🎂</span>
+            <span class="text-[11px] font-medium">Campaign</span>
         </a>
     </nav>
 
@@ -256,8 +299,10 @@
             renderLeaderboard(top100, myPartner);
             
             // Update last update time
-            document.getElementById('lastUpdate').textContent = 
-                `Updated: ${new Date().toLocaleTimeString()}`;
+            const updateTime = `Updated: ${new Date().toLocaleTimeString()}`;
+            document.getElementById('lastUpdate').textContent = updateTime;
+            const desktopUpdate = document.getElementById('lastUpdateDesktop');
+            if (desktopUpdate) desktopUpdate.textContent = updateTime;
         }
 
         function renderLeaderboard(partners, myPartner) {
@@ -345,13 +390,20 @@
         }
 
         function refreshLeaderboard() {
-            document.getElementById('lastUpdate').textContent = 'Updating...';
+            const updatingText = 'Updating...';
+            document.getElementById('lastUpdate').textContent = updatingText;
             document.getElementById('lastUpdate').classList.add('updating');
+            const desktopUpdate = document.getElementById('lastUpdateDesktop');
+            if (desktopUpdate) {
+                desktopUpdate.textContent = updatingText;
+                desktopUpdate.classList.add('updating');
+            }
             
             // Simulate API call
             setTimeout(() => {
                 loadLeaderboard();
                 document.getElementById('lastUpdate').classList.remove('updating');
+                if (desktopUpdate) desktopUpdate.classList.remove('updating');
             }, 1000);
         }
 
