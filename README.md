@@ -61,12 +61,18 @@ campaign/
 ├── /docs/                          # 📚 Complete Documentation
 │   ├── DOCUMENTATION-INDEX.html    # Interactive doc navigator
 │   ├── DOCUMENTATION-INDEX.md      # Markdown version
+│   ├── DOCUMENTATION-ORGANIZATION.md # Documentation structure guide
 │   ├── DESIGN-SYSTEM.md           # Complete design system (1,047 lines)
 │   ├── RTL-IMPLEMENTATION-GUIDE.md # Persian/RTL guide (850 lines)
 │   ├── PROJECT-GUIDE.md           # Architecture guide (900 lines)
 │   ├── project-brief.md           # Requirements (411 lines)
 │   ├── user-stories.md            # User stories (English)
-│   └── user-stories.fa.md         # User stories (Persian)
+│   ├── user-stories.fa.md         # User stories (Persian)
+│   ├── CAMPAIGN-TYPE-SYSTEM.md    # Campaign encoding specification
+│   └── /implementation/           # Implementation summaries
+│       ├── README.md
+│       ├── BIRTHDAY-CAMPAIGN-IMPLEMENTATION.md
+│       └── CAMPAIGN-TYPE-IMPLEMENTATION.md
 │
 ├── /src/                           # 💻 Source Code
 │   │
@@ -219,6 +225,12 @@ Complete project architecture:
 ### 🗺️ Interactive Guides
 - **[docs/DOCUMENTATION-INDEX.html](docs/DOCUMENTATION-INDEX.html)** — Beautiful interactive documentation navigator
 - **[docs/DOCUMENTATION-INDEX.md](docs/DOCUMENTATION-INDEX.md)** — Complete documentation index
+- **[docs/DOCUMENTATION-ORGANIZATION.md](docs/DOCUMENTATION-ORGANIZATION.md)** — Documentation structure guide
+
+### 📦 Implementation Summaries
+- **[docs/implementation/](docs/implementation/)** — Historical implementation records
+  - Birthday Campaign implementation
+  - Campaign Type system implementation
 
 ---
 

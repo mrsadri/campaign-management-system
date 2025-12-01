@@ -33,9 +33,9 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen font-persian">
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 pb-20 md:pb-0 min-h-screen font-persian">
     <!-- Desktop Header with Navigation -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-200/50">
         <!-- Mobile Header -->
         <div class="md:hidden p-4">
             <div class="flex justify-between items-center">
@@ -53,7 +53,7 @@
         </div>
 
         <!-- Desktop Header -->
-        <div class="hidden md:block border-b border-gray-200">
+        <div class="hidden md:block border-b border-gray-200/50">
             <div class="max-w-6xl mx-auto px-6">
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center gap-8">
@@ -95,17 +95,31 @@
         </div>
     </header>
 
-    <!-- Page Title (Mobile) -->
-    <div class="md:hidden bg-white border-b border-gray-200 px-4 py-3">
-        <h1 class="text-lg font-semibold text-center">درآمد امروز</h1>
-    </div>
-
     <!-- Main Content -->
-    <main class="p-4 max-w-2xl mx-auto">
+    <main class="max-w-6xl mx-auto px-4 md:px-6 py-6">
+        
+        <!-- Page Header -->
+        <div class="flex justify-between items-center mb-6 md:hidden">
+            <h1 class="text-xl font-bold text-gray-900">درآمد امروز</h1>
+            <button class="p-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors" onclick="refreshToday()" title="بروزرسانی">
+                🔄
+            </button>
+        </div>
+        
+        <!-- Page Header Desktop -->
+        <div class="hidden md:flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">درآمد امروز</h1>
+                <p class="text-sm text-gray-500">به‌روزرسانی خودکار هر ۳۰ ثانیه</p>
+            </div>
+            <button class="p-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors" onclick="refreshToday()" title="بروزرسانی">
+                🔄
+            </button>
+        </div>
         
         <!-- Summary Cards -->
         <section class="mb-6">
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-4 rounded-xl shadow-md">
                     <div class="text-3xl mb-2">💰</div>
                     <div class="text-2xl font-bold mb-1" id="todayTotal">۳,۰۰۰,۰۰۰</div>
@@ -118,13 +132,13 @@
                     <div class="text-sm text-gray-600">مجموع فروش</div>
                 </div>
 
-                <div class="bg-white p-4 rounded-xl shadow-sm border-r-4 border-green-500">
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-green-500">
                     <div class="text-3xl mb-2">✅</div>
                     <div class="text-2xl font-bold mb-1 text-green-600" id="qualifyingSales">۴</div>
                     <div class="text-sm text-gray-600">فروش واجد شرایط</div>
                 </div>
 
-                <div class="bg-white p-4 rounded-xl shadow-sm border-r-4 border-yellow-500">
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-yellow-500">
                     <div class="text-3xl mb-2">⏳</div>
                     <div class="text-2xl font-bold mb-1 text-yellow-600" id="pendingSales">۵۰۰,۰۰۰</div>
                     <div class="text-sm text-gray-600">در انتظار تسویه</div>
@@ -149,8 +163,7 @@
 
         <!-- Sales Timeline -->
         <section class="mb-6">
-            <h2 class="text-xl font-bold mb-1">خط زمانی فروش</h2>
-            <p class="text-sm text-gray-600 mb-4">به‌روزرسانی خودکار هر ۳۰ ثانیه</p>
+            <h2 class="text-xl font-bold mb-4 text-gray-900">خط زمانی فروش</h2>
 
             <div class="space-y-4" id="timelineList">
                 

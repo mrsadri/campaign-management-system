@@ -185,13 +185,13 @@
                     <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-2">
                         📊 نحوه محاسبه رتبه‌بندی
                         <span class="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-1 rounded-full cursor-help" 
-                              title="رتبه‌بندی بر اساس ارزش خالص کالا (NMV) از سفارشات تکمیل شده در طول دوره کمپین محاسبه می‌شود.">
+                              title="رتبه‌بندی بر اساس مبلغ کل فروش از سفارشات تکمیل شده در طول دوره کمپین محاسبه می‌شود.">
                             ℹ️
                         </span>
                     </h3>
                     <p class="text-xs text-gray-600 leading-relaxed">
-                        رتبه‌بندی بر اساس <strong>ارزش خالص کالا (NMV)</strong> از سفارشات تکمیل شده تعیین می‌شود. 
-                        NMV بالاتر = رتبه بالاتر. رتبه‌بندی هر چند دقیقه به‌روز می‌شود و در پایان کمپین ریست می‌گردد.
+                        رتبه‌بندی بر اساس <strong>مبلغ کل فروش</strong> از سفارشات تکمیل شده تعیین می‌شود. 
+                        فروش بالاتر = رتبه بالاتر. رتبه‌بندی هر چند دقیقه به‌روز می‌شود و در پایان کمپین ریست می‌گردد.
                         <button onclick="document.getElementById('scoringDetails').classList.toggle('hidden')" 
                                 class="text-primary font-medium hover:underline ml-1">
                             بیشتر بدانید ←
@@ -200,8 +200,8 @@
                     <div id="scoringDetails" class="hidden mt-3 p-3 bg-blue-50 rounded-lg text-xs text-gray-700">
                         <p class="mb-2"><strong>فرمول امتیازدهی:</strong></p>
                         <ul class="list-disc list-inside space-y-1 text-gray-600" dir="rtl">
-                            <li>هر سفارش تکمیل شده NMV خود را به مجموع شما اضافه می‌کند</li>
-                            <li>رتبه‌بندی بر اساس مجموع NMV مرتب می‌شود (بالاتر به پایین)</li>
+                            <li>هر سفارش تکمیل شده مبلغ فروش خود را به مجموع شما اضافه می‌کند</li>
+                            <li>رتبه‌بندی بر اساس مجموع مبلغ فروش مرتب می‌شود (بالاتر به پایین)</li>
                             <li>در صورت تساوی، سفارشات زودتر برنده می‌شوند</li>
                             <li>فقط سفارشات تکمیل شده در طول دوره کمپین محاسبه می‌شوند</li>
                         </ul>
@@ -232,7 +232,7 @@
                         <div class="flex items-center gap-3 text-sm mb-2">
                             <span class="text-gray-600"><span class="font-semibold text-gray-900" id="myOrders">۱۵</span> سفارش</span>
                             <span class="text-gray-300">•</span>
-                            <span class="text-gray-600"><span class="font-semibold text-gray-900" id="myNMV">۱۲.۵M</span> تومان NMV</span>
+                            <span class="text-gray-600"><span class="font-semibold text-gray-900" id="myNMV">۱۲.۵M</span> تومان فروش</span>
                         </div>
                         <div class="flex items-center gap-2 text-xs" id="rankMovement">
                             <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full">
@@ -275,7 +275,7 @@
                             <span class="font-bold text-white" id="rank2Orders">۴۵</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
-                            <span class="text-white/70">NMV</span>
+                            <span class="text-white/70">فروش</span>
                             <span class="font-bold text-white" id="rank2NMV">۴۲.۵M</span>
                         </div>
                     </div>
@@ -299,7 +299,7 @@
                             <span class="font-bold text-white" id="rank1Orders">۵۲</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
-                            <span class="text-white/80">NMV</span>
+                            <span class="text-white/80">فروش</span>
                             <span class="font-bold text-white" id="rank1NMV">۴۸.۲M</span>
                         </div>
                     </div>
@@ -322,7 +322,7 @@
                             <span class="font-bold text-white" id="rank3Orders">۳۸</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
-                            <span class="text-white/70">NMV</span>
+                            <span class="text-white/70">فروش</span>
                             <span class="font-bold text-white" id="rank3NMV">۳۵.۸M</span>
                         </div>
                     </div>
@@ -440,7 +440,7 @@
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider w-20">رتبه</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">شریک</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">سفارشات</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">NMV</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">مبلغ فروش</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">جایزه</th>
                         </tr>
                     </thead>
@@ -695,7 +695,7 @@
             document.getElementById('nextTargetRank').textContent = `رتبه #${toPersianNum(nextTarget)}`;
             
             if (nmvGap > 0) {
-                document.getElementById('pointsToNextRank').textContent = `+${formatCurrency(nmvGap)} NMV برای رسیدن`;
+                document.getElementById('pointsToNextRank').textContent = `+${formatCurrency(nmvGap)} تومان فروش برای رسیدن`;
             } else {
                 document.getElementById('pointsToNextRank').textContent = 'تقریباً رسیدی!';
             }
