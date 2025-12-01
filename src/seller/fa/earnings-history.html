@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تاریخچه درآمد - پنل فروشنده</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                    fontFamily: {
+                        persian: ['DanaVF', 'Tahoma', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+        }
+        body {
+            font-family: 'DanaVF', Tahoma, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 pb-20 min-h-screen font-persian">
+    <!-- Mobile Header -->
+    <header class="bg-white p-4 shadow-sm sticky top-0 z-50">
+        <div class="flex justify-between items-center">
+            <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">→ بازگشت</button>
+            <h1 class="text-lg font-semibold">تاریخچه درآمد</h1>
+            <button class="bg-transparent border-none text-xl cursor-pointer rounded-lg p-2 hover:bg-gray-100 transition-colors" onclick="exportEarnings()" title="خروجی">
+                📥
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-4 max-w-2xl mx-auto">
+        
+        <!-- Summary Dashboard -->
+        <section class="mb-6">
+            <h2 class="text-xl font-bold mb-4">درآمدهای شما</h2>
+            <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-3">
+                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                    <div class="text-5xl mb-2">💰</div>
+                    <div class="text-3xl font-bold mb-1">۴۵,۰۰۰,۰۰۰</div>
+                    <div class="text-sm text-gray-600 opacity-80">مجموع کل</div>
+                </div>
+                <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-6 rounded-xl shadow-md text-center">
+                    <div class="text-5xl mb-2">📅</div>
+                    <div class="text-3xl font-bold mb-1">۱۵,۰۰۰,۰۰۰</div>
+                    <div class="text-sm opacity-80">این ماه</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                    <div class="text-5xl mb-2">📆</div>
+                    <div class="text-3xl font-bold mb-1">۱۲,۵۰۰,۰۰۰</div>
+                    <div class="text-sm text-gray-600 opacity-80">ماه قبل</div>
+                </div>
+            </div>
+
+            <!-- Trend Chart Placeholder -->
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-bold mb-4">روند درآمد</h3>
+                <div class="mb-4">
+                    <svg width="100%" height="150" viewBox="0 0 300 150">
+                        <polyline
+                            fill="none"
+                            stroke="#2563EB"
+                            stroke-width="3"
+                            points="0,130 50,100 100,80 150,90 200,50 250,30 300,20"
+                        />
+                        <circle cx="0" cy="130" r="4" fill="#2563EB"/>
+                        <circle cx="50" cy="100" r="4" fill="#2563EB"/>
+                        <circle cx="100" cy="80" r="4" fill="#2563EB"/>
+                        <circle cx="150" cy="90" r="4" fill="#2563EB"/>
+                        <circle cx="200" cy="50" r="4" fill="#2563EB"/>
+                        <circle cx="250" cy="30" r="4" fill="#2563EB"/>
+                        <circle cx="300" cy="20" r="4" fill="#2563EB"/>
+                    </svg>
+                    <div class="flex justify-around text-xs text-gray-500 mt-2">
+                        <span>هفته ۱</span>
+                        <span>هفته ۲</span>
+                        <span>هفته ۳</span>
+                        <span>هفته ۴</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Options -->
+        <section class="mb-6">
+            <div class="flex flex-col gap-3 md:flex-row">
+                <select class="flex-1 p-3 border border-gray-300 rounded-lg bg-white" id="dateRangeFilter" onchange="applyFilters()">
+                    <option value="all">همه زمان‌ها</option>
+                    <option value="thisMonth" selected>این ماه</option>
+                    <option value="lastMonth">ماه قبل</option>
+                    <option value="last3Months">۳ ماه اخیر</option>
+                    <option value="custom">بازه سفارشی</option>
+                </select>
+                <select class="flex-1 p-3 border border-gray-300 rounded-lg bg-white" id="campaignFilterEarnings" onchange="applyFilters()">
+                    <option value="">همه کمپین‌ها</option>
+                    <option value="1">کمپین ویژه تابستانی</option>
+                    <option value="2">پاداش بیمه درمان</option>
+                    <option value="3">فروش سریع شخص ثالث</option>
+                </select>
+                <select class="flex-1 p-3 border border-gray-300 rounded-lg bg-white" id="companyFilterEarnings" onchange="applyFilters()">
+                    <option value="">همه شرکت‌ها</option>
+                    <option value="asia">آسیا</option>
+                    <option value="saman">سامان</option>
+                    <option value="razi">رازی</option>
+                    <option value="iran">ایران</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Tabs for Paid vs Pending -->
+        <section class="mb-6">
+            <div class="flex gap-2 mb-4">
+                <button class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-semibold cursor-pointer" onclick="switchTab('paid')">
+                    پاداش‌های پرداخت شده
+                </button>
+                <button class="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg font-semibold cursor-pointer relative" onclick="switchTab('pending')">
+                    پاداش‌های در انتظار
+                    <span class="absolute top-1 left-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">۳</span>
+                </button>
+            </div>
+
+            <!-- Paid Rewards Tab -->
+            <div class="tab-content active" id="paidTab">
+                <div class="space-y-4">
+                    
+                    <!-- Payment Record 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">📅</span>
+                                <span>دوشنبه، ۳۰ آبان ۱۴۰۴</span>
+                            </div>
+                            <div class="text-2xl font-bold text-green-600">+۱۰,۰۰۰,۰۰۰</div>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>کمپین: کمپین ویژه تابستانی</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>۸ فروش واجد شرایط</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>آسیا: ۵م • سامان: ۳م • رازی: ۲م</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🔢</span>
+                                <span>تراکنش: TX-2025-11-20-001</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('دانلود رسید')">
+                                📄 دانلود رسید
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('مشاهده جزئیات')">
+                                👁️ مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Record 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">📅</span>
+                                <span>دوشنبه، ۲۳ آبان ۱۴۰۴</span>
+                            </div>
+                            <div class="text-2xl font-bold text-green-600">+۱۲,۵۰۰,۰۰۰</div>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>کمپین‌ها: کمپین ویژه تابستانی، پاداش درمان</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>۱۰ فروش واجد شرایط</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>آسیا: ۶م • سامان: ۴.۵م • رازی: ۲م</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🔢</span>
+                                <span>تراکنش: TX-2025-11-13-001</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('دانلود رسید')">
+                                📄 دانلود رسید
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('مشاهده جزئیات')">
+                                👁️ مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Record 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">📅</span>
+                                <span>دوشنبه، ۱۶ آبان ۱۴۰۴</span>
+                            </div>
+                            <div class="text-2xl font-bold text-green-600">+۸,۰۰۰,۰۰۰</div>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>کمپین: کمپین ویژه تابستانی</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>۶ فروش واجد شرایط</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>آسیا: ۴م • سامان: ۳م • ایران: ۱م</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🔢</span>
+                                <span>تراکنش: TX-2025-11-06-001</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('دانلود رسید')">
+                                📄 دانلود رسید
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('مشاهده جزئیات')">
+                                👁️ مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Pending Rewards Tab -->
+            <div class="tab-content hidden" id="pendingTab">
+                <div class="space-y-4">
+                    
+                    <!-- Pending Record 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-r-4 border-yellow-500">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">⏳</span>
+                                <span>انتظار: دوشنبه، ۷ آذر ۱۴۰۴</span>
+                            </div>
+                            <div class="text-2xl font-bold text-yellow-600">۳,۵۰۰,۰۰۰</div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>کمپین: کمپین ویژه تابستانی</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>۳ فروش واجد شرایط (در انتظار تسویه)</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>آسیا: ۲م • رازی: ۱.۵م</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">ℹ️</span>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">در انتظار چرخه پرداخت</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Record 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-r-4 border-yellow-500">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">⏳</span>
+                                <span>انتظار: دوشنبه، ۷ آذر ۱۴۰۴</span>
+                            </div>
+                            <div class="text-2xl font-bold text-yellow-600">۱,۵۰۰,۰۰۰</div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>کمپین: پاداش بیمه درمان</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>۱ فروش واجد شرایط (در انتظار تسویه)</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>رازی: ۱.۵م</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">ℹ️</span>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">در انتظار تسویه</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Record 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-r-4 border-yellow-500">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">⏳</span>
+                                <span>انتظار: دوشنبه، ۷ آذر ۱۴۰۴</span>
+                            </div>
+                            <div class="text-2xl font-bold text-yellow-600">۵۰۰,۰۰۰</div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>کمپین: فروش سریع شخص ثالث</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>۱ فروش واجد شرایط</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>ایران: ۵۰۰ه</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">ℹ️</span>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">در انتظار چرخه پرداخت</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Export Section -->
+        <section class="bg-white p-6 rounded-xl shadow-sm text-center">
+            <h3 class="text-lg font-bold mb-4">خروجی گزارش درآمد</h3>
+            <div class="flex gap-3">
+                <button class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-semibold cursor-pointer hover:bg-primary-dark transition-colors" onclick="exportToPDF()">
+                    📄 خروجی PDF
+                </button>
+                <button class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-semibold cursor-pointer hover:bg-primary-dark transition-colors" onclick="exportToExcel()">
+                    📊 خروجی Excel
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">خانه</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">📊</span>
+            <span class="text-[11px] font-medium">امروز</span>
+        </a>
+        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+            <span class="text-2xl">💰</span>
+            <span class="text-[11px] font-medium">درآمدها</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">تنظیمات</span>
+        </a>
+    </nav>
+
+    <script src="../script.js"></script>
+    <script>
+        function switchTab(tabName) {
+            // Update tab buttons
+            const tabs = document.querySelectorAll('button[onclick*="switchTab"]');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-primary', 'text-white');
+                tab.classList.add('bg-white', 'border', 'border-gray-300');
+            });
+            event.target.classList.add('bg-primary', 'text-white');
+            event.target.classList.remove('bg-white', 'border', 'border-gray-300');
+            
+            // Update tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('active');
+            });
+            const targetTab = document.getElementById(tabName + 'Tab');
+            targetTab.classList.remove('hidden');
+            targetTab.classList.add('active');
+        }
+
+        function applyFilters() {
+            // In real app, this would filter the earnings list based on selected filters
+            console.log('اعمال فیلترها...');
+            showToast('فیلترها اعمال شدند');
+        }
+
+        function exportEarnings() {
+            alert('گزینه‌های خروجی:\n1. PDF\n2. Excel\n\nفرمت را از بخش خروجی زیر انتخاب کنید');
+        }
+
+        function exportToPDF() {
+            showToast('در حال تولید گزارش PDF...');
+            // In real app, generate PDF
+        }
+
+        function exportToExcel() {
+            showToast('در حال تولید گزارش Excel...');
+            // In real app, generate Excel
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:100px;right:50%;transform:translateX(50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

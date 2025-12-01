@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گردونه شانس - کمپین تولد</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+            font-weight: 100 900;
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'DanaVF', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
+        }
+        
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        .wheel-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 0 8px #F59E0B,
+                0 0 0 12px #D97706,
+                0 0 40px rgba(245, 158, 11, 0.5),
+                inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        #wheelCanvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 95%;
+            height: 95%;
+            border-radius: 50%;
+        }
+        
+        .wheel-pointer {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 22px solid transparent;
+            border-right: 22px solid transparent;
+            border-top: 45px solid #EF4444;
+            z-index: 20;
+            filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.5));
+        }
+        
+        .wheel-pointer::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: #EF4444;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
+        }
+        
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.4),
+                inset 0 -2px 5px rgba(0,0,0,0.2);
+            z-index: 15;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .wheel-center:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .wheel-center:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+        
+        .wheel-center.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+        .spin-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            color: #1a1a2e;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .spin-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .spin-button:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -20px;
+            animation: confetti-fall 3s linear forwards;
+            z-index: 9999;
+        }
+        
+        .winner-card {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .prize-glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+            to { box-shadow: 0 0 20px rgba(245, 158, 11, 0.8); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen pb-20 md:pb-0" dir="rtl">
+    <!-- Header -->
+    <header class="bg-white/10 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-white/10">
+        <div class="max-w-4xl mx-auto px-4 md:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <button onclick="history.back()" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-white">
+                        →
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">🎰 گردونه شانس</h1>
+                        <p class="text-xs text-gray-300">جوایز نقدی و محصولات پریمیوم برنده شو!</p>
+                    </div>
+                </div>
+                <a href="leaderboard.html" class="px-4 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium hover:bg-amber-600 transition-colors">
+                    🏆 جدول رتبه‌بندی
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 md:px-6 py-6">
+        
+        <!-- Available Spins Card -->
+        <div class="bg-gradient-to-br from-amber-500 to-amber-700 text-white p-6 rounded-2xl mb-6 shadow-2xl">
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-sm opacity-90 mb-1">چرخش‌های موجود</div>
+                    <div class="text-5xl font-bold mb-2" id="availableSpins">۳</div>
+                    <div class="text-sm opacity-80">با هر سفارش یک چرخش بگیر!</div>
+                </div>
+                <div class="text-left">
+                    <div class="text-sm opacity-90 mb-1">کل بردها</div>
+                    <div class="text-2xl font-bold text-yellow-200" id="totalWinnings">۰</div>
+                    <div class="text-xs opacity-70">تومان</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spin Wheel Container -->
+        <div class="bg-slate-800/50 backdrop-blur-sm p-8 rounded-2xl mb-6 shadow-2xl border border-white/10">
+            <div class="wheel-container">
+                <div class="wheel-pointer"></div>
+                <div class="wheel-wrapper">
+                    <canvas id="wheelCanvas"></canvas>
+                </div>
+                <button class="wheel-center" id="centerButton" onclick="handleSpin()">
+                    🎰
+                </button>
+            </div>
+            
+            <!-- Spin Button -->
+            <div class="text-center mt-8">
+                <button id="spinButton" 
+                        onclick="handleSpin()"
+                        class="spin-button px-10 py-4 text-lg rounded-xl shadow-lg disabled:transform-none">
+                    🎰 بچرخان
+                </button>
+                <p class="text-sm text-gray-400 mt-3" id="spinMessage">کلیک کن و برنده شو!</p>
+            </div>
+        </div>
+
+        <!-- Prize Odds Display -->
+        <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-2xl mb-6 shadow-lg border border-white/10">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-white">
+                🎁 جوایز موجود
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="prizeList">
+                <!-- Prizes will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Recent Winners Feed -->
+        <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-2xl mb-6 shadow-lg border border-white/10">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-white">
+                🔥 برندگان اخیر
+            </h3>
+            <div class="space-y-2 max-h-64 overflow-y-auto" id="recentWinners">
+                <!-- Recent winners will be inserted here -->
+            </div>
+        </div>
+
+        <!-- My Wins History -->
+        <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-2xl mb-6 shadow-lg border border-white/10">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-white">
+                🏆 بردهای من
+            </h3>
+            <div class="space-y-2" id="myWins">
+                <!-- Win history will be inserted here -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl border border-white/20 winner-card">
+            <div class="text-7xl mb-4" id="resultIcon">🎉</div>
+            <h3 class="text-3xl font-bold mb-2 text-white" id="resultTitle">تبریک!</h3>
+            <p class="text-lg text-gray-300 mb-4" id="resultMessage">برنده شدی!</p>
+            <div class="text-4xl font-bold text-yellow-400 mb-6 prize-glow p-4 rounded-xl bg-white/5" id="resultPrize">-</div>
+            <button onclick="closeResultModal()" class="px-8 py-3 bg-amber-500 text-white rounded-xl font-medium hover:bg-amber-600 transition-colors">
+                عالی! 🎉
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-white/10 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.3)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">خانه</span>
+        </a>
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors">
+            <span class="text-2xl">🏆</span>
+            <span class="text-[11px] font-medium">رتبه‌بندی</span>
+        </a>
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-amber-500 no-underline transition-colors">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">گردونه</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-400 no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">تنظیمات</span>
+        </a>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="../../birthday-campaign-utils.js"></script>
+    <script src="../../spin-wheel.js"></script>
+    <script>
+        // Persian number formatter
+        function toPersianNumber(num) {
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return num.toString().replace(/\d/g, d => persianDigits[d]);
+        }
+        
+        function formatPersianCurrency(amount) {
+            return toPersianNumber(amount.toLocaleString());
+        }
+        
+        // Game state
+        const gameState = {
+            availableSpins: 3,
+            totalWinnings: 0,
+            myWins: [],
+            recentWinners: [
+                { prize: '۱,۰۰۰,۰۰۰ تومان', time: 'همین الان', type: 'cash' },
+                { prize: '۷۰۰,۰۰۰ تومان', time: '۲ دقیقه پیش', type: 'cash' },
+                { prize: 'ایرپادز سری ۴', time: '۵ دقیقه پیش', type: 'premium' },
+                { prize: '۵۰۰,۰۰۰ تومان', time: '۸ دقیقه پیش', type: 'cash' },
+                { prize: '۲,۰۰۰,۰۰۰ تومان', time: '۱۲ دقیقه پیش', type: 'cash' },
+            ],
+            availablePremiumPrizes: ['premium_airpods', 'premium_watch', 'premium_ipad', 'premium_iphone']
+        };
+        
+        let wheel = null;
+        
+        // Initialize the wheel
+        function initWheel() {
+            const prizes = BirthdayCampaignUtils.getAllPrizes();
+            
+            const segments = prizes.map((prize, index) => ({
+                id: prize.id,
+                label: prize.label,
+                type: prize.type,
+                amount: prize.amount,
+                probability: prize.probability,
+                color: getSegmentColor(index)
+            }));
+            
+            wheel = new SpinWheel('wheelCanvas', {
+                segments: segments,
+                spinDuration: 5000,
+                spinRevolutions: 6,
+                fontSize: 11,
+                centerRadius: 35,
+                rtl: true,
+                onSpinStart: () => {
+                    document.getElementById('spinButton').disabled = true;
+                    document.getElementById('spinButton').textContent = '⏳ در حال چرخش...';
+                    document.getElementById('centerButton').classList.add('disabled');
+                    document.getElementById('centerButton').textContent = '⏳';
+                },
+                onSpinEnd: (segment, index) => {
+                    processSpinResult(segment);
+                }
+            });
+            
+            updateUI();
+            loadPrizeList();
+            loadRecentWinners();
+            loadMyWins();
+        }
+        
+        function getSegmentColor(index) {
+            const colors = [
+                '#E53935', '#FB8C00', '#43A047', '#1E88E5',
+                '#8E24AA', '#F06292', '#00897B', '#5E35B1',
+                '#FDD835', '#039BE5', '#7CB342'
+            ];
+            return colors[index % colors.length];
+        }
+        
+        function handleSpin() {
+            if (!wheel || wheel.isSpinning || gameState.availableSpins <= 0) return;
+            
+            // Get available prizes
+            const availablePrizes = gameState.availablePremiumPrizes;
+            
+            // Use the utility to determine the result
+            const result = BirthdayCampaignUtils.spinWheel(availablePrizes);
+            
+            // Find the index of the winning segment
+            const prizes = BirthdayCampaignUtils.getAllPrizes();
+            let targetIndex = prizes.findIndex(p => p.id === result.id);
+            
+            // If it's a fallback, we spin to the original prize visually
+            if (result.isFallback) {
+                targetIndex = prizes.findIndex(p => p.id === result.originalPrize);
+            }
+            
+            // Store result for processing
+            wheel.pendingResult = result;
+            
+            // Spin to the target segment
+            wheel.spinToSegment(targetIndex);
+        }
+        
+        function processSpinResult(segment) {
+            const result = wheel.pendingResult || segment;
+            
+            // Update game state
+            gameState.availableSpins--;
+            
+            if (result.type === 'cash') {
+                gameState.totalWinnings += result.amount;
+            }
+            
+            // Add to wins history
+            const win = {
+                prize: result.label,
+                type: result.type,
+                amount: result.amount || null,
+                date: 'همین الان'
+            };
+            gameState.myWins.unshift(win);
+            
+            // Add to recent winners
+            gameState.recentWinners.unshift({
+                prize: result.label,
+                time: 'همین الان',
+                type: result.type
+            });
+            
+            // Remove premium prize if won
+            if (result.type === 'premium' && !result.isFallback) {
+                const index = gameState.availablePremiumPrizes.indexOf(result.id);
+                if (index > -1) {
+                    gameState.availablePremiumPrizes.splice(index, 1);
+                }
+            }
+            
+            // Show result modal
+            showResultModal(result);
+            
+            // Update UI
+            updateUI();
+            loadPrizeList();
+            loadRecentWinners();
+            loadMyWins();
+            
+            // Reset button
+            document.getElementById('centerButton').classList.remove('disabled');
+            document.getElementById('centerButton').textContent = '🎰';
+        }
+        
+        function updateUI() {
+            document.getElementById('availableSpins').textContent = toPersianNumber(gameState.availableSpins);
+            document.getElementById('totalWinnings').textContent = formatPersianCurrency(gameState.totalWinnings);
+            
+            const spinButton = document.getElementById('spinButton');
+            const centerButton = document.getElementById('centerButton');
+            
+            if (gameState.availableSpins === 0) {
+                spinButton.disabled = true;
+                spinButton.textContent = '😢 چرخشی نداری';
+                centerButton.classList.add('disabled');
+                document.getElementById('spinMessage').textContent = 'با سفارش جدید چرخش بگیر!';
+            } else {
+                spinButton.disabled = false;
+                spinButton.textContent = '🎰 بچرخان';
+                document.getElementById('spinMessage').textContent = `${toPersianNumber(gameState.availableSpins)} چرخش داری!`;
+            }
+        }
+        
+        function showResultModal(result) {
+            const modal = document.getElementById('resultModal');
+            const icon = document.getElementById('resultIcon');
+            const title = document.getElementById('resultTitle');
+            const message = document.getElementById('resultMessage');
+            const prize = document.getElementById('resultPrize');
+            
+            if (result.type === 'cash') {
+                icon.textContent = '💰';
+                title.textContent = 'پول نقد بردی!';
+                message.textContent = 'جایزه به کیف پولت اضافه شد!';
+                prize.textContent = result.label;
+            } else if (result.type === 'premium') {
+                icon.textContent = '🏆';
+                title.textContent = 'جک‌پات!';
+                message.textContent = 'جایزه پریمیوم برنده شدی!';
+                prize.textContent = result.label;
+            }
+            
+            modal.classList.remove('hidden');
+            showConfetti();
+        }
+        
+        function closeResultModal() {
+            document.getElementById('resultModal').classList.add('hidden');
+        }
+        
+        function showConfetti() {
+            const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F'];
+            const shapes = ['circle', 'square', 'triangle'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    
+                    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                    if (shape === 'circle') {
+                        confetti.style.borderRadius = '50%';
+                    } else if (shape === 'triangle') {
+                        confetti.style.width = '0';
+                        confetti.style.height = '0';
+                        confetti.style.borderLeft = '5px solid transparent';
+                        confetti.style.borderRight = '5px solid transparent';
+                        confetti.style.borderBottom = '10px solid ' + colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.background = 'transparent';
+                    }
+                    
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3500);
+                }, i * 15);
+            }
+        }
+        
+        function loadPrizeList() {
+            const container = document.getElementById('prizeList');
+            const prizes = BirthdayCampaignUtils.getAllPrizes();
+            
+            container.innerHTML = prizes.map(prize => {
+                const isPremium = prize.type === 'premium';
+                const isAvailable = isPremium ? gameState.availablePremiumPrizes.includes(prize.id) : true;
+                
+                return `
+                    <div class="p-3 rounded-xl border ${isPremium && !isAvailable ? 'bg-gray-800/50 border-gray-600 opacity-50' : 'bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-amber-500/30'}">
+                        <div class="text-xs ${isPremium && !isAvailable ? 'text-gray-500' : 'text-gray-400'} mb-1">${toPersianNumber(prize.probability)}٪ شانس</div>
+                        <div class="font-bold text-sm ${isPremium && !isAvailable ? 'text-gray-500' : 'text-white'}">${prize.label}</div>
+                        ${isPremium ? `<div class="text-xs ${isAvailable ? 'text-yellow-400' : 'text-red-400'} mt-1">${isAvailable ? '✨ پریمیوم' : '✓ برنده شد'}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function loadRecentWinners() {
+            const container = document.getElementById('recentWinners');
+            container.innerHTML = gameState.recentWinners.slice(0, 10).map(winner => `
+                <div class="flex justify-between items-center p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">${winner.type === 'premium' ? '🏆' : '💰'}</span>
+                        <div>
+                            <div class="font-semibold text-white">${winner.prize}</div>
+                            <div class="text-xs text-gray-400">${winner.time}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function loadMyWins() {
+            const container = document.getElementById('myWins');
+            
+            if (gameState.myWins.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-6">هنوز برنده نشدی. بچرخان! 🎰</p>';
+                return;
+            }
+            
+            container.innerHTML = gameState.myWins.map(win => `
+                <div class="flex justify-between items-center p-3 bg-white/5 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">${win.type === 'premium' ? '🏆' : '💰'}</span>
+                        <div>
+                            <div class="font-semibold text-white">${win.prize}</div>
+                            <div class="text-xs text-gray-400">${win.date}</div>
+                        </div>
+                    </div>
+                    ${win.type === 'cash' && win.amount ? `<span class="text-green-400 font-bold">+${formatPersianCurrency(win.amount)}</span>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initWheel);
+        
+        // Close modal on outside click
+        document.getElementById('resultModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'resultModal') {
+                closeResultModal();
+            }
+        });
+    </script>
+</body>
+</html>

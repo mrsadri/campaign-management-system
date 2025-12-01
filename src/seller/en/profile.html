@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile & Settings - Seller Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #E2E8F0;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #2563EB;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen">
+    <!-- Desktop Header with Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <!-- Mobile Header -->
+        <div class="md:hidden p-4">
+            <div class="flex justify-between items-center">
+                <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">← Back</button>
+                <h1 class="text-lg font-semibold">Profile & Settings</h1>
+                <div></div>
+            </div>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-8">
+                        <div class="text-xl font-bold text-primary flex items-center gap-2">
+                            🎯 Campaign Portal
+                        </div>
+                        <!-- Desktop Navigation -->
+                        <nav class="flex items-center gap-1">
+                            <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏠 Home
+                            </a>
+                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                📊 Today's Earnings
+                            </a>
+                            <a href="earnings-history.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                💰 Earnings History
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="relative p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="location.href='notifications.html'">
+                            🔔
+                            <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">3</span>
+                        </button>
+                        <a href="profile.html" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/10 text-primary transition-colors">
+                            <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">👤</div>
+                            <span class="text-sm font-medium">Profile</span>
+                        </a>
+                        <!-- Language Switcher -->
+                        <a href="../fa/profile.html" class="px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors border border-gray-200">
+                            🌐 فارسی
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-4 max-w-2xl md:max-w-4xl mx-auto">
+        
+        <!-- Profile Card -->
+        <section class="bg-gradient-to-br from-primary to-primary-dark text-white p-8 rounded-xl shadow-md text-center mb-6">
+            <div class="mb-4">
+                <div class="w-20 h-20 bg-white text-primary rounded-full flex items-center justify-center text-4xl mx-auto">👤</div>
+            </div>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold mb-1">Ali Ahmadi</h2>
+                <p class="text-sm opacity-90 mb-1">Partner ID: P-1001</p>
+                <p class="text-sm opacity-90">Panel: Partner (شریک)</p>
+            </div>
+            <div class="flex justify-around pt-6 border-t border-white border-opacity-20">
+                <div class="text-center">
+                    <div class="text-2xl font-bold mb-1">45M</div>
+                    <div class="text-xs opacity-80">Total Earned</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold mb-1">125</div>
+                    <div class="text-xs opacity-80">Total Sales</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Column Layout for Desktop -->
+        <div class="md:grid md:grid-cols-2 md:gap-6">
+            <!-- Personal Information -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">Personal Information</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">👤</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">Full Name</div>
+                                <div class="text-sm text-gray-600">Ali Ahmadi</div>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 text-primary font-semibold cursor-pointer hover:bg-gray-100 rounded-lg transition-colors" onclick="alert('Edit name')">Edit</button>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📱</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">Phone Number</div>
+                                <div class="text-sm text-gray-600">+98 912 345 6789</div>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 text-primary font-semibold cursor-pointer hover:bg-gray-100 rounded-lg transition-colors" onclick="alert('Edit phone')">Edit</button>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📧</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">Email</div>
+                                <div class="text-sm text-gray-600">ali.ahmadi@email.com</div>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 text-primary font-semibold cursor-pointer hover:bg-gray-100 rounded-lg transition-colors" onclick="alert('Edit email')">Edit</button>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🏢</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">Panel Type</div>
+                                <div class="text-sm text-gray-600">Partner (شریک)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- App Settings -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">App Settings</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🌐</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">Language</div>
+                                <div class="text-sm text-gray-600">English</div>
+                            </div>
+                        </div>
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm cursor-pointer" onchange="changeLanguage(this)">
+                            <option value="en" selected>English</option>
+                            <option value="fa">فارسی (Farsi)</option>
+                        </select>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🌙</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">Dark Mode</div>
+                                <div class="text-xs text-gray-600">Enable dark theme</div>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" onchange="toggleDarkMode(this)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- Notification Preferences -->
+        <section class="mb-6">
+            <h2 class="text-xl font-bold mb-4">Notification Preferences</h2>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
+                
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">🎉</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">New Campaigns</div>
+                            <div class="text-xs text-gray-600">Get notified when new campaigns are available</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">💰</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">Reward Earned</div>
+                            <div class="text-xs text-gray-600">Instant notification when you earn a reward</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">✅</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">Payment Processed</div>
+                            <div class="text-xs text-gray-600">Notification when payments are sent</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">⏰</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">Campaign Ending Soon</div>
+                            <div class="text-xs text-gray-600">Reminder when campaigns are about to end</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">ℹ️</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">Sale Updates</div>
+                            <div class="text-xs text-gray-600">Notify about qualifying and non-qualifying sales</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+            </div>
+
+            <h3 class="text-lg font-semibold mb-4 mt-6">Notification Channels</h3>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">📱</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">Push Notifications</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">💬</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">SMS Notifications</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">📧</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">Email Notifications</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Two Column Layout for Desktop -->
+        <div class="md:grid md:grid-cols-2 md:gap-6">
+            <!-- Support & Help -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">Support & Help</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="location.href='#faq'">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">❓</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">FAQ & Help Center</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">→</span>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('Contact support')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">💬</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Contact Support</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">→</span>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('Tutorial')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🎥</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Tutorial Videos</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">→</span>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- About -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">About</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📱</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">App Version</div>
+                                <div class="text-sm text-gray-600">1.0.0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('Terms of Service')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📄</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Terms of Service</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">→</span>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('Privacy Policy')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🔒</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Privacy Policy</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">→</span>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- Logout Button -->
+        <section class="mt-8">
+            <button class="w-full px-4 py-4 bg-red-500 text-white rounded-xl font-semibold cursor-pointer hover:bg-red-600 transition-colors" onclick="logout()">
+                🚪 Logout
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">Home</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">📊</span>
+            <span class="text-[11px] font-medium">Today</span>
+        </a>
+        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">💰</span>
+            <span class="text-[11px] font-medium">Earnings</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">Settings</span>
+        </a>
+    </nav>
+
+    <script src="../script.js"></script>
+    <script>
+        function changeLanguage(select) {
+            const lang = select.value;
+            if (lang === 'fa') {
+                location.href = '../fa/profile.html';
+            } else {
+                showToast('Language changed to English');
+            }
+        }
+
+        function toggleDarkMode(checkbox) {
+            if (checkbox.checked) {
+                document.body.classList.add('dark-mode');
+                showToast('Dark mode enabled');
+            } else {
+                document.body.classList.remove('dark-mode');
+                showToast('Dark mode disabled');
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                showToast('Logging out...');
+                setTimeout(() => {
+                    // In real app, clear session and redirect to login
+                    alert('Logged out successfully');
+                }, 1000);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

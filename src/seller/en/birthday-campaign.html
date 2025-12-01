@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Campaign - Partner Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white py-12 md:py-20">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+            <div class="text-6xl mb-4">🎂</div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Partner Birthday Campaign</h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">Two weeks of golden opportunities! Compete, spin, and win!</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="leaderboard.html" class="px-8 py-4 bg-white text-yellow-600 font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🏆 View Leaderboard
+                </a>
+                <a href="spin-wheel.html" class="px-8 py-4 bg-yellow-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🎰 Spin Wheel
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaign Info -->
+    <section class="py-12 bg-white">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">How It Works</h2>
+                <p class="text-gray-600 text-lg">Two exciting ways to win prizes!</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- Leaderboard Card -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200">
+                    <div class="text-5xl mb-4">🏆</div>
+                    <h3 class="text-2xl font-bold mb-4">Leaderboard Competition</h3>
+                    <p class="text-gray-700 mb-6">
+                        Compete with other partners! The top 100 partners ranked by total sales (NMV) win gold prizes!
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Ranked by total sales (NMV) during campaign</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Top 100 partners win gold prizes</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Real-time ranking updates</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Gold prizes converted to cash at campaign end</span>
+                        </li>
+                    </ul>
+                    <a href="leaderboard.html" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                        View Leaderboard →
+                    </a>
+                </div>
+                
+                <!-- Spin Wheel Card -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-xl border border-purple-200">
+                    <div class="text-5xl mb-4">🎰</div>
+                    <h3 class="text-2xl font-bold mb-4">Spin Wheel of Fortune</h3>
+                    <p class="text-gray-700 mb-6">
+                        Every successful order gives you a spin! Win cash prizes or premium Apple products!
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>1 spin per successful order</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Cash prizes: 100K to 5M Tomans</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Premium prizes: iPhone, iPad, Apple Watch, AirPods</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Spins don't expire - use them anytime!</span>
+                        </li>
+                    </ul>
+                    <a href="spin-wheel.html" class="inline-block px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors">
+                        Spin Now →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prize Structure -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Prize Structure</h2>
+                <p class="text-gray-600">Amazing prizes waiting for you!</p>
+            </div>
+            
+            <!-- Leaderboard Prizes -->
+            <div class="bg-white p-8 rounded-xl shadow-sm mb-8">
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    🏅 Leaderboard Gold Prizes
+                </h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="p-4 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg border border-yellow-200">
+                        <div class="text-sm text-gray-600 mb-1">Rank 1</div>
+                        <div class="text-2xl font-bold text-yellow-700 mb-1">4 grams</div>
+                        <div class="text-xs text-gray-500">نیم سکه تمام بهار</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-gray-50 to-slate-50 rounded-lg border border-gray-200">
+                        <div class="text-sm text-gray-600 mb-1">Ranks 2-5</div>
+                        <div class="text-2xl font-bold text-gray-700 mb-1">2 grams</div>
+                        <div class="text-xs text-gray-500">Each</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border border-orange-200">
+                        <div class="text-sm text-gray-600 mb-1">Ranks 6-10</div>
+                        <div class="text-2xl font-bold text-orange-700 mb-1">1 gram</div>
+                        <div class="text-xs text-gray-500">Each</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border border-blue-200">
+                        <div class="text-sm text-gray-600 mb-1">Ranks 11-100</div>
+                        <div class="text-2xl font-bold text-blue-700 mb-1">200-800 sot</div>
+                        <div class="text-xs text-gray-500">Varies by rank</div>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p class="text-sm text-blue-800">
+                        <strong>Note:</strong> Gold prizes will be converted to cash based on the current gold price (18 karat) at the end of the campaign. 
+                        Payment will be processed within 72 business hours after campaign ends.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Spin Wheel Prizes -->
+            <div class="bg-white p-8 rounded-xl shadow-sm">
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    🎁 Spin Wheel Prizes
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Cash Prizes -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-gray-700">💰 Cash Prizes</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">5,000,000 تومان</span>
+                                <span class="text-sm text-gray-600">1% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">2,000,000 تومان</span>
+                                <span class="text-sm text-gray-600">3% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">1,000,000 تومان</span>
+                                <span class="text-sm text-gray-600">4% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">700,000 تومان</span>
+                                <span class="text-sm text-gray-600">55% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">500,000 تومان</span>
+                                <span class="text-sm text-gray-600">20% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">300,000 تومان</span>
+                                <span class="text-sm text-gray-600">10% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">100,000 تومان</span>
+                                <span class="text-sm text-gray-600">5% chance</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Premium Prizes -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-gray-700">🏆 Premium Prizes</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">iPhone 17 Pro</span>
+                                <span class="text-sm text-gray-600">0.2% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">iPad Air M3</span>
+                                <span class="text-sm text-gray-600">0.4% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">Apple Watch Series 11</span>
+                                <span class="text-sm text-gray-600">0.6% chance</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">AirPods Series 4</span>
+                                <span class="text-sm text-gray-600">0.8% chance</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <p class="text-xs text-yellow-800">
+                                <strong>Note:</strong> Premium prizes are limited. Once won, they're removed from the pool. 
+                                If a won premium prize is selected, you'll receive 700,000 Tomans instead.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules & FAQ -->
+    <section class="py-12 bg-white">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Rules & FAQ</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Rules -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">📋 Campaign Rules</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">Campaign Duration</h4>
+                            <p class="text-sm text-gray-600">The campaign runs for 2 weeks. Final rankings are locked at 23:59 on the last day.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">Leaderboard Ranking</h4>
+                            <p class="text-sm text-gray-600">Rankings are based on total NMV (Net Merchandise Value) of all successful orders during the campaign period.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">Spin Wheel</h4>
+                            <p class="text-sm text-gray-600">Each successful order gives you 1 spin. Spins don't expire and can be used anytime during the campaign.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">Prize Payment</h4>
+                            <p class="text-sm text-gray-600">Gold prizes are converted to cash based on current gold price at campaign end. Payments processed within 72 business hours.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">❓ Frequently Asked Questions</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">How often is the leaderboard updated?</h4>
+                            <p class="text-sm text-gray-700">The leaderboard updates every 30 minutes (or in real-time if possible).</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">What happens if I don't use my spins?</h4>
+                            <p class="text-sm text-gray-700">Spins are saved and don't expire. You can use them anytime during the campaign period.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">When will I receive my premium prize?</h4>
+                            <p class="text-sm text-gray-700">Premium prizes (Apple products) will be shipped after the campaign ends. You'll receive a notification with shipping details.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">How is the gold price determined?</h4>
+                            <p class="text-sm text-gray-700">The gold price (18 karat) is fetched from a reliable source at the end of the campaign for prize calculation.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">Can I see my ranking history?</h4>
+                            <p class="text-sm text-gray-700">Yes! The leaderboard shows your current rank and you can see how it changes as you make more sales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 bg-gradient-to-r from-primary to-primary-dark text-white">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Win?</h2>
+            <p class="text-xl mb-8 opacity-90">Start making sales and climb the leaderboard!</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="leaderboard.html" class="px-8 py-4 bg-white text-primary font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🏆 View Leaderboard
+                </a>
+                <a href="spin-wheel.html" class="px-8 py-4 bg-yellow-500 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🎰 Spin Wheel
+                </a>
+                <a href="dashboard.html" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-primary transition-all">
+                    📊 My Dashboard
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+            <p class="text-gray-400">Partner Birthday Campaign - Two weeks of golden opportunities!</p>
+            <p class="text-sm text-gray-500 mt-2">For support, contact your campaign manager</p>
+        </div>
+    </footer>
+</body>
+</html>
+

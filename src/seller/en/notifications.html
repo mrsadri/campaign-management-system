@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Seller Portal</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="seller-app">
+    <!-- Mobile Header -->
+    <header class="seller-header">
+        <div class="seller-header-content">
+            <button class="btn-back" onclick="history.back()">← Back</button>
+            <h1 class="page-title">Notifications</h1>
+            <button class="clear-all-btn" onclick="clearAllNotifications()">
+                Clear All
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="seller-main">
+        
+        <!-- Notification Settings Toggle -->
+        <section class="notification-settings-bar">
+            <span>🔔 Notifications Enabled</span>
+            <label class="toggle-switch">
+                <input type="checkbox" checked onchange="toggleNotifications(this)">
+                <span class="toggle-slider"></span>
+            </label>
+        </section>
+
+        <!-- Notifications List -->
+        <section class="notifications-list">
+            
+            <!-- New Campaign Notification -->
+            <div class="notification-item unread new-campaign">
+                <div class="notification-icon">🎉</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">New Campaign Available!</span>
+                        <span class="notification-badge unread-badge">NEW</span>
+                    </div>
+                    <div class="notification-message">
+                        <strong>Winter Special 2025</strong> - Earn up to 2,000,000 Tomans per sale!
+                        Campaign runs from Dec 1 to Feb 28.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=4'">
+                            View Campaign
+                        </button>
+                    </div>
+                    <div class="notification-time">2 hours ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Reward Earned Notification 1 -->
+            <div class="notification-item unread reward-earned">
+                <div class="notification-icon">💰</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Reward Earned!</span>
+                        <span class="notification-badge unread-badge">NEW</span>
+                    </div>
+                    <div class="notification-message">
+                        You earned <strong>2,000,000 Tomans</strong> from your Asia third-party 12-month sale!
+                    </div>
+                    <div class="notification-meta">
+                        <span>Campaign: Summer Special</span>
+                        <span>•</span>
+                        <span>Sale ID: #12345</span>
+                    </div>
+                    <div class="notification-time">4 hours ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Reward Earned Notification 2 -->
+            <div class="notification-item unread reward-earned">
+                <div class="notification-icon">💰</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Reward Earned!</span>
+                        <span class="notification-badge unread-badge">NEW</span>
+                    </div>
+                    <div class="notification-message">
+                        You earned <strong>1,500,000 Tomans</strong> from your Saman third-party 6-month sale!
+                    </div>
+                    <div class="notification-meta">
+                        <span>Campaign: Summer Special</span>
+                        <span>•</span>
+                        <span>Sale ID: #12344</span>
+                    </div>
+                    <div class="notification-time">6 hours ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Payment Processed Notification -->
+            <div class="notification-item read payment-processed">
+                <div class="notification-icon">✅</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Payment Processed</span>
+                    </div>
+                    <div class="notification-message">
+                        Payment of <strong>10,000,000 Tomans</strong> has been sent to your account.
+                    </div>
+                    <div class="notification-meta">
+                        <span>Transaction: TX-2025-11-20-001</span>
+                        <span>•</span>
+                        <span>8 qualifying sales</span>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="alert('Download receipt')">
+                            📄 Download Receipt
+                        </button>
+                    </div>
+                    <div class="notification-time">Yesterday</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Campaign Ending Soon -->
+            <div class="notification-item read campaign-ending">
+                <div class="notification-icon">⏰</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Campaign Ending Soon!</span>
+                    </div>
+                    <div class="notification-message">
+                        <strong>Third-party Quick Sale</strong> campaign ends in 3 days. Make your final sales now!
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=3'">
+                            View Campaign
+                        </button>
+                    </div>
+                    <div class="notification-time">2 days ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Sale Didn't Qualify -->
+            <div class="notification-item read sale-info">
+                <div class="notification-icon">ℹ️</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Sale Recorded - No Reward</span>
+                    </div>
+                    <div class="notification-message">
+                        Your Asia third-party sale didn't qualify because you already earned from Asia today (First purchase only rule).
+                    </div>
+                    <div class="notification-tip">
+                        <strong>💡 Tip:</strong> Try selling from Saman or Razi for more rewards today
+                    </div>
+                    <div class="notification-time">3 days ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Payment Scheduled -->
+            <div class="notification-item read payment-info">
+                <div class="notification-icon">📅</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Payment Scheduled</span>
+                    </div>
+                    <div class="notification-message">
+                        Your next payment of <strong>5,500,000 Tomans</strong> is scheduled for Monday, Nov 27.
+                    </div>
+                    <div class="notification-meta">
+                        <span>4 pending rewards</span>
+                    </div>
+                    <div class="notification-time">3 days ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Achievement/Milestone -->
+            <div class="notification-item read achievement">
+                <div class="notification-icon">🏆</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Congratulations!</span>
+                    </div>
+                    <div class="notification-message">
+                        You've reached <strong>10 sales</strong> in the Summer Special campaign! Keep up the great work!
+                    </div>
+                    <div class="notification-time">1 week ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Added to Campaign -->
+            <div class="notification-item read new-campaign">
+                <div class="notification-icon">➕</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">Added to Campaign</span>
+                    </div>
+                    <div class="notification-message">
+                        You've been added to the <strong>Health Insurance Bonus</strong> campaign.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=2'">
+                            View Campaign
+                        </button>
+                    </div>
+                    <div class="notification-time">2 weeks ago</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+        </section>
+
+        <!-- Empty State (Hidden by default) -->
+        <div class="empty-state" id="emptyNotifications" style="display: none;">
+            <div class="empty-icon">🔔</div>
+            <h3>No Notifications</h3>
+            <p>You're all caught up! New notifications will appear here.</p>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </a>
+        <a href="earnings-today.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Today</span>
+        </a>
+        <a href="earnings-history.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Earnings</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Settings</span>
+        </a>
+    </nav>
+
+    <script src="../script.js"></script>
+    <script>
+        function dismissNotification(btn) {
+            const notification = btn.closest('.notification-item');
+            notification.style.animation = 'slideOut 0.3s';
+            
+            setTimeout(() => {
+                notification.remove();
+                checkEmpty();
+                updateNotificationCount();
+            }, 300);
+        }
+
+        function clearAllNotifications() {
+            if (confirm('Clear all notifications?')) {
+                const notifications = document.querySelectorAll('.notification-item');
+                notifications.forEach(notif => {
+                    notif.style.animation = 'slideOut 0.3s';
+                });
+                
+                setTimeout(() => {
+                    notifications.forEach(notif => notif.remove());
+                    showEmptyState();
+                    updateNotificationCount();
+                }, 300);
+            }
+        }
+
+        function toggleNotifications(checkbox) {
+            if (checkbox.checked) {
+                showToast('Notifications enabled');
+            } else {
+                showToast('Notifications disabled');
+            }
+        }
+
+        function checkEmpty() {
+            const list = document.querySelector('.notifications-list');
+            const empty = document.getElementById('emptyNotifications');
+            const items = document.querySelectorAll('.notification-item');
+            
+            if (items.length === 0) {
+                list.style.display = 'none';
+                empty.style.display = 'block';
+            }
+        }
+
+        function showEmptyState() {
+            document.querySelector('.notifications-list').style.display = 'none';
+            document.getElementById('emptyNotifications').style.display = 'block';
+        }
+
+        function updateNotificationCount() {
+            const unreadCount = document.querySelectorAll('.notification-item.unread').length;
+            // Update badge in other pages
+            localStorage.setItem('unreadNotifications', unreadCount);
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        // Mark all as read when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const unreadItems = document.querySelectorAll('.notification-item.unread');
+                unreadItems.forEach(item => {
+                    item.classList.remove('unread');
+                    const badge = item.querySelector('.unread-badge');
+                    if (badge) badge.remove();
+                });
+                updateNotificationCount();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+

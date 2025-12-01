@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Management System - Demo</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .demo-hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 40px;
+        }
+        
+        .demo-hero h1 {
+            font-size: 42px;
+            margin-bottom: 16px;
+            color: white;
+        }
+        
+        .demo-hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .demo-buttons .btn {
+            padding: 14px 28px;
+            font-size: 16px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .stats-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin: 40px 0;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+        
+        .documentation-section {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+        
+        .documentation-section h2 {
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+        
+        .doc-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .doc-list li {
+            background: white;
+            padding: 16px 24px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .doc-list li:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .doc-list a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tech-stack {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin: 40px 0;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .tech-badge {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="demo-hero">
+            <h1>🎯 Campaign Management System</h1>
+            <p>A powerful, modern UI for managing Daily Purchase Campaigns in the insurance industry. Built with pure HTML, CSS, and JavaScript.</p>
+            <div class="demo-buttons">
+                <button class="btn btn-primary" onclick="location.href='dashboard.html'">
+                    View Dashboard
+                </button>
+                <button class="btn" style="background: white; color: var(--primary-color);" onclick="location.href='create-campaign.html'">
+                    Create Campaign
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">User Stories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Step Wizard</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Max Companies</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Responsive</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <h2 style="font-size: 32px; margin-bottom: 24px; text-align: center;">✨ Key Features</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Campaign Dashboard</h3>
+                <p>View all campaigns with filtering, search, and sorting capabilities. Track performance metrics in real-time.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Multi-Step Wizard</h3>
+                <p>Intuitive 4-step campaign creation process with validation and progress tracking.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🏢</div>
+                <h3>Insurance Companies</h3>
+                <p>Add up to 10 insurance companies with complex conditions and reward structures.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Flexible Rewards</h3>
+                <p>Configure rewards based on company, category, duration, purchase type, and calculation interval.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Partner Management</h3>
+                <p>Easy selection and management of campaign participants with search and filter.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Responsive Design</h3>
+                <p>Works perfectly on desktop, tablet, and mobile devices with adaptive layouts.</p>
+            </div>
+        </div>
+
+        <!-- Technical Stack -->
+        <div class="tech-stack">
+            <h2 style="font-size: 28px; margin-bottom: 16px;">🔧 Built With</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                No frameworks, no dependencies - just clean, modern web technologies
+            </p>
+            <div class="tech-badges">
+                <span class="tech-badge">HTML5</span>
+                <span class="tech-badge">CSS3 (Grid & Flexbox)</span>
+                <span class="tech-badge">Vanilla JavaScript</span>
+                <span class="tech-badge">LocalStorage API</span>
+                <span class="tech-badge">CSS Variables</span>
+                <span class="tech-badge">Responsive Design</span>
+                <span class="tech-badge">Modern ES6+</span>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="documentation-section">
+            <h2>📚 Documentation & Resources</h2>
+            <ul class="doc-list">
+                <li>
+                    <span>📄 <strong>Project Brief</strong> - Complete project requirements and specifications</span>
+                    <a href="../../../docs/project-brief.md" target="_blank">View →</a>
+                </li>
+                <li>
+                    <span>📝 <strong>User Stories</strong> - 16 detailed user stories covering all features</span>
+                    <a href="../../../docs/user-stories.md" target="_blank">View →</a>
+                </li>
+                <li>
+                    <span>📖 <strong>README</strong> - Setup instructions and project overview</span>
+                    <a href="../../../README.md" target="_blank">View →</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="stats-section">
+            <h2 style="font-size: 28px; margin-bottom: 16px;">🚀 Quick Start</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">
+                Get started in seconds - no build process, no installation required!
+            </p>
+            
+            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 8px; margin-bottom: 16px;">
+                <strong>Option 1: Direct Browser</strong>
+                <p style="margin: 8px 0 0 0; color: var(--text-secondary);">
+                    Simply open <code style="background: white; padding: 2px 8px; border-radius: 4px;">index.html</code> in your browser
+                </p>
+            </div>
+            
+            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 8px;">
+                <strong>Option 2: Local Server (Recommended)</strong>
+                <pre style="background: white; padding: 16px; border-radius: 8px; margin-top: 12px; overflow-x: auto;"><code>python -m http.server 8000
+# Then visit http://localhost:8000</code></pre>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="demo-hero" style="margin-top: 40px;">
+            <h2 style="font-size: 32px; color: white; margin-bottom: 16px;">Ready to Get Started?</h2>
+            <p style="color: white; opacity: 0.95;">
+                Explore the dashboard or create your first campaign
+            </p>
+            <div class="demo-buttons">
+                <button class="btn" style="background: white; color: var(--primary-color);" onclick="location.href='dashboard.html'">
+                    Go to Dashboard →
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

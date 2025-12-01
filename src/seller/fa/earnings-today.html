@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درآمد امروز - پنل فروشنده</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                    fontFamily: {
+                        persian: ['DanaVF', 'Tahoma', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+        }
+        body {
+            font-family: 'DanaVF', Tahoma, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 pb-20 min-h-screen font-persian">
+    <!-- Mobile Header -->
+    <header class="bg-white p-4 shadow-sm sticky top-0 z-50">
+        <div class="flex justify-between items-center">
+            <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">→ بازگشت</button>
+            <h1 class="text-lg font-semibold">درآمد امروز</h1>
+            <button class="bg-transparent border-none text-xl cursor-pointer rounded-lg p-2 hover:bg-gray-100 transition-colors" onclick="refreshToday()" title="تازه‌سازی">
+                🔄
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-4 max-w-2xl mx-auto">
+        
+        <!-- Summary Cards -->
+        <section class="mb-6">
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-4 rounded-xl shadow-md">
+                    <div class="text-3xl mb-2">💰</div>
+                    <div class="text-2xl font-bold mb-1" id="todayTotal">۳,۰۰۰,۰۰۰</div>
+                    <div class="text-sm opacity-90">کسب شده امروز</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <div class="text-3xl mb-2">📝</div>
+                    <div class="text-2xl font-bold mb-1 text-gray-900" id="totalSales">۱۲</div>
+                    <div class="text-sm text-gray-600">مجموع فروش</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border-r-4 border-green-500">
+                    <div class="text-3xl mb-2">✅</div>
+                    <div class="text-2xl font-bold mb-1 text-green-600" id="qualifyingSales">۴</div>
+                    <div class="text-sm text-gray-600">فروش واجد شرایط</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border-r-4 border-yellow-500">
+                    <div class="text-3xl mb-2">⏳</div>
+                    <div class="text-2xl font-bold mb-1 text-yellow-600" id="pendingSales">۵۰۰,۰۰۰</div>
+                    <div class="text-sm text-gray-600">در انتظار تسویه</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter & Actions -->
+        <section class="mb-6">
+            <div class="flex gap-2 mb-3 flex-wrap">
+                <button class="px-4 py-2 bg-primary text-white rounded-lg font-medium transition-colors hover:bg-primary-dark active" onclick="filterSales('all')">همه فروش‌ها</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300" onclick="filterSales('qualifying')">فقط واجد شرایط</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300" onclick="filterSales('campaign')">بر اساس کمپین</button>
+            </div>
+            <select class="w-full p-3 border border-gray-300 rounded-lg bg-white hidden" id="campaignFilter">
+                <option value="">همه کمپین‌ها</option>
+                <option value="1">کمپین ویژه تابستانی</option>
+                <option value="2">پاداش بیمه درمان</option>
+                <option value="3">فروش سریع شخص ثالث</option>
+            </select>
+        </section>
+
+        <!-- Sales Timeline -->
+        <section class="mb-6">
+            <h2 class="text-xl font-bold mb-1">خط زمانی فروش</h2>
+            <p class="text-sm text-gray-600 mb-4">به‌روزرسانی خودکار هر ۳۰ ثانیه</p>
+
+            <div class="space-y-4" id="timelineList">
+                
+                <!-- Sale Item 1 - Success -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-green-500 flex gap-4" data-type="qualifying">
+                    <div class="text-sm font-semibold text-gray-600 whitespace-nowrap">۱۰:۴۵</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">✅</span>
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">پاداش دریافت شد</span>
+                        </div>
+                        <div class="space-y-1 mb-3 text-sm">
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">شرکت:</span>
+                                <span class="font-medium">آسیا</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">دسته:</span>
+                                <span class="font-medium">شخص ثالث • ۱۲ ماهه</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">پرداخت:</span>
+                                <span class="font-medium">نقدی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">کمپین:</span>
+                                <span class="font-medium">کمپین ویژه تابستانی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">وضعیت:</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">تسویه شده</span>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200">
+                            <span class="text-sm text-gray-600">پاداش:</span>
+                            <span class="text-lg font-bold text-green-600 mr-2">+۲,۰۰۰,۰۰۰ تومان</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sale Item 2 - Success -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-green-500 flex gap-4" data-type="qualifying">
+                    <div class="text-sm font-semibold text-gray-600 whitespace-nowrap">۰۹:۳۰</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">✅</span>
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">پاداش دریافت شد</span>
+                        </div>
+                        <div class="space-y-1 mb-3 text-sm">
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">شرکت:</span>
+                                <span class="font-medium">سامان</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">دسته:</span>
+                                <span class="font-medium">شخص ثالث • ۶ ماهه</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">پرداخت:</span>
+                                <span class="font-medium">قسطی تماسی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">کمپین:</span>
+                                <span class="font-medium">کمپین ویژه تابستانی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">وضعیت:</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">تسویه شده</span>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200">
+                            <span class="text-sm text-gray-600">پاداش:</span>
+                            <span class="text-lg font-bold text-green-600 mr-2">+۱,۰۰۰,۰۰۰ تومان</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sale Item 3 - Pending -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-yellow-500 flex gap-4" data-type="qualifying">
+                    <div class="text-sm font-semibold text-gray-600 whitespace-nowrap">۰۸:۱۵</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">⏳</span>
+                            <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">در انتظار تسویه</span>
+                        </div>
+                        <div class="space-y-1 mb-3 text-sm">
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">شرکت:</span>
+                                <span class="font-medium">رازی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">دسته:</span>
+                                <span class="font-medium">بدنه • ۱۲ ماهه</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">پرداخت:</span>
+                                <span class="font-medium">نقدی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">کمپین:</span>
+                                <span class="font-medium">کمپین ویژه تابستانی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">وضعیت:</span>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">در انتظار تسویه</span>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200">
+                            <span class="text-sm text-gray-600">پاداش مورد انتظار:</span>
+                            <span class="text-lg font-bold text-yellow-600 mr-2">۵۰۰,۰۰۰ تومان</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sale Item 4 - Not Qualifying -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-500 flex gap-4" data-type="non-qualifying">
+                    <div class="text-sm font-semibold text-gray-600 whitespace-nowrap">۰۷:۵۰</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">ℹ️</span>
+                            <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">بدون پاداش</span>
+                        </div>
+                        <div class="space-y-1 mb-3 text-sm">
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">شرکت:</span>
+                                <span class="font-medium">ایران</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">دسته:</span>
+                                <span class="font-medium">شخص ثالث • ۳ ماهه</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">پرداخت:</span>
+                                <span class="font-medium">نقدی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">وضعیت:</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">تسویه شده</span>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200 space-y-2">
+                            <div class="flex items-start gap-2 text-sm">
+                                <span class="text-xl">ℹ️</span>
+                                <span class="text-gray-700">مدت ۳ ماهه واجد شرایط کمپین‌های فعلی نیست</span>
+                            </div>
+                            <div class="text-sm bg-yellow-50 p-2 rounded border border-yellow-200">
+                                <strong>نکته:</strong> برای شرکت ایران، بیمه‌نامه‌های ۶ یا ۱۲ ماهه بفروشید تا پاداش بگیرید
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sale Item 5 - Not Qualifying (Already earned) -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-500 flex gap-4" data-type="non-qualifying">
+                    <div class="text-sm font-semibold text-gray-600 whitespace-nowrap">۰۶:۳۰</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">ℹ️</span>
+                            <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">بدون پاداش</span>
+                        </div>
+                        <div class="space-y-1 mb-3 text-sm">
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">شرکت:</span>
+                                <span class="font-medium">آسیا</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">دسته:</span>
+                                <span class="font-medium">شخص ثالث • ۱۲ ماهه</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">پرداخت:</span>
+                                <span class="font-medium">نقدی</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-gray-600">وضعیت:</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">تسویه شده</span>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200 space-y-2">
+                            <div class="flex items-start gap-2 text-sm">
+                                <span class="text-xl">ℹ️</span>
+                                <span class="text-gray-700">قبلاً امروز از آسیا کسب کرده‌اید (قانون فقط اولین خرید)</span>
+                            </div>
+                            <div class="text-sm bg-yellow-50 p-2 rounded border border-yellow-200">
+                                <strong>نکته:</strong> برای کسب پاداش بیشتر امروز، از سامان یا رازی بفروشید
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Empty State -->
+            <div class="bg-white p-8 rounded-xl shadow-sm text-center hidden" id="emptyTimeline">
+                <div class="text-5xl mb-4">📊</div>
+                <h3 class="text-xl font-bold mb-2">هنوز فروشی امروز نداشته‌اید</h3>
+                <p class="text-gray-600">فروش‌های شما به صورت زنده اینجا نمایش داده می‌شوند</p>
+            </div>
+
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="grid grid-cols-2 gap-3">
+            <button class="bg-white border border-gray-300 p-4 rounded-xl flex flex-col items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors" onclick="location.href='dashboard.html'">
+                <span class="text-2xl">🏠</span>
+                <span class="font-medium">بازگشت به کمپین‌ها</span>
+            </button>
+            <button class="bg-white border border-gray-300 p-4 rounded-xl flex flex-col items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors" onclick="location.href='earnings-history.html'">
+                <span class="text-2xl">💰</span>
+                <span class="font-medium">مشاهده همه درآمدها</span>
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">خانه</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+            <span class="text-2xl">📊</span>
+            <span class="text-[11px] font-medium">امروز</span>
+        </a>
+        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">💰</span>
+            <span class="text-[11px] font-medium">درآمدها</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">تنظیمات</span>
+        </a>
+    </nav>
+
+    <script src="../script.js"></script>
+    <script>
+        let autoRefreshInterval;
+
+        function filterSales(type) {
+            const items = document.querySelectorAll('[data-type]');
+            const buttons = document.querySelectorAll('button');
+            const campaignFilter = document.getElementById('campaignFilter');
+            
+            // Update active button
+            buttons.forEach(btn => {
+                if (btn.textContent.includes('همه فروش') || btn.textContent.includes('واجد شرایط') || btn.textContent.includes('کمپین')) {
+                    btn.classList.remove('active', 'bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+            event.target.classList.add('active', 'bg-primary', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            
+            // Show/hide campaign filter
+            if (type === 'campaign') {
+                campaignFilter.classList.remove('hidden');
+            } else {
+                campaignFilter.classList.add('hidden');
+            }
+            
+            // Filter items
+            if (type === 'all') {
+                items.forEach(item => item.classList.remove('hidden'));
+            } else if (type === 'qualifying') {
+                items.forEach(item => {
+                    if (item.dataset.type === 'qualifying') {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            }
+        }
+
+        function refreshToday() {
+            const btn = event.target;
+            btn.style.animation = 'spin 1s';
+            
+            // Simulate refresh
+            setTimeout(() => {
+                btn.style.animation = '';
+                showToast('اطلاعات به‌روز شد');
+            }, 1000);
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:100px;right:50%;transform:translateX(50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        // Auto-refresh every 30 seconds
+        function startAutoRefresh() {
+            autoRefreshInterval = setInterval(() => {
+                console.log('در حال به‌روزرسانی خودکار...');
+                // In real app, fetch new data from API
+            }, 30000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            startAutoRefresh();
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+        });
+    </script>
+</body>
+</html>

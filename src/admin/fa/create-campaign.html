@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ایجاد کمپین - سیستم مدیریت کمپین</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+            font-weight: 100 900;
+            font-display: swap;
+        }
+        body {
+            font-family: 'DanaVF', Tahoma, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 py-6">
+        <!-- Header -->
+        <header class="bg-white rounded-xl p-6 mb-6 shadow-sm">
+            <div class="flex justify-between items-center gap-4 flex-wrap">
+                <button class="bg-transparent border border-gray-300 px-4 py-2 rounded-lg text-sm cursor-pointer transition-all hover:bg-gray-50" onclick="location.href='dashboard.html'">بازگشت ←</button>
+                <h1 class="text-2xl font-semibold text-gray-900">ایجاد کمپین جدید</h1>
+                <div class="flex gap-2">
+                    <button class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-colors" id="saveDraft">ذخیره پیش‌نویس</button>
+                    <button class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" id="publishCampaign">انتشار کمپین</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Steps -->
+        <div class="flex justify-between mb-8 bg-white p-6 rounded-xl shadow-sm relative">
+            <div class="step flex-1 flex flex-col items-center gap-2 relative" data-step="1">
+                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold text-base transition-all step-number">۱</div>
+                <div class="text-sm font-medium text-primary step-label">اطلاعات پایه</div>
+            </div>
+            <div class="step flex-1 flex flex-col items-center gap-2 relative" data-step="2">
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-semibold text-base transition-all step-number">۲</div>
+                <div class="text-sm font-medium text-gray-600 step-label">شرایط</div>
+            </div>
+            <div class="step flex-1 flex flex-col items-center gap-2 relative" data-step="3">
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-semibold text-base transition-all step-number">۳</div>
+                <div class="text-sm font-medium text-gray-600 step-label">شرکت‌کنندگان</div>
+            </div>
+            <div class="step flex-1 flex flex-col items-center gap-2 relative" data-step="4">
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-semibold text-base transition-all step-number">۴</div>
+                <div class="text-sm font-medium text-gray-600 step-label">بررسی نهایی</div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <form id="campaignForm" class="bg-white rounded-xl p-8 shadow-sm">
+            
+            <!-- Step 1: Basic Information -->
+            <div class="form-step block" data-step="1">
+                <h2 class="text-2xl font-semibold mb-2">اطلاعات پایه</h2>
+                
+                <div class="mb-6">
+                    <label for="campaignName" class="block text-sm font-medium mb-2 text-gray-900">نام کمپین <span class="text-red-500">*</span></label>
+                    <input type="text" id="campaignName" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10" placeholder="نام کمپین را وارد کنید" required>
+                    <span class="block text-xs text-gray-500 mt-1">یک نام توصیفی برای کمپین خود انتخاب کنید</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label for="startDate" class="block text-sm font-medium mb-2 text-gray-900">تاریخ شروع <span class="text-red-500">*</span></label>
+                        <input type="date" id="startDate" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10" required>
+                    </div>
+                    <div>
+                        <label for="endDate" class="block text-sm font-medium mb-2 text-gray-900">تاریخ پایان <span class="text-red-500">*</span></label>
+                        <input type="date" id="endDate" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10" required>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label for="panel" class="block text-sm font-medium mb-2 text-gray-900">نوع پنل <span class="text-red-500">*</span></label>
+                    <select id="panel" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10" required>
+                        <option value="">انتخاب پنل</option>
+                        <option value="partner">شریک (Partner)</option>
+                        <option value="snap">اسنپ (Snap)</option>
+                        <option value="pishkhan">پیشخوان (Pishkhan)</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label for="calculationInterval" class="block text-sm font-medium mb-2 text-gray-900">بازه محاسبه پاداش <span class="text-red-500">*</span></label>
+                    <select id="calculationInterval" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10" required>
+                        <option value="">انتخاب بازه</option>
+                        <option value="daily">روزی یک بار (Daily)</option>
+                        <option value="3days">هر ۳ روز</option>
+                        <option value="4days">هر ۴ روز</option>
+                        <option value="5days">هر ۵ روز</option>
+                        <option value="weekly">هفته‌ای یک بار (Weekly)</option>
+                    </select>
+                    <div class="mt-2 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+                        ⚠️ این بازه برای تمام شرکت‌های بیمه در این کمپین اعمال می‌شود و پس از فعال‌سازی قابل تغییر نیست
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label for="displaySettings" class="block text-sm font-medium mb-2 text-gray-900">تنظیمات نمایش</label>
+                    <textarea id="displaySettings" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10 resize-y min-h-[80px]" rows="3" placeholder="تنظیمات نمایش و یادداشت‌ها را وارد کنید"></textarea>
+                </div>
+
+                <div class="flex justify-between gap-4 mt-8 pt-6 border-t border-gray-200">
+                    <div></div>
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" onclick="nextStep(2)">← بعدی: افزودن شرایط</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Insurance Company Conditions -->
+            <div class="form-step hidden" data-step="2">
+                <h2 class="text-2xl font-semibold mb-2">شرایط شرکت بیمه</h2>
+                <p class="text-gray-600 mb-6">تا ۱۰ شرکت بیمه با شرایط و پاداش‌های خاص اضافه کنید</p>
+
+                <div class="flex justify-between items-center mb-6 p-4 bg-gray-50 rounded-lg">
+                    <div class="font-semibold text-gray-900">
+                        شرکت‌های اضافه شده: <span id="companyCount">۰</span> / ۱۰
+                    </div>
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" id="addCompany">+ افزودن شرکت بیمه</button>
+                </div>
+
+                <div id="companiesContainer" class="flex flex-col gap-4 mb-6">
+                    <!-- Insurance company cards will be added here -->
+                </div>
+
+                <div class="text-center py-12 px-6 text-gray-600 bg-gray-50 rounded-lg block" id="emptyCompanies">
+                    <p>هنوز هیچ شرکت بیمه‌ای اضافه نشده است. برای شروع روی "افزودن شرکت بیمه" کلیک کنید.</p>
+                </div>
+
+                <div class="flex justify-between gap-4 mt-8 pt-6 border-t border-gray-200">
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-colors" onclick="prevStep(1)">قبلی →</button>
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" onclick="nextStep(3)">← بعدی: افزودن شرکت‌کنندگان</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Participants -->
+            <div class="form-step hidden" data-step="3">
+                <h2 class="text-2xl font-semibold mb-2">شرکت‌کنندگان کمپین</h2>
+                <p class="text-gray-600 mb-6">شرکایی که می‌توانند در این کمپین شرکت کنند را انتخاب کنید</p>
+
+                <div class="mb-6">
+                    <label for="partnerSearch" class="block text-sm font-medium mb-2 text-gray-900">جستجوی شرکا</label>
+                    <input type="text" id="partnerSearch" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10" placeholder="جستجو بر اساس شماره یا نام شریک">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="border border-gray-300 rounded-xl p-4">
+                        <h3 class="text-base mb-4 pb-4 border-b border-gray-200 font-semibold">شرکای موجود</h3>
+                        <div id="availablePartners" class="max-h-[400px] overflow-y-auto flex flex-col gap-2">
+                            <!-- Available partners will be listed here -->
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center gap-4">
+                        <button type="button" class="bg-primary text-white border-none p-4 rounded-lg text-lg font-bold cursor-pointer transition-all hover:bg-primary-dark" id="addSelected">←</button>
+                        <button type="button" class="bg-primary text-white border-none p-4 rounded-lg text-lg font-bold cursor-pointer transition-all hover:bg-primary-dark" id="removeSelected">→</button>
+                    </div>
+                    <div class="border border-gray-300 rounded-xl p-4">
+                        <h3 class="text-base mb-4 pb-4 border-b border-gray-200 font-semibold">شرکای انتخاب شده (<span id="selectedCount">۰</span>)</h3>
+                        <div id="selectedPartners" class="max-h-[400px] overflow-y-auto flex flex-col gap-2">
+                            <!-- Selected partners will be listed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between gap-4 mt-8 pt-6 border-t border-gray-200">
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-colors" onclick="prevStep(2)">قبلی →</button>
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" onclick="nextStep(4)">← بعدی: بررسی</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Review & Publish -->
+            <div class="form-step hidden" data-step="4">
+                <h2 class="text-2xl font-semibold mb-2">بررسی کمپین</h2>
+                <p class="text-gray-600 mb-6">قبل از انتشار، تمام جزئیات کمپین را بررسی کنید</p>
+
+                <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4 pb-4 border-b border-gray-200">اطلاعات پایه</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs text-gray-500 font-medium">نام کمپین:</span>
+                            <span class="text-sm text-gray-900 font-medium" id="reviewName">-</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs text-gray-500 font-medium">پنل:</span>
+                            <span class="text-sm text-gray-900 font-medium" id="reviewPanel">-</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs text-gray-500 font-medium">تاریخ شروع:</span>
+                            <span class="text-sm text-gray-900 font-medium" id="reviewStartDate">-</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs text-gray-500 font-medium">تاریخ پایان:</span>
+                            <span class="text-sm text-gray-900 font-medium" id="reviewEndDate">-</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs text-gray-500 font-medium">بازه محاسبه:</span>
+                            <span class="text-sm text-gray-900 font-medium" id="reviewInterval">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4 pb-4 border-b border-gray-200">شرکت‌های بیمه و شرایط</h3>
+                    <div id="reviewCompanies" class="overflow-x-auto">
+                        <!-- Companies table will be generated here -->
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4 pb-4 border-b border-gray-200">شرکت‌کنندگان</h3>
+                    <div class="flex flex-col gap-1">
+                        <span class="text-xs text-gray-500 font-medium">تعداد کل شرکا:</span>
+                        <span class="text-sm text-gray-900 font-medium" id="reviewParticipants">۰</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between gap-4 mt-8 pt-6 border-t border-gray-200">
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-colors" onclick="prevStep(3)">قبلی →</button>
+                    <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" id="finalPublish">انتشار کمپین</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Modal for Adding Insurance Company -->
+    <div id="companyModal" class="hidden fixed top-0 left-0 w-full h-full bg-black/50 z-[1000] items-center justify-center">
+        <div class="bg-white rounded-xl w-[90%] max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-xl font-semibold">افزودن شرکت بیمه</h3>
+                <button class="bg-transparent border-none text-3xl text-gray-600 cursor-pointer leading-none p-0 w-8 h-8 hover:text-gray-900" onclick="closeCompanyModal()">&times;</button>
+            </div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-900">شرکت بیمه <span class="text-red-500">*</span></label>
+                    <select id="modalCompany" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10">
+                        <option value="">انتخاب شرکت</option>
+                        <option value="asia">آسیا (Asia)</option>
+                        <option value="saman">سامان (Saman)</option>
+                        <option value="razi">رازی (Razi)</option>
+                        <option value="iran">ایران (Iran)</option>
+                        <option value="parsian">پارسیان (Parsian)</option>
+                        <option value="pasargad">پاسارگاد (Pasargad)</option>
+                        <option value="alborz">البرز (Alborz)</option>
+                        <option value="dana">دانا (Dana)</option>
+                        <option value="mellat">ملت (Mellat)</option>
+                        <option value="kosar">کوثر (Kosar)</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-900">رشته بیمه <span class="text-red-500">*</span></label>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="thirdparty" class="w-[18px] h-[18px] cursor-pointer modal-category">
+                            بیمه ثالث (Third-party Liability)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="body" class="w-[18px] h-[18px] cursor-pointer modal-category">
+                            بیمه بدنه (Body Insurance)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="health" class="w-[18px] h-[18px] cursor-pointer modal-category">
+                            بیمه درمان (Health Insurance)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="fire" class="w-[18px] h-[18px] cursor-pointer modal-category">
+                            بیمه آتش‌سوزی (Fire Insurance)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="life" class="w-[18px] h-[18px] cursor-pointer modal-category">
+                            بیمه عمر (Life Insurance)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-900">مدت بیمه‌نامه <span class="text-red-500">*</span></label>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="3" class="w-[18px] h-[18px] cursor-pointer modal-duration">
+                            ۳ ماهه (3 Months)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="6" class="w-[18px] h-[18px] cursor-pointer modal-duration">
+                            ۶ ماهه (6 Months)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="12" class="w-[18px] h-[18px] cursor-pointer modal-duration">
+                            ۱۲ ماهه (12 Months)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="any" class="w-[18px] h-[18px] cursor-pointer modal-duration">
+                            هر مدتی (Any Duration)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-900">نوع پرداخت <span class="text-red-500">*</span></label>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="cash" class="w-[18px] h-[18px] cursor-pointer modal-purchase">
+                            نقدی (Cash)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="touch-installment" class="w-[18px] h-[18px] cursor-pointer modal-purchase">
+                            قسطی تاچ (Touch Installment)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="checkbox" value="non-touch-installment" class="w-[18px] h-[18px] cursor-pointer modal-purchase">
+                            قسطی نان‌تاچ (Non-touch Installment)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-900">مبلغ پاداش (تومان) <span class="text-red-500">*</span></label>
+                    <input type="number" id="modalReward" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10" placeholder="مثال: ۱,۰۰۰,۰۰۰" min="0">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-900">نحوه محاسبه پاداش <span class="text-red-500">*</span></label>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="radio" name="calculationType" value="first" checked class="w-[18px] h-[18px] cursor-pointer">
+                            فقط اولین خرید روز (First Purchase of Day Only)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <input type="radio" name="calculationType" value="all" class="w-[18px] h-[18px] cursor-pointer">
+                            تمام خریدهای دوره (All Purchases in Period)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-200 flex justify-start gap-2">
+                <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-colors" onclick="closeCompanyModal()">انصراف</button>
+                <button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" onclick="saveCompany()">افزودن شرکت</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script src="../campaign-form.js"></script>
+</body>
+</html>

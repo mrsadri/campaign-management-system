@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل و تنظیمات - پنل فروشنده</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                    fontFamily: {
+                        persian: ['DanaVF', 'Tahoma', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+        }
+        body {
+            font-family: 'DanaVF', Tahoma, Arial, sans-serif;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: #E2E8F0;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            right: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #2563EB;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(-24px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen font-persian">
+    <!-- Desktop Header with Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <!-- Mobile Header -->
+        <div class="md:hidden p-4">
+            <div class="flex justify-between items-center">
+                <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">→ بازگشت</button>
+                <h1 class="text-lg font-semibold">پروفایل و تنظیمات</h1>
+                <div></div>
+            </div>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-8">
+                        <div class="text-xl font-bold text-primary flex items-center gap-2">
+                            🎯 پنل کمپین
+                        </div>
+                        <!-- Desktop Navigation -->
+                        <nav class="flex items-center gap-1">
+                            <a href="dashboard.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🏠 خانه
+                            </a>
+                            <a href="earnings-today.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                📊 درآمد امروز
+                            </a>
+                            <a href="earnings-history.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                💰 تاریخچه درآمد
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="relative p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="location.href='notifications.html'">
+                            🔔
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-4 text-center">۳</span>
+                        </button>
+                        <a href="profile.html" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/10 text-primary transition-colors">
+                            <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">👤</div>
+                            <span class="text-sm font-medium">پروفایل</span>
+                        </a>
+                        <!-- Language Switcher -->
+                        <a href="../en/profile.html" class="px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors border border-gray-200">
+                            🌐 English
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-4 max-w-2xl md:max-w-4xl mx-auto">
+        
+        <!-- Profile Card -->
+        <section class="bg-gradient-to-br from-primary to-primary-dark text-white p-8 rounded-xl shadow-md text-center mb-6">
+            <div class="mb-4">
+                <div class="w-20 h-20 bg-white text-primary rounded-full flex items-center justify-center text-4xl mx-auto">👤</div>
+            </div>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold mb-1">علی احمدی</h2>
+                <p class="text-sm opacity-90 mb-1">کد شریک: P-1001</p>
+                <p class="text-sm opacity-90">پنل: شریک</p>
+            </div>
+            <div class="flex justify-around pt-6 border-t border-white border-opacity-20">
+                <div class="text-center">
+                    <div class="text-2xl font-bold mb-1">۴۵م</div>
+                    <div class="text-xs opacity-80">کل درآمد</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold mb-1">۱۲۵</div>
+                    <div class="text-xs opacity-80">کل فروش</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Column Layout for Desktop -->
+        <div class="md:grid md:grid-cols-2 md:gap-6">
+            <!-- Personal Information -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">اطلاعات شخصی</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">👤</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">نام کامل</div>
+                                <div class="text-sm text-gray-600">علی احمدی</div>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 text-primary font-semibold cursor-pointer hover:bg-gray-100 rounded-lg transition-colors" onclick="alert('ویرایش نام')">ویرایش</button>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📱</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">شماره تماس</div>
+                                <div class="text-sm text-gray-600">+98 912 345 6789</div>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 text-primary font-semibold cursor-pointer hover:bg-gray-100 rounded-lg transition-colors" onclick="alert('ویرایش شماره تماس')">ویرایش</button>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📧</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">ایمیل</div>
+                                <div class="text-sm text-gray-600">ali.ahmadi@email.com</div>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 text-primary font-semibold cursor-pointer hover:bg-gray-100 rounded-lg transition-colors" onclick="alert('ویرایش ایمیل')">ویرایش</button>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🏢</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">نوع پنل</div>
+                                <div class="text-sm text-gray-600">شریک</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- App Settings -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">تنظیمات برنامه</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🌐</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">زبان</div>
+                                <div class="text-sm text-gray-600">فارسی</div>
+                            </div>
+                        </div>
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm cursor-pointer" onchange="changeLanguage(this)">
+                            <option value="fa" selected>فارسی</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🌙</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">حالت تاریک</div>
+                                <div class="text-xs text-gray-600">فعال‌سازی تم تاریک</div>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" onchange="toggleDarkMode(this)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- Notification Preferences -->
+        <section class="mb-6">
+            <h2 class="text-xl font-bold mb-4">تنظیمات اعلان‌ها</h2>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
+                
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">🎉</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">کمپین‌های جدید</div>
+                            <div class="text-xs text-gray-600">هنگامی که کمپین جدیدی در دسترس است اطلاع دریافت کنید</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">💰</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">پاداش دریافت شده</div>
+                            <div class="text-xs text-gray-600">اعلان فوری هنگام دریافت پاداش</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">✅</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">پرداخت انجام شد</div>
+                            <div class="text-xs text-gray-600">اعلان هنگام ارسال پرداخت‌ها</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">⏰</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">کمپین در حال پایان</div>
+                            <div class="text-xs text-gray-600">یادآوری هنگام نزدیک شدن به پایان کمپین</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">ℹ️</div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-1">به‌روزرسانی فروش</div>
+                            <div class="text-xs text-gray-600">اطلاع از فروش‌های واجد شرایط و غیر واجد شرایط</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+            </div>
+
+            <h3 class="text-lg font-semibold mb-4 mt-6">کانال‌های اعلان</h3>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">📱</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">اعلان‌های Push</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">💬</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">اعلان‌های پیامکی</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="p-4 flex justify-between items-center">
+                    <div class="flex gap-4 items-center flex-1">
+                        <div class="text-2xl">📧</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">اعلان‌های ایمیل</div>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Two Column Layout for Desktop -->
+        <div class="md:grid md:grid-cols-2 md:gap-6">
+            <!-- Support & Help -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">پشتیبانی و راهنما</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="location.href='#faq'">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">❓</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">سوالات متداول و مرکز راهنما</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">←</span>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('تماس با پشتیبانی')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">💬</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">تماس با پشتیبانی</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">←</span>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('آموزش')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🎥</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">ویدیوهای آموزشی</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">←</span>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- About -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold mb-4">درباره</h2>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📱</div>
+                            <div class="flex-1">
+                                <div class="font-semibold mb-1">نسخه برنامه</div>
+                                <div class="text-sm text-gray-600">1.0.0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('شرایط استفاده')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">📄</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">شرایط استفاده</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">←</span>
+                    </div>
+
+                    <div class="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="alert('سیاست حریم خصوصی')">
+                        <div class="flex gap-4 items-center flex-1">
+                            <div class="text-2xl">🔒</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">سیاست حریم خصوصی</div>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 text-xl">←</span>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- Logout Button -->
+        <section class="mt-8">
+            <button class="w-full px-4 py-4 bg-red-500 text-white rounded-xl font-semibold cursor-pointer hover:bg-red-600 transition-colors" onclick="logout()">
+                🚪 خروج
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">خانه</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">📊</span>
+            <span class="text-[11px] font-medium">امروز</span>
+        </a>
+        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">💰</span>
+            <span class="text-[11px] font-medium">درآمدها</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">تنظیمات</span>
+        </a>
+    </nav>
+
+    <script src="../script.js"></script>
+    <script>
+        function changeLanguage(select) {
+            const lang = select.value;
+            if (lang === 'en') {
+                location.href = '../en/profile.html';
+            } else {
+                showToast(`زبان به فارسی تغییر یافت`);
+            }
+        }
+
+        function toggleDarkMode(checkbox) {
+            if (checkbox.checked) {
+                document.body.classList.add('dark-mode');
+                showToast('حالت تاریک فعال شد');
+            } else {
+                document.body.classList.remove('dark-mode');
+                showToast('حالت تاریک غیرفعال شد');
+            }
+        }
+
+        function logout() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
+                showToast('در حال خروج...');
+                setTimeout(() => {
+                    // In real app, clear session and redirect to login
+                    alert('با موفقیت خارج شدید');
+                }, 1000);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:100px;right:50%;transform:translateX(50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

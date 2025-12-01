@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کمپین تولد شرکا - پنل شریک</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-50" dir="rtl">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white py-12 md:py-20">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+            <div class="text-6xl mb-4">🎂</div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">کمپین تولد شرکا</h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">دو هفته فرصت طلایی! رقابت کن، بچرخان و برنده شو!</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="leaderboard.html" class="px-8 py-4 bg-white text-yellow-600 font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🏆 مشاهده جدول رتبه‌بندی
+                </a>
+                <a href="spin-wheel.html" class="px-8 py-4 bg-yellow-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🎰 گردونه شانس
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaign Info -->
+    <section class="py-12 bg-white">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">نحوه کار</h2>
+                <p class="text-gray-600 text-lg">دو روش هیجان‌انگیز برای برنده شدن!</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- Leaderboard Card -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200">
+                    <div class="text-5xl mb-4">🏆</div>
+                    <h3 class="text-2xl font-bold mb-4">رقابت جدول رتبه‌بندی</h3>
+                    <p class="text-gray-700 mb-6">
+                        با سایر شرکا رقابت کن! ۱۰۰ شریک برتر بر اساس مجموع فروش (NMV) جایزه طلا می‌برند!
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>رتبه‌بندی بر اساس مجموع فروش (NMV) در طول کمپین</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>۱۰۰ شریک برتر جایزه طلا می‌برند</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>به‌روزرسانی لحظه‌ای رتبه‌بندی</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>جوایز طلا در پایان کمپین به نقد تبدیل می‌شوند</span>
+                        </li>
+                    </ul>
+                    <a href="leaderboard.html" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                        مشاهده جدول رتبه‌بندی ←
+                    </a>
+                </div>
+                
+                <!-- Spin Wheel Card -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-xl border border-purple-200">
+                    <div class="text-5xl mb-4">🎰</div>
+                    <h3 class="text-2xl font-bold mb-4">گردونه شانس</h3>
+                    <p class="text-gray-700 mb-6">
+                        هر سفارش موفق یک چرخش به شما می‌دهد! جوایز نقدی یا محصولات پریمیوم اپل برنده شو!
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>هر سفارش موفق = ۱ چرخش</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>جوایز نقدی: از ۱۰۰ هزار تا ۵ میلیون تومان</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>جوایز پریمیوم: آیفون، آیپد، اپل واچ، ایرپادز</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>چرخش‌ها منقضی نمی‌شوند - هر زمان که خواستی استفاده کن!</span>
+                        </li>
+                    </ul>
+                    <a href="spin-wheel.html" class="inline-block px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors">
+                        چرخاندن الان ←
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prize Structure -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">ساختار جوایز</h2>
+                <p class="text-gray-600">جوایز فوق‌العاده منتظر شما هستند!</p>
+            </div>
+            
+            <!-- Leaderboard Prizes -->
+            <div class="bg-white p-8 rounded-xl shadow-sm mb-8">
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    🏅 جوایز طلای جدول رتبه‌بندی
+                </h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="p-4 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg border border-yellow-200">
+                        <div class="text-sm text-gray-600 mb-1">رتبه ۱</div>
+                        <div class="text-2xl font-bold text-yellow-700 mb-1">۴ گرم</div>
+                        <div class="text-xs text-gray-500">نیم سکه تمام بهار</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-gray-50 to-slate-50 rounded-lg border border-gray-200">
+                        <div class="text-sm text-gray-600 mb-1">رتبه‌های ۲-۵</div>
+                        <div class="text-2xl font-bold text-gray-700 mb-1">۲ گرم</div>
+                        <div class="text-xs text-gray-500">هر نفر</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border border-orange-200">
+                        <div class="text-sm text-gray-600 mb-1">رتبه‌های ۶-۱۰</div>
+                        <div class="text-2xl font-bold text-orange-700 mb-1">۱ گرم</div>
+                        <div class="text-xs text-gray-500">هر نفر</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border border-blue-200">
+                        <div class="text-sm text-gray-600 mb-1">رتبه‌های ۱۱-۱۰۰</div>
+                        <div class="text-2xl font-bold text-blue-700 mb-1">۲۰۰-۸۰۰ سوت</div>
+                        <div class="text-xs text-gray-500">بر اساس رتبه</div>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p class="text-sm text-blue-800">
+                        <strong>توجه:</strong> جوایز طلا بر اساس قیمت روز طلا (۱۸ عیار) در پایان کمپین به نقد تبدیل می‌شوند. 
+                        پرداخت در ۷۲ ساعت کاری پس از پایان کمپین انجام می‌شود.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Spin Wheel Prizes -->
+            <div class="bg-white p-8 rounded-xl shadow-sm">
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    🎁 جوایز گردونه شانس
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Cash Prizes -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-gray-700">💰 جوایز نقدی</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">۵,۰۰۰,۰۰۰ تومان</span>
+                                <span class="text-sm text-gray-600">احتمال ۱٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">۲,۰۰۰,۰۰۰ تومان</span>
+                                <span class="text-sm text-gray-600">احتمال ۳٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">۱,۰۰۰,۰۰۰ تومان</span>
+                                <span class="text-sm text-gray-600">احتمال ۴٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">۷۰۰,۰۰۰ تومان</span>
+                                <span class="text-sm text-gray-600">احتمال ۵۵٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">۵۰۰,۰۰۰ تومان</span>
+                                <span class="text-sm text-gray-600">احتمال ۲۰٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">۳۰۰,۰۰۰ تومان</span>
+                                <span class="text-sm text-gray-600">احتمال ۱۰٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium">۱۰۰,۰۰۰ تومان</span>
+                                <span class="text-sm text-gray-600">احتمال ۵٪</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Premium Prizes -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-gray-700">🏆 جوایز پریمیوم</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">آیفون ۱۷ پرو</span>
+                                <span class="text-sm text-gray-600">احتمال ۰.۲٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">آیپد ایر M3</span>
+                                <span class="text-sm text-gray-600">احتمال ۰.۴٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">اپل واچ سری ۱۱</span>
+                                <span class="text-sm text-gray-600">احتمال ۰.۶٪</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium">ایرپادز سری ۴</span>
+                                <span class="text-sm text-gray-600">احتمال ۰.۸٪</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <p class="text-xs text-yellow-800">
+                                <strong>توجه:</strong> جوایز پریمیوم محدود هستند. پس از برنده شدن، از لیست حذف می‌شوند. 
+                                اگر جایزه پریمیوم برنده شده انتخاب شود، ۷۰۰,۰۰۰ تومان دریافت خواهید کرد.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules & FAQ -->
+    <section class="py-12 bg-white">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">قوانین و سوالات متداول</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Rules -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">📋 قوانین کمپین</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">مدت زمان کمپین</h4>
+                            <p class="text-sm text-gray-600">کمپین به مدت ۲ هفته اجرا می‌شود. رتبه‌بندی نهایی در ساعت ۲۳:۵۹ روز آخر قفل می‌شود.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">رتبه‌بندی جدول</h4>
+                            <p class="text-sm text-gray-600">رتبه‌بندی بر اساس مجموع NMV (ارزش خالص کالا) تمام سفارش‌های موفق در طول دوره کمپین است.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">گردونه شانس</h4>
+                            <p class="text-sm text-gray-600">هر سفارش موفق ۱ چرخش به شما می‌دهد. چرخش‌ها منقضی نمی‌شوند و می‌توانید در هر زمان در طول کمپین استفاده کنید.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">پرداخت جوایز</h4>
+                            <p class="text-sm text-gray-600">جوایز طلا بر اساس قیمت روز طلا در پایان کمپین به نقد تبدیل می‌شوند. پرداخت در ۷۲ ساعت کاری انجام می‌شود.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">❓ سوالات متداول</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">جدول رتبه‌بندی هر چند وقت یک بار به‌روز می‌شود؟</h4>
+                            <p class="text-sm text-gray-700">جدول رتبه‌بندی هر ۳۰ دقیقه یک بار به‌روز می‌شود (یا به صورت لحظه‌ای در صورت امکان).</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">اگر چرخش‌هایم را استفاده نکنم چه می‌شود؟</h4>
+                            <p class="text-sm text-gray-700">چرخش‌ها ذخیره می‌شوند و منقضی نمی‌شوند. می‌توانید در هر زمان در طول دوره کمپین استفاده کنید.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">جایزه پریمیوم من چه زمانی ارسال می‌شود؟</h4>
+                            <p class="text-sm text-gray-700">جوایز پریمیوم (محصولات اپل) پس از پایان کمپین ارسال می‌شوند. اطلاعیه‌ای با جزئیات ارسال دریافت خواهید کرد.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">قیمت طلا چگونه تعیین می‌شود؟</h4>
+                            <p class="text-sm text-gray-700">قیمت طلا (۱۸ عیار) از منبع معتبر در پایان کمپین برای محاسبه جوایز دریافت می‌شود.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">آیا می‌توانم تاریخچه رتبه‌بندی خود را ببینم؟</h4>
+                            <p class="text-sm text-gray-700">بله! جدول رتبه‌بندی رتبه فعلی شما را نشان می‌دهد و می‌توانید ببینید چگونه با فروش بیشتر تغییر می‌کند.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 bg-gradient-to-r from-primary to-primary-dark text-white">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">آماده برنده شدن هستی؟</h2>
+            <p class="text-xl mb-8 opacity-90">شروع به فروش کن و در جدول رتبه‌بندی صعود کن!</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="leaderboard.html" class="px-8 py-4 bg-white text-primary font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🏆 مشاهده جدول رتبه‌بندی
+                </a>
+                <a href="spin-wheel.html" class="px-8 py-4 bg-yellow-500 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    🎰 گردونه شانس
+                </a>
+                <a href="dashboard.html" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-primary transition-all">
+                    📊 داشبورد من
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+            <p class="text-gray-400">کمپین تولد شرکا - دو هفته فرصت طلایی!</p>
+            <p class="text-sm text-gray-500 mt-2">برای پشتیبانی، با مدیر کمپین تماس بگیرید</p>
+        </div>
+    </footer>
+</body>
+</html>
+

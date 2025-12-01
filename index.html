@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-5xl w-full p-12 md:p-16">
+        <div class="inline-block bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-10">
+            ✅ 94% Complete — Production Ready
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold mb-2 text-gray-900">Campaign Management System</h1>
+        <p class="text-lg text-gray-600 mb-10">Two-Sided Insurance Sales Campaign Platform</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+            <!-- Seller Interface English -->
+            <div class="border-2 border-gray-200 rounded-xl p-8 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:-translate-y-1 hover:shadow-xl" onclick="window.location.href='src/seller/en/dashboard.html'">
+                <div class="text-5xl mb-4">📱</div>
+                <h2 class="text-xl font-semibold mb-2 text-gray-800">Seller Interface</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">Complete seller/partner dashboard with campaigns, earnings tracking, and notifications</p>
+                <a href="src/seller/en/dashboard.html" class="text-indigo-600 font-semibold inline-flex items-center gap-1 hover:text-purple-600 transition-colors">
+                    Open English Version →
+                </a>
+            </div>
+            
+            <!-- Seller Interface Persian -->
+            <div class="border-2 border-gray-200 rounded-xl p-8 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:-translate-y-1 hover:shadow-xl" onclick="window.location.href='src/seller/fa/dashboard.html'">
+                <div class="text-5xl mb-4">🌍</div>
+                <h2 class="text-xl font-semibold mb-2 text-gray-800">Seller Interface (Persian)</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">Persian/RTL version with premium financial design and DanaVF font</p>
+                <a href="src/seller/fa/dashboard.html" class="text-indigo-600 font-semibold inline-flex items-center gap-1 hover:text-purple-600 transition-colors">
+                    باز کردن نسخه فارسی ←
+                </a>
+            </div>
+            
+            <!-- Admin Interface English -->
+            <div class="border-2 border-gray-200 rounded-xl p-8 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:-translate-y-1 hover:shadow-xl" onclick="window.location.href='src/admin/en/dashboard.html'">
+                <div class="text-5xl mb-4">💼</div>
+                <h2 class="text-xl font-semibold mb-2 text-gray-800">Admin Interface</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">Campaign management dashboard with 4-step creation wizard</p>
+                <a href="src/admin/en/dashboard.html" class="text-indigo-600 font-semibold inline-flex items-center gap-1 hover:text-purple-600 transition-colors">
+                    Open Admin Panel →
+                </a>
+            </div>
+            
+            <!-- Admin Interface Persian -->
+            <div class="border-2 border-gray-200 rounded-xl p-8 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:-translate-y-1 hover:shadow-xl" onclick="window.location.href='src/admin/fa/dashboard.html'">
+                <div class="text-5xl mb-4">⚙️</div>
+                <h2 class="text-xl font-semibold mb-2 text-gray-800">Admin Interface (Persian)</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">Persian/RTL admin dashboard for campaign management</p>
+                <a href="src/admin/fa/dashboard.html" class="text-indigo-600 font-semibold inline-flex items-center gap-1 hover:text-purple-600 transition-colors">
+                    باز کردن پنل مدیریت ←
+                </a>
+            </div>
+            
+            <!-- Demo & Showcase -->
+            <div class="border-2 border-gray-200 rounded-xl p-8 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:-translate-y-1 hover:shadow-xl" onclick="window.location.href='src/admin/en/demo.html'">
+                <div class="text-5xl mb-4">🎨</div>
+                <h2 class="text-xl font-semibold mb-2 text-gray-800">Demo & Showcase</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">Complete project demo with features, design system, and documentation</p>
+                <a href="src/admin/en/demo.html" class="text-indigo-600 font-semibold inline-flex items-center gap-1 hover:text-purple-600 transition-colors">
+                    View Demo →
+                </a>
+            </div>
+            
+            <!-- Documentation -->
+            <div class="border-2 border-gray-200 rounded-xl p-8 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:-translate-y-1 hover:shadow-xl" onclick="window.location.href='docs/DOCUMENTATION-INDEX.html'">
+                <div class="text-5xl mb-4">📚</div>
+                <h2 class="text-xl font-semibold mb-2 text-gray-800">Documentation</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">Complete guides: Design System, RTL Implementation, Project Architecture</p>
+                <a href="docs/DOCUMENTATION-INDEX.html" class="text-indigo-600 font-semibold inline-flex items-center gap-1 hover:text-purple-600 transition-colors">
+                    Browse Docs →
+                </a>
+            </div>
+        </div>
+        
+        <div class="text-center pt-8 border-t border-gray-200 text-gray-600">
+            <p>
+                <strong class="text-gray-900">Tech Stack:</strong> Pure HTML, CSS, JavaScript — No Dependencies<br>
+                <strong class="text-gray-900">Languages:</strong> English + Persian (فارسی)<br>
+                <strong class="text-gray-900">User Stories:</strong> 15/16 Implemented<br>
+                <a href="README.md" class="text-indigo-600 font-semibold hover:text-purple-600 transition-colors">Read Full Documentation</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Index — Campaign Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: #f7fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        .card h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        
+        .card h3 {
+            font-size: 20px;
+            margin: 30px 0 15px;
+            color: #4a5568;
+        }
+        
+        .card p {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+        
+        .doc-link {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-decoration: none;
+            color: #1a202c;
+            transition: all 0.3s;
+        }
+        
+        .doc-link:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+            transform: translateX(5px);
+        }
+        
+        .doc-icon {
+            font-size: 32px;
+            margin-right: 20px;
+        }
+        
+        .doc-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+        
+        .doc-meta {
+            font-size: 14px;
+            color: #718096;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .quick-link {
+            padding: 15px;
+            background: #edf2f7;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2d3748;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .quick-link:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .badge-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .badge-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .badge-info {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 Documentation Index</h1>
+        <p>Complete guide to all project documentation</p>
+    </div>
+    
+    <div class="container">
+        <!-- Main Documentation -->
+        <div class="card">
+            <h2>📖 Main Documentation (The Big Three)</h2>
+            <p>Comprehensive guides covering all aspects of the project</p>
+            
+            <a href="DESIGN-SYSTEM.md" class="doc-link">
+                <div class="doc-icon">🎨</div>
+                <div class="doc-info">
+                    <h4>Design System <span class="badge badge-primary">950+ lines</span></h4>
+                    <p class="doc-meta">Complete visual language, color system, typography, components, RTL, accessibility</p>
+                </div>
+            </a>
+            
+            <a href="RTL-IMPLEMENTATION-GUIDE.md" class="doc-link">
+                <div class="doc-icon">🌍</div>
+                <div class="doc-info">
+                    <h4>RTL Implementation Guide <span class="badge badge-success">850+ lines</span></h4>
+                    <p class="doc-meta">Persian/RTL guide with translations, examples, testing checklists</p>
+                </div>
+            </a>
+            
+            <a href="PROJECT-GUIDE.md" class="doc-link">
+                <div class="doc-icon">📋</div>
+                <div class="doc-info">
+                    <h4>Project Guide <span class="badge badge-info">900+ lines</span></h4>
+                    <p class="doc-meta">Architecture, file structure, implementation status, roadmap, technical specs</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Requirements & Stories -->
+        <div class="card">
+            <h2>📝 Requirements & User Stories</h2>
+            
+            <a href="project-brief.md" class="doc-link">
+                <div class="doc-icon">📄</div>
+                <div class="doc-info">
+                    <h4>Project Brief</h4>
+                    <p class="doc-meta">Complete requirements, two-sided system explanation, goals, constraints</p>
+                </div>
+            </a>
+            
+            <a href="user-stories.md" class="doc-link">
+                <div class="doc-icon">📖</div>
+                <div class="doc-info">
+                    <h4>User Stories (English)</h4>
+                    <p class="doc-meta">16 user stories (10 seller + 6 admin) with acceptance criteria</p>
+                </div>
+            </a>
+            
+            <a href="user-stories.fa.md" class="doc-link">
+                <div class="doc-icon">📗</div>
+                <div class="doc-info">
+                    <h4>User Stories (Persian)</h4>
+                    <p class="doc-meta">همان 16 داستان کاربری به فارسی</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Quick Navigation -->
+        <div class="card">
+            <h2>🚀 Quick Navigation</h2>
+            <h3>By Role</h3>
+            <div class="grid">
+                <a href="PROJECT-GUIDE.md" class="quick-link">
+                    👨‍💻 New Developer
+                </a>
+                <a href="DESIGN-SYSTEM.md" class="quick-link">
+                    🎨 UI/UX Designer
+                </a>
+                <a href="RTL-IMPLEMENTATION-GUIDE.md" class="quick-link">
+                    🌍 RTL Specialist
+                </a>
+                <a href="project-brief.md" class="quick-link">
+                    📊 Product Owner
+                </a>
+                <a href="user-stories.md" class="quick-link">
+                    🧪 QA Tester
+                </a>
+                <a href="DESIGN-SYSTEM.md#9-accessibility" class="quick-link">
+                    ♿ Accessibility
+                </a>
+            </div>
+            
+            <h3>By Task</h3>
+            <div class="grid">
+                <a href="../README.md" class="quick-link">
+                    🏃 Quick Start
+                </a>
+                <a href="DESIGN-SYSTEM.md#5-component-library" class="quick-link">
+                    🧩 Implement Component
+                </a>
+                <a href="RTL-IMPLEMENTATION-GUIDE.md#implementation-guide" class="quick-link">
+                    🔄 Convert to Persian
+                </a>
+                <a href="PROJECT-GUIDE.md#implementation-status" class="quick-link">
+                    ✅ Check Status
+                </a>
+                <a href="PROJECT-GUIDE.md#technical-specifications" class="quick-link">
+                    🔌 Backend Integration
+                </a>
+                <a href="RTL-IMPLEMENTATION-GUIDE.md#testing--verification" class="quick-link">
+                    🧪 Test RTL Pages
+                </a>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="card">
+            <h2>📊 Documentation Statistics</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #e2e8f0;">
+                        <th style="padding: 12px; text-align: left;">Document</th>
+                        <th style="padding: 12px; text-align: center;">Lines</th>
+                        <th style="padding: 12px; text-align: center;">Read Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 12px;">DESIGN-SYSTEM.md</td>
+                        <td style="padding: 12px; text-align: center;">1,047</td>
+                        <td style="padding: 12px; text-align: center;">35 min</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 12px;">RTL-IMPLEMENTATION-GUIDE.md</td>
+                        <td style="padding: 12px; text-align: center;">850</td>
+                        <td style="padding: 12px; text-align: center;">25 min</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 12px;">PROJECT-GUIDE.md</td>
+                        <td style="padding: 12px; text-align: center;">900</td>
+                        <td style="padding: 12px; text-align: center;">30 min</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 12px;">project-brief.md</td>
+                        <td style="padding: 12px; text-align: center;">411</td>
+                        <td style="padding: 12px; text-align: center;">15 min</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 12px;">user-stories.md</td>
+                        <td style="padding: 12px; text-align: center;">269</td>
+                        <td style="padding: 12px; text-align: center;">10 min</td>
+                    </tr>
+                    <tr style="border-bottom: 2px solid #e2e8f0;">
+                        <td style="padding: 12px;">user-stories.fa.md</td>
+                        <td style="padding: 12px; text-align: center;">271</td>
+                        <td style="padding: 12px; text-align: center;">10 min</td>
+                    </tr>
+                    <tr style="font-weight: 600;">
+                        <td style="padding: 12px;">Total</td>
+                        <td style="padding: 12px; text-align: center;">~4,000</td>
+                        <td style="padding: 12px; text-align: center;">~2.5 hrs</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Back to Home -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="../index.html" style="
+                display: inline-block;
+                padding: 15px 40px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: 600;
+                transition: transform 0.3s;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Details - Seller Portal</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="seller-app">
+    <!-- Mobile Header -->
+    <header class="seller-header">
+        <div class="seller-header-content">
+            <button class="btn-back" onclick="history.back()">← Back</button>
+            <div class="seller-header-actions">
+                <button class="notification-btn" onclick="location.href='notifications.html'">
+                    🔔
+                    <span class="notification-badge">3</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="seller-main">
+        
+        <!-- Campaign Header -->
+        <section class="campaign-detail-header">
+            <div class="campaign-badges">
+                <span class="campaign-badge new">NEW</span>
+                <span class="campaign-badge active">ACTIVE</span>
+            </div>
+            <h1 class="campaign-detail-title">Summer Insurance Special 2025</h1>
+            <div class="campaign-meta">
+                <div class="meta-item">
+                    <span class="meta-icon">📅</span>
+                    <span>Jan 1 - Mar 31, 2025</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-icon">⏰</span>
+                    <span class="countdown-timer">25 days remaining</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Progress in This Campaign -->
+        <section class="my-progress">
+            <h2 class="section-title">My Progress</h2>
+            <div class="progress-cards">
+                <div class="progress-stat-card">
+                    <div class="progress-stat-value">5</div>
+                    <div class="progress-stat-label">Sales Made</div>
+                </div>
+                <div class="progress-stat-card highlight">
+                    <div class="progress-stat-value">8,500,000</div>
+                    <div class="progress-stat-label">Earned</div>
+                </div>
+                <div class="progress-stat-card">
+                    <div class="progress-stat-value">Yesterday</div>
+                    <div class="progress-stat-label">Last Sale</div>
+                </div>
+            </div>
+            <div class="ranking-info">
+                <span class="ranking-icon">🏆</span>
+                <span>You're in the top 30% of sellers in this campaign!</span>
+            </div>
+        </section>
+
+        <!-- Campaign Type Information -->
+        <section class="campaign-type-info" id="campaignTypeSection" style="display: none;">
+            <h2 class="section-title">📋 Campaign Type Details</h2>
+            <div id="campaignTypeDetails" class="campaign-type-details">
+                <!-- Parsed Campaign Type info will be displayed here -->
+            </div>
+        </section>
+
+        <!-- Important Rules -->
+        <section class="campaign-rules">
+            <h2 class="section-title">⚠️ Important Rules</h2>
+            <div class="rule-cards">
+                <div class="rule-card">
+                    <div class="rule-icon">🎯</div>
+                    <div class="rule-content">
+                        <div class="rule-title">Reward Type</div>
+                        <div class="rule-description">First purchase of day only for some companies</div>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-icon">💰</div>
+                    <div class="rule-content">
+                        <div class="rule-title">Payment Schedule</div>
+                        <div class="rule-description">Paid every Monday</div>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-icon">✅</div>
+                    <div class="rule-content">
+                        <div class="rule-title">Settlement</div>
+                        <div class="rule-description">Insurance must be settled immediately</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reward Conditions Table -->
+        <section class="reward-conditions">
+            <h2 class="section-title">Reward Conditions</h2>
+            <p class="section-subtitle">See what you can earn for each type of sale</p>
+            
+            <div class="conditions-table-wrapper">
+                <table class="conditions-table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Category</th>
+                            <th>Duration</th>
+                            <th>Payment</th>
+                            <th>Reward</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td><strong>Asia</strong></td>
+                            <td>Third-party<br>Body</td>
+                            <td>12 months</td>
+                            <td>Cash</td>
+                            <td class="reward-cell">2,000,000</td>
+                            <td><span class="badge-first">First Only</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Saman</strong></td>
+                            <td>Third-party</td>
+                            <td>6, 12 months</td>
+                            <td>Touch/Non-touch Installment</td>
+                            <td class="reward-cell">1,500,000</td>
+                            <td><span class="badge-all">All Sales</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Razi</strong></td>
+                            <td>Body</td>
+                            <td>12 months</td>
+                            <td>Cash</td>
+                            <td class="reward-cell">1,000,000</td>
+                            <td><span class="badge-first">First Only</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Visual Examples -->
+            <div class="example-cards">
+                <div class="example-card">
+                    <div class="example-icon">💡</div>
+                    <div class="example-text">
+                        <strong>Example:</strong> Sell Asia third-party 12-month cash = <span class="highlight-amount">2,000,000 Tomans</span>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">💡</div>
+                    <div class="example-text">
+                        <strong>Example:</strong> Sell Saman third-party 6-month installment = <span class="highlight-amount">1,500,000 Tomans</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Earnings Calculator -->
+        <section class="earnings-calculator">
+            <h2 class="section-title">🧮 Earnings Calculator</h2>
+            <p class="section-subtitle">Calculate your potential earnings before making a sale</p>
+            
+            <div class="calculator-form">
+                <div class="calc-form-group">
+                    <label>Insurance Company</label>
+                    <select class="calc-select" id="calcCompany" onchange="calculateEarnings()">
+                        <option value="">Select company...</option>
+                        <option value="asia">Asia (آسیا)</option>
+                        <option value="saman">Saman (سامان)</option>
+                        <option value="razi">Razi (رازی)</option>
+                    </select>
+                </div>
+
+                <div class="calc-form-group">
+                    <label>Insurance Category</label>
+                    <select class="calc-select" id="calcCategory" onchange="calculateEarnings()">
+                        <option value="">Select category...</option>
+                        <option value="thirdparty">Third-party (ثالث)</option>
+                        <option value="body">Body (بدنه)</option>
+                        <option value="health">Health (درمان)</option>
+                    </select>
+                </div>
+
+                <div class="calc-form-group">
+                    <label>Duration</label>
+                    <select class="calc-select" id="calcDuration" onchange="calculateEarnings()">
+                        <option value="">Select duration...</option>
+                        <option value="3">3 months</option>
+                        <option value="6">6 months</option>
+                        <option value="12">12 months</option>
+                    </select>
+                </div>
+
+                <div class="calc-form-group">
+                    <label>Payment Type</label>
+                    <select class="calc-select" id="calcPayment" onchange="calculateEarnings()">
+                        <option value="">Select payment type...</option>
+                        <option value="cash">Cash (نقدی)</option>
+                        <option value="touch">Touch Installment</option>
+                        <option value="nontouch">Non-touch Installment</option>
+                    </select>
+                </div>
+
+                <div class="calc-result" id="calcResult">
+                    <div class="calc-result-icon">💰</div>
+                    <div class="calc-result-content">
+                        <div class="calc-result-label">You will earn:</div>
+                        <div class="calc-result-amount" id="calcAmount">-</div>
+                        <div class="calc-result-note" id="calcNote"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="campaign-faq">
+            <h2 class="section-title">❓ Frequently Asked Questions</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>When will I get paid?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Payments are processed every Monday for all qualifying sales from the previous week. You'll receive a notification when the payment is sent.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What counts as "first purchase of day"?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        If a company has "First Only" rule, only your first qualifying sale from that company each day earns a reward. Subsequent sales from the same company on the same day won't earn rewards.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can I earn from multiple campaigns?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! If a sale qualifies for multiple campaigns, you'll earn rewards from all of them. Your total earnings are cumulative.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What if the customer cancels the policy?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        If a policy is cancelled within 30 days, the reward will be deducted from your next payment. You'll be notified if this happens.
+                    </div>
+                </div>
+            </div>
+
+            <div class="support-box">
+                <p>Still have questions?</p>
+                <button class="btn-support" onclick="alert('Contact support feature')">Contact Support</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </a>
+        <a href="earnings-today.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Today</span>
+        </a>
+        <a href="earnings-history.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Earnings</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Settings</span>
+        </a>
+    </nav>
+
+    <script src="../../campaign-type-utils.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // Load and display Campaign Type information
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get campaign ID from URL or use default
+            const urlParams = new URLSearchParams(window.location.search);
+            const campaignId = urlParams.get('id') || '1';
+            
+            // Get campaign data (in real app, this would come from API)
+            // For demo, check localStorage or use mock data
+            const campaigns = JSON.parse(localStorage.getItem('campaigns') || '[]');
+            const campaign = campaigns.find(c => c.id == campaignId) || mockSellerData.campaigns[0];
+            
+            // If campaign has Campaign Type string, parse and display it
+            if (campaign && campaign.campaignType && typeof CampaignTypeUtils !== 'undefined') {
+                displayCampaignTypeInfo(campaign.campaignType);
+            }
+        });
+        
+        function displayCampaignTypeInfo(campaignTypeStr) {
+            if (!campaignTypeStr || !CampaignTypeUtils) return;
+            
+            // Parse the Campaign Type string
+            const parsed = CampaignTypeUtils.parseCampaignType(campaignTypeStr);
+            if (!parsed) return;
+            
+            // Generate seller-friendly summary
+            const summary = CampaignTypeUtils.generateSellerSummary(campaignTypeStr);
+            if (!summary) return;
+            
+            // Display the information
+            const section = document.getElementById('campaignTypeSection');
+            const detailsDiv = document.getElementById('campaignTypeDetails');
+            
+            if (!section || !detailsDiv) return;
+            
+            let html = '';
+            
+            if (parsed.isMerged) {
+                // Multiple merged campaigns
+                html = `
+                    <div class="campaign-type-card">
+                        <div class="campaign-type-header">
+                            <span class="badge">Merged Campaign</span>
+                            <span class="refresh-period">${summary.refreshPeriod}</span>
+                        </div>
+                        <div class="campaign-type-body">
+                            <p class="campaign-type-desc">This campaign combines ${parsed.campaigns.length} different reward structures:</p>
+                            ${parsed.campaigns.map((camp, idx) => `
+                                <div class="merged-campaign-item">
+                                    <h4>Campaign ${idx + 1}</h4>
+                                    <div class="campaign-details">
+                                        <div><strong>Companies:</strong> ${camp.companies.map(c => c.name).join(', ')}</div>
+                                        <div><strong>Policy Types:</strong> ${camp.policyTypes.map(pt => pt.name).join(', ')}</div>
+                                        <div><strong>Reward:</strong> ${camp.reward.label}</div>
+                                        <div><strong>Qualification:</strong> ${camp.salesCondition.label}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Single campaign
+                html = `
+                    <div class="campaign-type-card">
+                        <div class="campaign-type-header">
+                            <span class="refresh-period">${summary.refreshPeriod}</span>
+                            <span class="sales-condition">${summary.salesCondition}</span>
+                        </div>
+                        <div class="campaign-type-body">
+                            <div class="campaign-type-row">
+                                <span class="label">Refresh Period:</span>
+                                <span class="value">${parsed.refreshPeriod.label}</span>
+                            </div>
+                            <div class="campaign-type-row">
+                                <span class="label">Qualification Rule:</span>
+                                <span class="value">${parsed.salesCondition.label}</span>
+                            </div>
+                            <div class="campaign-type-row">
+                                <span class="label">Insurance Companies:</span>
+                                <span class="value">${parsed.companies.map(c => c.name).join(', ')}</span>
+                            </div>
+                            <div class="campaign-type-row">
+                                <span class="label">Policy Types:</span>
+                                <span class="value">${parsed.policyTypes.map(pt => pt.name).join(', ')}</span>
+                            </div>
+                            <div class="campaign-type-row">
+                                <span class="label">Reward Structure:</span>
+                                <span class="value reward-value">${parsed.reward.label}</span>
+                            </div>
+                            ${parsed.salesCondition.description ? `
+                                <div class="campaign-type-note">
+                                    <strong>Note:</strong> ${parsed.salesCondition.description}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            detailsDiv.innerHTML = html;
+            section.style.display = 'block';
+        }
+
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = element.querySelector('.faq-icon');
+            
+            faqItem.classList.toggle('active');
+            if (faqItem.classList.contains('active')) {
+                answer.style.display = 'block';
+                icon.textContent = '▲';
+            } else {
+                answer.style.display = 'none';
+                icon.textContent = '▼';
+            }
+        }
+
+        function calculateEarnings() {
+            const company = document.getElementById('calcCompany').value;
+            const category = document.getElementById('calcCategory').value;
+            const duration = document.getElementById('calcDuration').value;
+            const payment = document.getElementById('calcPayment').value;
+            
+            const resultDiv = document.getElementById('calcResult');
+            const amountDiv = document.getElementById('calcAmount');
+            const noteDiv = document.getElementById('calcNote');
+            
+            if (!company || !category || !duration || !payment) {
+                amountDiv.textContent = '-';
+                noteDiv.textContent = '';
+                return;
+            }
+            
+            // Simple calculation logic (this would be more complex in real app)
+            let amount = 0;
+            let note = '';
+            
+            if (company === 'asia' && category === 'thirdparty' && duration === '12' && payment === 'cash') {
+                amount = 2000000;
+                note = '✓ Qualifies! First purchase only per day.';
+            } else if (company === 'saman' && category === 'thirdparty' && (duration === '6' || duration === '12') && (payment === 'touch' || payment === 'nontouch')) {
+                amount = 1500000;
+                note = '✓ Qualifies! All purchases count.';
+            } else if (company === 'razi' && category === 'body' && duration === '12' && payment === 'cash') {
+                amount = 1000000;
+                note = '✓ Qualifies! First purchase only per day.';
+            } else {
+                amount = 0;
+                note = '✗ This combination doesn\'t qualify for rewards.';
+            }
+            
+            amountDiv.textContent = amount > 0 ? amount.toLocaleString() + ' Tomans' : 'No Reward';
+            noteDiv.textContent = note;
+            noteDiv.className = 'calc-result-note ' + (amount > 0 ? 'success' : 'error');
+        }
+    </script>
+</body>
+</html>
+

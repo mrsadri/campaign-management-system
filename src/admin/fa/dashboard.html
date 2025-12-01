@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت کمپین - داشبورد</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                    fontFamily: {
+                        dana: ['DanaVF', 'Tahoma', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'DanaVF';
+            src: url('../../assets/fonts/DanaVF.ttf') format('truetype');
+            font-weight: 100 900;
+            font-display: swap;
+        }
+        body {
+            font-family: 'DanaVF', Tahoma, Arial, sans-serif;
+        }
+        /* Mobile menu transition */
+        .sidebar-overlay {
+            transition: opacity 0.3s;
+        }
+        .sidebar-panel {
+            transition: transform 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Mobile Header -->
+    <header class="lg:hidden bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div class="flex items-center justify-between px-4 py-3">
+            <button onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="منو">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <div class="text-lg font-bold text-primary">🎯 پنل مدیریت</div>
+            <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="location.href='create-campaign.html'">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div id="sidebarOverlay" class="sidebar-overlay fixed inset-0 bg-black/50 z-40 lg:hidden hidden" onclick="toggleMobileMenu()"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar-panel fixed right-0 top-0 bottom-0 w-64 bg-white border-l border-gray-200 z-50 translate-x-full lg:translate-x-0">
+        <div class="p-6 border-b border-gray-200">
+            <div class="text-xl font-bold text-primary flex items-center gap-2">
+                🎯 پنل مدیریت
+            </div>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-1">
+                <li>
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-medium transition-colors">
+                        <span class="text-xl">📊</span>
+                        <span>داشبورد</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="create-campaign.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                        <span class="text-xl">➕</span>
+                        <span>کمپین جدید</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                        <span class="text-xl">📋</span>
+                        <span>کمپین‌های فعال</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                        <span class="text-xl">👥</span>
+                        <span>شرکای فروش</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                        <span class="text-xl">💰</span>
+                        <span>گزارش‌ها</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                        <span class="text-xl">⚙️</span>
+                        <span>تنظیمات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Language Switcher -->
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
+            <a href="../en/dashboard.html" class="flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-200 transition-colors text-sm">
+                🌐 English
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="lg:mr-64 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+            <!-- Desktop Header -->
+            <header class="hidden lg:flex items-center justify-between mb-6 bg-white rounded-xl p-6 shadow-sm">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">داشبورد</h1>
+                    <p class="text-gray-600 text-sm">خلاصه عملکرد کمپین‌ها</p>
+                </div>
+                <div class="flex gap-3">
+                    <button class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                        📊 گزارش‌ها
+                    </button>
+                    <button class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" onclick="location.href='create-campaign.html'">
+                        <span class="text-lg font-bold">+</span> کمپین جدید
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-sm text-gray-600">کمپین‌های فعال</span>
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">۱۲</div>
+                    <div class="text-sm text-green-600">+۲ از ماه قبل</div>
+                </div>
+
+                <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-5 rounded-xl shadow-md">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-sm opacity-90">کل پرداخت‌ها</span>
+                        <span class="text-2xl">💰</span>
+                    </div>
+                    <div class="text-3xl font-bold mb-1">۴۵۰م</div>
+                    <div class="text-sm opacity-80">+۱۵٪ این ماه</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-sm text-gray-600">شرکای فعال</span>
+                        <span class="text-2xl">👥</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">۲۸۵</div>
+                    <div class="text-sm text-green-600">+۳۲ شریک جدید</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-sm text-gray-600">فروش این ماه</span>
+                        <span class="text-2xl">📈</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">۱,۲۴۳</div>
+                    <div class="text-sm text-green-600">+۲۵٪ از ماه قبل</div>
+                </div>
+            </section>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex flex-wrap gap-2 bg-white p-3 rounded-xl mb-6 shadow-sm">
+                <button class="tab px-4 py-2 border-none rounded-lg cursor-pointer text-sm font-medium hover:bg-gray-100 transition-all bg-primary text-white" data-tab="all">همه کمپین‌ها</button>
+                <button class="tab px-4 py-2 border-none rounded-lg cursor-pointer text-sm font-medium text-gray-600 hover:bg-gray-100 transition-all" data-tab="active">فعال</button>
+                <button class="tab px-4 py-2 border-none rounded-lg cursor-pointer text-sm font-medium text-gray-600 hover:bg-gray-100 transition-all" data-tab="draft">پیش‌نویس</button>
+                <button class="tab px-4 py-2 border-none rounded-lg cursor-pointer text-sm font-medium text-gray-600 hover:bg-gray-100 transition-all" data-tab="completed">تکمیل شده</button>
+            </nav>
+
+            <!-- Filters -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-xl mb-6 shadow-sm">
+                <div class="flex flex-col gap-2">
+                    <label for="search" class="text-xs font-medium text-gray-600">جستجو</label>
+                    <input type="text" id="search" placeholder="جستجوی کمپین..." class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="panel" class="text-xs font-medium text-gray-600">پنل</label>
+                    <select id="panel" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10">
+                        <option value="">همه پنل‌ها</option>
+                        <option value="partner">شریک</option>
+                        <option value="snap">اسنپ</option>
+                        <option value="pishkhan">پیشخوان</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="dateRange" class="text-xs font-medium text-gray-600">بازه زمانی</label>
+                    <select id="dateRange" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10">
+                        <option value="">همه زمان‌ها</option>
+                        <option value="today">امروز</option>
+                        <option value="week">این هفته</option>
+                        <option value="month">این ماه</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Campaign List -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-6" id="campaignList">
+                <!-- Campaign cards will be populated here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="text-center py-16 px-6 bg-white rounded-xl shadow-sm hidden" id="emptyState">
+                <div class="text-6xl mb-4">📊</div>
+                <h3 class="text-xl mb-2 font-semibold text-gray-900">کمپینی یافت نشد</h3>
+                <p class="text-gray-600 mb-6">برای شروع اولین کمپین خود را ایجاد کنید</p>
+                <button class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-sm hover:shadow-md" onclick="location.href='create-campaign.html'">ایجاد کمپین</button>
+            </div>
+
+            <!-- Quick Actions -->
+            <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                <button onclick="location.href='create-campaign.html'" class="bg-blue-50 border border-blue-200 p-6 rounded-xl cursor-pointer text-center hover:bg-blue-100 transition-colors group">
+                    <div class="text-4xl mb-3">➕</div>
+                    <div class="font-semibold text-primary group-hover:text-primary-dark">ایجاد کمپین جدید</div>
+                </button>
+                <button onclick="alert('گزارش‌ها')" class="bg-green-50 border border-green-200 p-6 rounded-xl cursor-pointer text-center hover:bg-green-100 transition-colors group">
+                    <div class="text-4xl mb-3">📊</div>
+                    <div class="font-semibold text-green-700 group-hover:text-green-800">مشاهده گزارش‌ها</div>
+                </button>
+                <button onclick="alert('مدیریت شرکا')" class="bg-purple-50 border border-purple-200 p-6 rounded-xl cursor-pointer text-center hover:bg-purple-100 transition-colors group">
+                    <div class="text-4xl mb-3">👥</div>
+                    <div class="font-semibold text-purple-700 group-hover:text-purple-800">مدیریت شرکا</div>
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <!-- Campaign Card Template -->
+    <template id="campaignCardTemplate">
+        <div class="bg-white rounded-xl p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 border border-gray-100">
+            <div class="flex justify-between items-start mb-3">
+                <div>
+                    <h3 class="text-base font-semibold mb-1 campaign-title"></h3>
+                    <span class="campaign-badge inline-block px-2.5 py-1 rounded-full text-xs font-medium"></span>
+                </div>
+                <div class="campaign-actions flex gap-1">
+                    <button class="bg-transparent border-none text-base cursor-pointer p-1.5 rounded-lg transition-colors hover:bg-gray-100" title="ویرایش">✏️</button>
+                    <button class="bg-transparent border-none text-base cursor-pointer p-1.5 rounded-lg transition-colors hover:bg-gray-100" title="کپی">📋</button>
+                    <button class="bg-transparent border-none text-base cursor-pointer p-1.5 rounded-lg transition-colors hover:bg-gray-100" title="مشاهده">👁️</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-4 pb-4 border-b border-gray-200 text-sm">
+                <div class="flex flex-col gap-0.5">
+                    <span class="text-xs text-gray-500">پنل:</span>
+                    <span class="text-gray-900 font-medium panel-value"></span>
+                </div>
+                <div class="flex flex-col gap-0.5">
+                    <span class="text-xs text-gray-500">مدت زمان:</span>
+                    <span class="text-gray-900 font-medium duration-value"></span>
+                </div>
+                <div class="flex flex-col gap-0.5">
+                    <span class="text-xs text-gray-500">بازه:</span>
+                    <span class="text-gray-900 font-medium interval-value"></span>
+                </div>
+                <div class="flex flex-col gap-0.5">
+                    <span class="text-xs text-gray-500">شرکت‌ها:</span>
+                    <span class="text-gray-900 font-medium companies-value"></span>
+                </div>
+                <div class="flex flex-col gap-0.5 col-span-2">
+                    <span class="text-xs text-gray-500">شرکت‌کنندگان:</span>
+                    <span class="text-gray-900 font-medium participants-value"></span>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-3 text-center">
+                <div>
+                    <div class="text-lg font-semibold text-primary mb-0.5 stat-value">۰</div>
+                    <div class="text-xs text-gray-500">کل فروش</div>
+                </div>
+                <div>
+                    <div class="text-lg font-semibold text-primary mb-0.5 stat-value">۰</div>
+                    <div class="text-xs text-gray-500">پاداش‌ها</div>
+                </div>
+                <div>
+                    <div class="text-lg font-semibold text-primary mb-0.5 stat-value">۰</div>
+                    <div class="text-xs text-gray-500">شرکا</div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="../script.js"></script>
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        // Close mobile menu on resize to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                sidebar.classList.add('translate-x-full');
+                sidebar.classList.remove('translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        });
+
+        // Initialize campaign list
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load campaigns from storage first
+            if (typeof loadCampaignsFromStorage === 'function') {
+                loadCampaignsFromStorage();
+            }
+            // Then load and display campaigns
+            if (typeof loadCampaigns === 'function') {
+                loadCampaigns('all');
+            }
+            // Setup filters and tabs
+            if (typeof setupFilters === 'function') {
+                setupFilters();
+            }
+            if (typeof setupTabs === 'function') {
+                setupTabs();
+            }
+        });
+    </script>
+</body>
+</html>

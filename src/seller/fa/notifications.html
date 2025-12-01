@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اعلان‌ها - پنل فروشنده</title>
+    <link rel="stylesheet" href="../styles-rtl.css">
+</head>
+<body class="seller-app">
+    <!-- Mobile Header -->
+    <header class="seller-header">
+        <div class="seller-header-content">
+            <button class="btn-back" onclick="history.back()">→ بازگشت</button>
+            <h1 class="page-title">اعلان‌ها</h1>
+            <button class="clear-all-btn" onclick="clearAllNotifications()">
+                پاک کردن همه
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="seller-main">
+        
+        <!-- Notification Settings Toggle -->
+        <section class="notification-settings-bar">
+            <span>🔔 اعلان‌ها فعال است</span>
+            <label class="toggle-switch">
+                <input type="checkbox" checked onchange="toggleNotifications(this)">
+                <span class="toggle-slider"></span>
+            </label>
+        </section>
+
+        <!-- Notifications List -->
+        <section class="notifications-list">
+            
+            <!-- New Campaign Notification -->
+            <div class="notification-item unread new-campaign">
+                <div class="notification-icon">🎉</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">کمپین جدید در دسترس است!</span>
+                        <span class="notification-badge unread-badge">جدید</span>
+                    </div>
+                    <div class="notification-message">
+                        <strong>ویژه زمستان ۱۴۰۴</strong> - تا ۲,۰۰۰,۰۰۰ تومان برای هر فروش کسب کنید!
+                        کمپین از ۱ آذر تا ۱۰ اسفند اجرا می‌شود.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=4'">
+                            مشاهده کمپین
+                        </button>
+                    </div>
+                    <div class="notification-time">۲ ساعت پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Reward Earned Notification 1 -->
+            <div class="notification-item unread reward-earned">
+                <div class="notification-icon">💰</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">پاداش دریافت شد!</span>
+                        <span class="notification-badge unread-badge">جدید</span>
+                    </div>
+                    <div class="notification-message">
+                        شما <strong>۲,۰۰۰,۰۰۰ تومان</strong> از فروش آسیا شخص ثالث ۱۲ماهه خود کسب کردید!
+                    </div>
+                    <div class="notification-meta">
+                        <span>کمپین: کمپین ویژه تابستانی</span>
+                        <span>•</span>
+                        <span>شناسه فروش: #12345</span>
+                    </div>
+                    <div class="notification-time">۴ ساعت پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Reward Earned Notification 2 -->
+            <div class="notification-item unread reward-earned">
+                <div class="notification-icon">💰</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">پاداش دریافت شد!</span>
+                        <span class="notification-badge unread-badge">جدید</span>
+                    </div>
+                    <div class="notification-message">
+                        شما <strong>۱,۵۰۰,۰۰۰ تومان</strong> از فروش سامان شخص ثالث ۶ماهه خود کسب کردید!
+                    </div>
+                    <div class="notification-meta">
+                        <span>کمپین: کمپین ویژه تابستانی</span>
+                        <span>•</span>
+                        <span>شناسه فروش: #12344</span>
+                    </div>
+                    <div class="notification-time">۶ ساعت پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Payment Processed Notification -->
+            <div class="notification-item read payment-processed">
+                <div class="notification-icon">✅</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">پرداخت انجام شد</span>
+                    </div>
+                    <div class="notification-message">
+                        پرداخت <strong>۱۰,۰۰۰,۰۰۰ تومان</strong> به حساب شما ارسال شده است.
+                    </div>
+                    <div class="notification-meta">
+                        <span>تراکنش: TX-2025-11-20-001</span>
+                        <span>•</span>
+                        <span>۸ فروش واجد شرایط</span>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="alert('دانلود رسید')">
+                            📄 دانلود رسید
+                        </button>
+                    </div>
+                    <div class="notification-time">دیروز</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Campaign Ending Soon -->
+            <div class="notification-item read campaign-ending">
+                <div class="notification-icon">⏰</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">کمپین در حال پایان است!</span>
+                    </div>
+                    <div class="notification-message">
+                        کمپین <strong>فروش سریع شخص ثالث</strong> تا ۳ روز دیگر پایان می‌یابد. فروش‌های نهایی خود را انجام دهید!
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=3'">
+                            مشاهده کمپین
+                        </button>
+                    </div>
+                    <div class="notification-time">۲ روز پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Sale Didn't Qualify -->
+            <div class="notification-item read sale-info">
+                <div class="notification-icon">ℹ️</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">فروش ثبت شد - بدون پاداش</span>
+                    </div>
+                    <div class="notification-message">
+                        فروش آسیا شخص ثالث شما واجد شرایط نبود چون قبلاً امروز از آسیا کسب کرده‌اید (قانون فقط اولین خرید).
+                    </div>
+                    <div class="notification-tip">
+                        <strong>💡 نکته:</strong> برای کسب پاداش بیشتر امروز، از سامان یا رازی بفروشید
+                    </div>
+                    <div class="notification-time">۳ روز پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Payment Scheduled -->
+            <div class="notification-item read payment-info">
+                <div class="notification-icon">📅</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">پرداخت برنامه‌ریزی شده</span>
+                    </div>
+                    <div class="notification-message">
+                        پرداخت بعدی شما به مبلغ <strong>۵,۵۰۰,۰۰۰ تومان</strong> برای دوشنبه، ۷ آذر برنامه‌ریزی شده است.
+                    </div>
+                    <div class="notification-meta">
+                        <span>۴ پاداش در انتظار</span>
+                    </div>
+                    <div class="notification-time">۳ روز پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Achievement/Milestone -->
+            <div class="notification-item read achievement">
+                <div class="notification-icon">🏆</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">تبریک!</span>
+                    </div>
+                    <div class="notification-message">
+                        شما به <strong>۱۰ فروش</strong> در کمپین ویژه تابستانی رسیده‌اید! به کار عالی ادامه دهید!
+                    </div>
+                    <div class="notification-time">۱ هفته پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+            <!-- Added to Campaign -->
+            <div class="notification-item read new-campaign">
+                <div class="notification-icon">➕</div>
+                <div class="notification-content">
+                    <div class="notification-header">
+                        <span class="notification-title">افزوده شده به کمپین</span>
+                    </div>
+                    <div class="notification-message">
+                        شما به کمپین <strong>پاداش بیمه درمان</strong> اضافه شده‌اید.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-notification-action" onclick="location.href='campaign-detail.html?id=2'">
+                            مشاهده کمپین
+                        </button>
+                    </div>
+                    <div class="notification-time">۲ هفته پیش</div>
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">×</button>
+            </div>
+
+        </section>
+
+        <!-- Empty State (Hidden by default) -->
+        <div class="empty-state" id="emptyNotifications" style="display: none;">
+            <div class="empty-icon">🔔</div>
+            <h3>اعلانی وجود ندارد</h3>
+            <p>همه چیز به‌روز است! اعلان‌های جدید اینجا نمایش داده می‌شوند.</p>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">خانه</span>
+        </a>
+        <a href="earnings-today.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">امروز</span>
+        </a>
+        <a href="earnings-history.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">درآمدها</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">تنظیمات</span>
+        </a>
+    </nav>
+
+    <script src="../script.js"></script>
+    <script>
+        function dismissNotification(btn) {
+            const notification = btn.closest('.notification-item');
+            notification.style.animation = 'slideOut 0.3s';
+            
+            setTimeout(() => {
+                notification.remove();
+                checkEmpty();
+                updateNotificationCount();
+            }, 300);
+        }
+
+        function clearAllNotifications() {
+            if (confirm('همه اعلان‌ها پاک شوند؟')) {
+                const notifications = document.querySelectorAll('.notification-item');
+                notifications.forEach(notif => {
+                    notif.style.animation = 'slideOut 0.3s';
+                });
+                
+                setTimeout(() => {
+                    notifications.forEach(notif => notif.remove());
+                    showEmptyState();
+                    updateNotificationCount();
+                }, 300);
+            }
+        }
+
+        function toggleNotifications(checkbox) {
+            if (checkbox.checked) {
+                showToast('اعلان‌ها فعال شد');
+            } else {
+                showToast('اعلان‌ها غیرفعال شد');
+            }
+        }
+
+        function checkEmpty() {
+            const list = document.querySelector('.notifications-list');
+            const empty = document.getElementById('emptyNotifications');
+            const items = document.querySelectorAll('.notification-item');
+            
+            if (items.length === 0) {
+                list.style.display = 'none';
+                empty.style.display = 'block';
+            }
+        }
+
+        function showEmptyState() {
+            document.querySelector('.notifications-list').style.display = 'none';
+            document.getElementById('emptyNotifications').style.display = 'block';
+        }
+
+        function updateNotificationCount() {
+            const unreadCount = document.querySelectorAll('.notification-item.unread').length;
+            // Update badge in other pages
+            localStorage.setItem('unreadNotifications', unreadCount);
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        // Mark all as read when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const unreadItems = document.querySelectorAll('.notification-item.unread');
+                unreadItems.forEach(item => {
+                    item.classList.remove('unread');
+                    const badge = item.querySelector('.unread-badge');
+                    if (badge) badge.remove();
+                });
+                updateNotificationCount();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+

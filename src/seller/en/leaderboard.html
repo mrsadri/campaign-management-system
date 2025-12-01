@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Birthday Campaign</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0, #808080); color: #000; }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32, #8B4513); color: #fff; }
+        .my-rank {
+            background: linear-gradient(135deg, #2563EB, #1E40AF);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .updating { animation: pulse 1.5s infinite; }
+    </style>
+</head>
+<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <button onclick="history.back()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        ←
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">🏆 Leaderboard</h1>
+                        <p class="text-xs text-gray-500">Top 100 Partners - Birthday Campaign</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-gray-500" id="lastUpdate">Updating...</span>
+                    <button onclick="refreshLeaderboard()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        🔄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 md:px-6 py-6">
+        
+        <!-- Campaign Info Banner -->
+        <div class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white p-4 rounded-xl mb-6 shadow-lg">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold mb-1">🎂 Partner Birthday Campaign</h2>
+                    <p class="text-sm opacity-90">Compete for gold prizes! Top 100 partners win!</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm opacity-90 mb-1">Time Remaining</div>
+                    <div class="text-2xl font-bold" id="timeRemaining">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Rank Card -->
+        <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-6 rounded-xl mb-6 shadow-lg" id="myRankCard">
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-sm opacity-90 mb-1">Your Current Rank</div>
+                    <div class="text-4xl font-bold mb-2" id="myRank">-</div>
+                    <div class="text-sm opacity-80" id="myStats">Loading...</div>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm opacity-90 mb-1">Your Gold Prize</div>
+                    <div class="text-2xl font-bold mb-1" id="myGoldPrize">-</div>
+                    <div class="text-sm opacity-80" id="myGoldValue">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gold Price Info -->
+        <div class="bg-white p-4 rounded-xl mb-6 shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-sm text-gray-600 mb-1">Current Gold Price (18 Karat)</div>
+                    <div class="text-lg font-bold text-gray-900" id="goldPrice">11,830,000 تومان/گرم</div>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm text-gray-600 mb-1">Prize Calculation</div>
+                    <div class="text-sm font-medium text-gray-700">Based on end-of-campaign price</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prize Structure -->
+        <div class="bg-white p-4 rounded-xl mb-6 shadow-sm">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                🏅 Prize Structure
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="p-3 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg border border-yellow-200">
+                    <div class="text-xs text-gray-600 mb-1">Rank 1</div>
+                    <div class="text-lg font-bold text-yellow-700">4 grams</div>
+                </div>
+                <div class="p-3 bg-gradient-to-br from-gray-50 to-slate-50 rounded-lg border border-gray-200">
+                    <div class="text-xs text-gray-600 mb-1">Ranks 2-5</div>
+                    <div class="text-lg font-bold text-gray-700">2 grams</div>
+                </div>
+                <div class="p-3 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border border-orange-200">
+                    <div class="text-xs text-gray-600 mb-1">Ranks 6-10</div>
+                    <div class="text-lg font-bold text-orange-700">1 gram</div>
+                </div>
+                <div class="p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border border-blue-200">
+                    <div class="text-xs text-gray-600 mb-1">Ranks 11-100</div>
+                    <div class="text-lg font-bold text-blue-700">200-800 sot</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-bold">Top 100 Partners</h3>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="searchInput" placeholder="Search partner..." 
+                           class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary">
+                </div>
+            </div>
+            
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Rank</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Partner</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Orders</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">NMV</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Gold Prize</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardTable" class="divide-y divide-gray-200">
+                        <!-- Leaderboard rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="md:hidden divide-y divide-gray-200" id="leaderboardCards">
+                <!-- Leaderboard cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="hidden text-center py-16 px-6 bg-white rounded-xl shadow-sm" id="emptyState">
+            <div class="text-6xl mb-4">📊</div>
+            <h3 class="text-lg mb-2 font-semibold text-gray-900">No Rankings Yet</h3>
+            <p class="text-gray-600">Start making sales to appear on the leaderboard!</p>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">Home</span>
+        </a>
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+            <span class="text-2xl">🏆</span>
+            <span class="text-[11px] font-medium">Leaderboard</span>
+        </a>
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">Spin Wheel</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">Settings</span>
+        </a>
+    </nav>
+
+    <script src="../../birthday-campaign-utils.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // Mock data for demonstration
+        const mockLeaderboardData = {
+            currentPartnerId: 'P-1001',
+            goldPricePerGram: 11830000,
+            campaignEndDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            partners: Array.from({ length: 150 }, (_, i) => ({
+                id: `P-${1000 + i}`,
+                name: `Partner ${1000 + i}`,
+                code: `P-${1000 + i}`,
+                orders: Math.floor(Math.random() * 50) + 1,
+                nmv: Math.floor(Math.random() * 50000000) + 1000000
+            }))
+        };
+
+        let leaderboardData = [];
+
+        function loadLeaderboard() {
+            // Calculate rankings
+            leaderboardData = BirthdayCampaignUtils.calculateLeaderboard(mockLeaderboardData.partners);
+            
+            // Get top 100
+            const top100 = leaderboardData.slice(0, 100);
+            
+            // Find my rank
+            const myPartner = leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId);
+            
+            // Update my rank card
+            if (myPartner) {
+                document.getElementById('myRank').textContent = `#${myPartner.rank}`;
+                document.getElementById('myStats').textContent = 
+                    `${myPartner.orders} orders • ${formatCurrency(myPartner.nmv)} تومان NMV`;
+                
+                const goldPrize = BirthdayCampaignUtils.getGoldPrizeForRank(myPartner.rank);
+                document.getElementById('myGoldPrize').textContent = 
+                    BirthdayCampaignUtils.formatGoldAmount(goldPrize.grams);
+                document.getElementById('myGoldValue').textContent = 
+                    `≈ ${formatCurrency(BirthdayCampaignUtils.calculateCashEquivalent(goldPrize.grams, mockLeaderboardData.goldPricePerGram))} تومان`;
+            } else {
+                document.getElementById('myRank').textContent = 'Not Ranked';
+                document.getElementById('myStats').textContent = 'Make sales to appear on leaderboard';
+                document.getElementById('myGoldPrize').textContent = '-';
+                document.getElementById('myGoldValue').textContent = '-';
+            }
+            
+            // Render leaderboard
+            renderLeaderboard(top100, myPartner);
+            
+            // Update last update time
+            document.getElementById('lastUpdate').textContent = 
+                `Updated: ${new Date().toLocaleTimeString()}`;
+        }
+
+        function renderLeaderboard(partners, myPartner) {
+            const tableBody = document.getElementById('leaderboardTable');
+            const cardsContainer = document.getElementById('leaderboardCards');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (partners.length === 0) {
+                tableBody.innerHTML = '';
+                cardsContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            // Desktop table
+            tableBody.innerHTML = partners.map(partner => {
+                const isMe = myPartner && partner.id === myPartner.id;
+                const rankClass = partner.rank === 1 ? 'rank-1' : 
+                                 partner.rank === 2 ? 'rank-2' : 
+                                 partner.rank === 3 ? 'rank-3' : '';
+                const rowClass = isMe ? 'my-rank bg-primary/10' : '';
+                
+                return `
+                    <tr class="${rowClass}">
+                        <td class="px-4 py-3">
+                            <span class="rank-badge ${rankClass}">${partner.rank}</span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="font-medium">${partner.name}</div>
+                            <div class="text-xs text-gray-500">${partner.code}</div>
+                        </td>
+                        <td class="px-4 py-3 text-right font-medium">${partner.orders}</td>
+                        <td class="px-4 py-3 text-right font-bold">${formatCurrency(partner.nmv)}</td>
+                        <td class="px-4 py-3 text-right">
+                            <div class="font-semibold text-yellow-600">${BirthdayCampaignUtils.formatGoldAmount(partner.goldPrize)}</div>
+                            <div class="text-xs text-gray-500">${partner.goldPrizeDescription}</div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Mobile cards
+            cardsContainer.innerHTML = partners.map(partner => {
+                const isMe = myPartner && partner.id === myPartner.id;
+                const rankClass = partner.rank === 1 ? 'rank-1' : 
+                                 partner.rank === 2 ? 'rank-2' : 
+                                 partner.rank === 3 ? 'rank-3' : '';
+                const cardClass = isMe ? 'bg-primary/5 border-2 border-primary' : '';
+                
+                return `
+                    <div class="p-4 ${cardClass}">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="rank-badge ${rankClass}">${partner.rank}</span>
+                                <div>
+                                    <div class="font-medium">${partner.name}</div>
+                                    <div class="text-xs text-gray-500">${partner.code}</div>
+                                </div>
+                            </div>
+                            ${isMe ? '<span class="text-xs bg-primary text-white px-2 py-1 rounded">You</span>' : ''}
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-sm">
+                            <div>
+                                <div class="text-xs text-gray-500">Orders</div>
+                                <div class="font-semibold">${partner.orders}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-500">NMV</div>
+                                <div class="font-semibold">${formatCurrency(partner.nmv)}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-500">Gold</div>
+                                <div class="font-semibold text-yellow-600">${BirthdayCampaignUtils.formatGoldAmount(partner.goldPrize)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function formatCurrency(amount) {
+            return amount.toLocaleString('en-US');
+        }
+
+        function refreshLeaderboard() {
+            document.getElementById('lastUpdate').textContent = 'Updating...';
+            document.getElementById('lastUpdate').classList.add('updating');
+            
+            // Simulate API call
+            setTimeout(() => {
+                loadLeaderboard();
+                document.getElementById('lastUpdate').classList.remove('updating');
+            }, 1000);
+        }
+
+        function updateTimeRemaining() {
+            const timeRemaining = BirthdayCampaignUtils.getTimeUntilEnd(mockLeaderboardData.campaignEndDate);
+            const timeEl = document.getElementById('timeRemaining');
+            
+            if (timeRemaining.ended) {
+                timeEl.textContent = 'Campaign Ended';
+            } else {
+                timeEl.textContent = `${timeRemaining.days}d ${timeRemaining.hours}h ${timeRemaining.minutes}m`;
+            }
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = leaderboardData.slice(0, 100).filter(p => 
+                p.name.toLowerCase().includes(searchTerm) || 
+                p.code.toLowerCase().includes(searchTerm)
+            );
+            renderLeaderboard(filtered, leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId));
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLeaderboard();
+            updateTimeRemaining();
+            setInterval(updateTimeRemaining, 60000); // Update every minute
+            setInterval(refreshLeaderboard, 1800000); // Auto-refresh every 30 minutes
+        });
+    </script>
+</body>
+</html>
+

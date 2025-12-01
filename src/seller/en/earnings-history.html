@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings History - Seller Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-50 pb-20 min-h-screen">
+    <!-- Mobile Header -->
+    <header class="bg-white p-4 shadow-sm sticky top-0 z-50">
+        <div class="flex justify-between items-center">
+            <button class="bg-transparent border-none text-xl cursor-pointer" onclick="history.back()">← Back</button>
+            <h1 class="text-lg font-semibold">Earnings History</h1>
+            <button class="bg-transparent border-none text-xl cursor-pointer rounded-lg p-2 hover:bg-gray-100 transition-colors" onclick="exportEarnings()" title="Export">
+                📥
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-4 max-w-2xl mx-auto">
+        
+        <!-- Summary Dashboard -->
+        <section class="mb-6">
+            <h2 class="text-xl font-bold mb-4">Your Earnings</h2>
+            <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-3">
+                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                    <div class="text-5xl mb-2">💰</div>
+                    <div class="text-3xl font-bold mb-1">45,000,000</div>
+                    <div class="text-sm text-gray-600 opacity-80">Total All Time</div>
+                </div>
+                <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-6 rounded-xl shadow-md text-center">
+                    <div class="text-5xl mb-2">📅</div>
+                    <div class="text-3xl font-bold mb-1">15,000,000</div>
+                    <div class="text-sm opacity-80">This Month</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                    <div class="text-5xl mb-2">📆</div>
+                    <div class="text-3xl font-bold mb-1">12,500,000</div>
+                    <div class="text-sm text-gray-600 opacity-80">Last Month</div>
+                </div>
+            </div>
+
+            <!-- Trend Chart Placeholder -->
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-bold mb-4">Earnings Trend</h3>
+                <div class="mb-4">
+                    <svg width="100%" height="150" viewBox="0 0 300 150">
+                        <polyline
+                            fill="none"
+                            stroke="#2563EB"
+                            stroke-width="3"
+                            points="0,130 50,100 100,80 150,90 200,50 250,30 300,20"
+                        />
+                        <circle cx="0" cy="130" r="4" fill="#2563EB"/>
+                        <circle cx="50" cy="100" r="4" fill="#2563EB"/>
+                        <circle cx="100" cy="80" r="4" fill="#2563EB"/>
+                        <circle cx="150" cy="90" r="4" fill="#2563EB"/>
+                        <circle cx="200" cy="50" r="4" fill="#2563EB"/>
+                        <circle cx="250" cy="30" r="4" fill="#2563EB"/>
+                        <circle cx="300" cy="20" r="4" fill="#2563EB"/>
+                    </svg>
+                    <div class="flex justify-around text-xs text-gray-500 mt-2">
+                        <span>Week 1</span>
+                        <span>Week 2</span>
+                        <span>Week 3</span>
+                        <span>Week 4</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Options -->
+        <section class="mb-6">
+            <div class="flex flex-col gap-3 md:flex-row">
+                <select class="flex-1 p-3 border border-gray-300 rounded-lg bg-white" id="dateRangeFilter" onchange="applyFilters()">
+                    <option value="all">All Time</option>
+                    <option value="thisMonth" selected>This Month</option>
+                    <option value="lastMonth">Last Month</option>
+                    <option value="last3Months">Last 3 Months</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+                <select class="flex-1 p-3 border border-gray-300 rounded-lg bg-white" id="campaignFilterEarnings" onchange="applyFilters()">
+                    <option value="">All Campaigns</option>
+                    <option value="1">Summer Special</option>
+                    <option value="2">Health Bonus</option>
+                    <option value="3">Third-party Quick</option>
+                </select>
+                <select class="flex-1 p-3 border border-gray-300 rounded-lg bg-white" id="companyFilterEarnings" onchange="applyFilters()">
+                    <option value="">All Companies</option>
+                    <option value="asia">Asia</option>
+                    <option value="saman">Saman</option>
+                    <option value="razi">Razi</option>
+                    <option value="iran">Iran</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Tabs for Paid vs Pending -->
+        <section class="mb-6">
+            <div class="flex gap-2 mb-4">
+                <button class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-semibold cursor-pointer" onclick="switchTab('paid')">
+                    Paid Rewards
+                </button>
+                <button class="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg font-semibold cursor-pointer relative" onclick="switchTab('pending')">
+                    Pending Rewards
+                    <span class="absolute top-1 right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span>
+                </button>
+            </div>
+
+            <!-- Paid Rewards Tab -->
+            <div class="tab-content active" id="paidTab">
+                <div class="space-y-4">
+                    
+                    <!-- Payment Record 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">📅</span>
+                                <span>Monday, Nov 20, 2025</span>
+                            </div>
+                            <div class="text-2xl font-bold text-green-600">+10,000,000</div>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>Campaign: Summer Special</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>8 qualifying sales</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>Asia: 5M • Saman: 3M • Razi: 2M</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🔢</span>
+                                <span>Transaction: TX-2025-11-20-001</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('Download receipt')">
+                                📄 Download Receipt
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('View breakdown')">
+                                👁️ View Breakdown
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Record 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">📅</span>
+                                <span>Monday, Nov 13, 2025</span>
+                            </div>
+                            <div class="text-2xl font-bold text-green-600">+12,500,000</div>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>Campaigns: Summer Special, Health Bonus</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>10 qualifying sales</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>Asia: 6M • Saman: 4.5M • Razi: 2M</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🔢</span>
+                                <span>Transaction: TX-2025-11-13-001</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('Download receipt')">
+                                📄 Download Receipt
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('View breakdown')">
+                                👁️ View Breakdown
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Record 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">📅</span>
+                                <span>Monday, Nov 6, 2025</span>
+                            </div>
+                            <div class="text-2xl font-bold text-green-600">+8,000,000</div>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>Campaign: Summer Special</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>6 qualifying sales</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>Asia: 4M • Saman: 3M • Iran: 1M</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🔢</span>
+                                <span>Transaction: TX-2025-11-06-001</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('Download receipt')">
+                                📄 Download Receipt
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-200 transition-colors" onclick="alert('View breakdown')">
+                                👁️ View Breakdown
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Pending Rewards Tab -->
+            <div class="tab-content hidden" id="pendingTab">
+                <div class="space-y-4">
+                    
+                    <!-- Pending Record 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">⏳</span>
+                                <span>Expected: Monday, Nov 27, 2025</span>
+                            </div>
+                            <div class="text-2xl font-bold text-yellow-600">3,500,000</div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>Campaign: Summer Special</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>3 qualifying sales (awaiting settlement)</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>Asia: 2M • Razi: 1.5M</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">ℹ️</span>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">Awaiting Payment Cycle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Record 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">⏳</span>
+                                <span>Expected: Monday, Nov 27, 2025</span>
+                            </div>
+                            <div class="text-2xl font-bold text-yellow-600">1,500,000</div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>Campaign: Health Bonus</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>1 qualifying sale (awaiting settlement)</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>Razi: 1.5M</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">ℹ️</span>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">Awaiting Settlement</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Record 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2 text-sm font-semibold">
+                                <span class="text-lg">⏳</span>
+                                <span>Expected: Monday, Nov 27, 2025</span>
+                            </div>
+                            <div class="text-2xl font-bold text-yellow-600">500,000</div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🎯</span>
+                                <span>Campaign: Third-party Quick</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">📝</span>
+                                <span>1 qualifying sale</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">🏢</span>
+                                <span>Iran: 500K</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-base">ℹ️</span>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">Awaiting Payment Cycle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Export Section -->
+        <section class="bg-white p-6 rounded-xl shadow-sm text-center">
+            <h3 class="text-lg font-bold mb-4">Export Earnings Report</h3>
+            <div class="flex gap-3">
+                <button class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-semibold cursor-pointer hover:bg-primary-dark transition-colors" onclick="exportToPDF()">
+                    📄 Export to PDF
+                </button>
+                <button class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-semibold cursor-pointer hover:bg-primary-dark transition-colors" onclick="exportToExcel()">
+                    📊 Export to Excel
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">Home</span>
+        </a>
+        <a href="earnings-today.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">📊</span>
+            <span class="text-[11px] font-medium">Today</span>
+        </a>
+        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+            <span class="text-2xl">💰</span>
+            <span class="text-[11px] font-medium">Earnings</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">Settings</span>
+        </a>
+    </nav>
+
+    <script src="../script.js"></script>
+    <script>
+        function switchTab(tabName) {
+            // Update tab buttons
+            const tabs = document.querySelectorAll('button[onclick*="switchTab"]');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-primary', 'text-white');
+                tab.classList.add('bg-white', 'border', 'border-gray-300');
+            });
+            event.target.classList.add('bg-primary', 'text-white');
+            event.target.classList.remove('bg-white', 'border', 'border-gray-300');
+            
+            // Update tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('active');
+            });
+            const targetTab = document.getElementById(tabName + 'Tab');
+            targetTab.classList.remove('hidden');
+            targetTab.classList.add('active');
+        }
+
+        function applyFilters() {
+            // In real app, this would filter the earnings list based on selected filters
+            console.log('Applying filters...');
+            showToast('Filters applied');
+        }
+
+        function exportEarnings() {
+            alert('Export options:\n1. PDF\n2. Excel\n\nSelect format from Export section below');
+        }
+
+        function exportToPDF() {
+            showToast('Generating PDF report...');
+            // In real app, generate PDF
+        }
+
+        function exportToExcel() {
+            showToast('Generating Excel report...');
+            // In real app, generate Excel
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:12px 24px;border-radius:8px;z-index:9999;';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

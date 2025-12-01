@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Management System - Start Here</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        
+        .main-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .nav-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            text-decoration: none;
+            color: #0F172A;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-card-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .nav-card h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #4F46E5;
+        }
+        
+        .nav-card p {
+            color: #64748B;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .nav-card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .nav-card-link {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-card-link:hover {
+            text-decoration: underline;
+        }
+        
+        .docs-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .docs-section h2 {
+            font-size: 28px;
+            margin-bottom: 24px;
+            color: #0F172A;
+        }
+        
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        
+        .doc-item {
+            padding: 16px;
+            background: #F8FAFC;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+        
+        .doc-item:hover {
+            background: #E2E8F0;
+            transform: translateX(4px);
+        }
+        
+        .doc-icon {
+            font-size: 24px;
+        }
+        
+        .doc-info h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .doc-info p {
+            font-size: 12px;
+            color: #64748B;
+        }
+        
+        .stats-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #4F46E5;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: #64748B;
+            font-size: 14px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 32px;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .main-nav {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Campaign Management System</h1>
+            <p>Daily Purchase Campaign System - Two-Sided Platform</p>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="main-nav">
+            <!-- Seller Interface -->
+            <a href="src/seller/en/dashboard.html" class="nav-card">
+                <div class="nav-card-icon">👥</div>
+                <h2>Seller/Partner Portal</h2>
+                <p>Main interface for sellers (شریک) to view campaigns, track earnings, and manage notifications.</p>
+                <div class="nav-card-links">
+                    <span class="nav-card-link">→ Dashboard</span>
+                    <span class="nav-card-link">→ Today's Earnings</span>
+                    <span class="nav-card-link">→ Earnings History</span>
+                    <span class="nav-card-link">→ Notifications</span>
+                </div>
+            </a>
+
+            <!-- Admin Interface -->
+            <a href="src/admin/en/dashboard.html" class="nav-card">
+                <div class="nav-card-icon">💼</div>
+                <h2>Admin Dashboard</h2>
+                <p>Back office interface for sales administrators to create and manage campaigns.</p>
+                <div class="nav-card-links">
+                    <span class="nav-card-link">→ Campaign List</span>
+                    <span class="nav-card-link">→ Create Campaign</span>
+                    <span class="nav-card-link">→ Analytics</span>
+                </div>
+            </a>
+
+            <!-- Demo & Documentation -->
+            <a href="src/admin/en/demo.html" class="nav-card">
+                <div class="nav-card-icon">🎨</div>
+                <h2>Demo & Overview</h2>
+                <p>Project showcase with features, statistics, and technical information.</p>
+                <div class="nav-card-links">
+                    <span class="nav-card-link">→ Feature Tour</span>
+                    <span class="nav-card-link">→ Screenshots</span>
+                    <span class="nav-card-link">→ Tech Stack</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Project Statistics -->
+        <div class="stats-section">
+            <h2>Project Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-value">94%</div>
+                    <div class="stat-label">Implementation Complete</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">16</div>
+                    <div class="stat-label">User Stories</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">21</div>
+                    <div class="stat-label">Files Created</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">11.7K</div>
+                    <div class="stat-label">Lines of Code</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="docs-section">
+            <h2>📚 Documentation</h2>
+            <div class="docs-grid">
+                <a href="docs/project-brief.md" class="doc-item">
+                    <div class="doc-icon">📄</div>
+                    <div class="doc-info">
+                        <h3>Project Brief</h3>
+                        <p>Complete requirements</p>
+                    </div>
+                </a>
+
+                <a href="docs/user-stories.md" class="doc-item">
+                    <div class="doc-icon">📝</div>
+                    <div class="doc-info">
+                        <h3>User Stories</h3>
+                        <p>16 detailed stories</p>
+                    </div>
+                </a>
+
+                <a href="docs/PROJECT-GUIDE.md" class="doc-item">
+                    <div class="doc-icon">🗺️</div>
+                    <div class="doc-info">
+                        <h3>Implementation Plan</h3>
+                        <p>Development roadmap</p>
+                    </div>
+                </a>
+
+                <a href="archive/USER-STORIES-VERIFICATION.md" class="doc-item">
+                    <div class="doc-icon">✅</div>
+                    <div class="doc-info">
+                        <h3>Verification Document</h3>
+                        <p>Story verification</p>
+                    </div>
+                </a>
+
+                <a href="docs/ALL-FIXES-COMPLETE.md" class="doc-item">
+                    <div class="doc-icon">🎉</div>
+                    <div class="doc-info">
+                        <h3>Completion Summary</h3>
+                        <p>Final delivery report</p>
+                    </div>
+                </a>
+
+                <a href="docs/COMPREHENSIVE-PATH-AUDIT.md" class="doc-item">
+                    <div class="doc-icon">📊</div>
+                    <div class="doc-info">
+                        <h3>Changes Summary</h3>
+                        <p>Two-sided approach</p>
+                    </div>
+                </a>
+
+                <a href="README.md" class="doc-item">
+                    <div class="doc-icon">📖</div>
+                    <div class="doc-info">
+                        <h3>README</h3>
+                        <p>Setup & usage guide</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="docs-section">
+            <h2>🚀 Quick Start Guide</h2>
+            <div style="line-height: 2;">
+                <p><strong>For Sellers:</strong></p>
+                <ol style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Open <a href="src/seller/en/dashboard.html" style="color: #4F46E5; font-weight: 500;">src/seller/en/dashboard.html</a></li>
+                    <li>Browse active campaigns</li>
+                    <li>Click any campaign to see details and use calculator</li>
+                    <li>Check notifications and earnings history</li>
+                </ol>
+
+                <p><strong>For Admins:</strong></p>
+                <ol style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Open <a href="src/admin/en/dashboard.html" style="color: #4F46E5; font-weight: 500;">src/admin/en/dashboard.html</a></li>
+                    <li>View all campaigns (active, draft, completed)</li>
+                    <li>Click "New Campaign" to create with 4-step wizard</li>
+                    <li>Add insurance companies, configure conditions, select participants</li>
+                </ol>
+
+                <p><strong>For Developers:</strong></p>
+                <ol style="margin-left: 20px;">
+                    <li>Read <a href="README.md" style="color: #4F46E5; font-weight: 500;">README.md</a> for setup</li>
+                    <li>Review <a href="docs/project-brief.md" style="color: #4F46E5; font-weight: 500;">project-brief.md</a> for requirements</li>
+                    <li>Check <a href="archive/USER-STORIES-VERIFICATION.md" style="color: #4F46E5; font-weight: 500;">USER-STORIES-VERIFICATION.md</a> for implementation details</li>
+                    <li>Study code structure and comments</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Campaign Management System v1.0</strong></p>
+            <p>Built with HTML, CSS, and JavaScript • Mobile-First • Production-Ready</p>
+            <p style="margin-top: 16px;">November 26, 2025</p>
+        </div>
+    </div>
+</body>
+</html>
+

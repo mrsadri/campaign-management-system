@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول رتبه‌بندی - کمپین تولد</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563EB',
+                            dark: '#1E40AF',
+                            light: '#3B82F6',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0, #808080); color: #000; }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32, #8B4513); color: #fff; }
+        .my-rank {
+            background: linear-gradient(135deg, #2563EB, #1E40AF);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .updating { animation: pulse 1.5s infinite; }
+    </style>
+</head>
+<body class="bg-gray-50 pb-20 md:pb-0 min-h-screen" dir="rtl">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <button onclick="history.back()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        →
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">🏆 جدول رتبه‌بندی</h1>
+                        <p class="text-xs text-gray-500">۱۰۰ شریک برتر - کمپین تولد</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-gray-500" id="lastUpdate">در حال به‌روزرسانی...</span>
+                    <button onclick="refreshLeaderboard()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        🔄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 md:px-6 py-6">
+        
+        <!-- Campaign Info Banner -->
+        <div class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white p-4 rounded-xl mb-6 shadow-lg">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold mb-1">🎂 کمپین تولد شرکا</h2>
+                    <p class="text-sm opacity-90">برای جوایز طلا رقابت کنید! ۱۰۰ شریک برتر برنده می‌شوند!</p>
+                </div>
+                <div class="text-left">
+                    <div class="text-sm opacity-90 mb-1">زمان باقی‌مانده</div>
+                    <div class="text-2xl font-bold" id="timeRemaining">در حال بارگذاری...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Rank Card -->
+        <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-6 rounded-xl mb-6 shadow-lg" id="myRankCard">
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-sm opacity-90 mb-1">رتبه فعلی شما</div>
+                    <div class="text-4xl font-bold mb-2" id="myRank">-</div>
+                    <div class="text-sm opacity-80" id="myStats">در حال بارگذاری...</div>
+                </div>
+                <div class="text-left">
+                    <div class="text-sm opacity-90 mb-1">جایزه طلای شما</div>
+                    <div class="text-2xl font-bold mb-1" id="myGoldPrize">-</div>
+                    <div class="text-sm opacity-80" id="myGoldValue">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gold Price Info -->
+        <div class="bg-white p-4 rounded-xl mb-6 shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-sm text-gray-600 mb-1">قیمت طلای فعلی (۱۸ عیار)</div>
+                    <div class="text-lg font-bold text-gray-900" id="goldPrice">۱۱,۸۳۰,۰۰۰ تومان/گرم</div>
+                </div>
+                <div class="text-left">
+                    <div class="text-sm text-gray-600 mb-1">محاسبه جایزه</div>
+                    <div class="text-sm font-medium text-gray-700">بر اساس قیمت پایان کمپین</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prize Structure -->
+        <div class="bg-white p-4 rounded-xl mb-6 shadow-sm">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                🏅 ساختار جوایز
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="p-3 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg border border-yellow-200">
+                    <div class="text-xs text-gray-600 mb-1">رتبه ۱</div>
+                    <div class="text-lg font-bold text-yellow-700">۴ گرم</div>
+                </div>
+                <div class="p-3 bg-gradient-to-br from-gray-50 to-slate-50 rounded-lg border border-gray-200">
+                    <div class="text-xs text-gray-600 mb-1">رتبه‌های ۲-۵</div>
+                    <div class="text-lg font-bold text-gray-700">۲ گرم</div>
+                </div>
+                <div class="p-3 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border border-orange-200">
+                    <div class="text-xs text-gray-600 mb-1">رتبه‌های ۶-۱۰</div>
+                    <div class="text-lg font-bold text-orange-700">۱ گرم</div>
+                </div>
+                <div class="p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border border-blue-200">
+                    <div class="text-xs text-gray-600 mb-1">رتبه‌های ۱۱-۱۰۰</div>
+                    <div class="text-lg font-bold text-blue-700">۲۰۰-۸۰۰ سوت</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-bold">۱۰۰ شریک برتر</h3>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="searchInput" placeholder="جستجوی شریک..." 
+                           class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary">
+                </div>
+            </div>
+            
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">رتبه</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">شریک</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">تعداد سفارش</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">میزان فروش</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">جایزه طلا</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardTable" class="divide-y divide-gray-200">
+                        <!-- Leaderboard rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="md:hidden divide-y divide-gray-200" id="leaderboardCards">
+                <!-- Leaderboard cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="hidden text-center py-16 px-6 bg-white rounded-xl shadow-sm" id="emptyState">
+            <div class="text-6xl mb-4">📊</div>
+            <h3 class="text-lg mb-2 font-semibold text-gray-900">هنوز رتبه‌بندی وجود ندارد</h3>
+            <p class="text-gray-600">برای ظاهر شدن در جدول رتبه‌بندی شروع به فروش کنید!</p>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <a href="dashboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🏠</span>
+            <span class="text-[11px] font-medium">خانه</span>
+        </a>
+        <a href="leaderboard.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-primary no-underline transition-colors">
+            <span class="text-2xl">🏆</span>
+            <span class="text-[11px] font-medium">رتبه‌بندی</span>
+        </a>
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">گردونه</span>
+        </a>
+        <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors">
+            <span class="text-2xl">⚙️</span>
+            <span class="text-[11px] font-medium">تنظیمات</span>
+        </a>
+    </nav>
+
+    <script src="../../birthday-campaign-utils.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // Same JavaScript as English version, but with Persian text
+        const mockLeaderboardData = {
+            currentPartnerId: 'P-1001',
+            goldPricePerGram: 11830000,
+            campaignEndDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            partners: Array.from({ length: 150 }, (_, i) => ({
+                id: `P-${1000 + i}`,
+                name: `شریک ${1000 + i}`,
+                code: `P-${1000 + i}`,
+                orders: Math.floor(Math.random() * 50) + 1,
+                nmv: Math.floor(Math.random() * 50000000) + 1000000
+            }))
+        };
+
+        let leaderboardData = [];
+
+        function loadLeaderboard() {
+            leaderboardData = BirthdayCampaignUtils.calculateLeaderboard(mockLeaderboardData.partners);
+            const top100 = leaderboardData.slice(0, 100);
+            const myPartner = leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId);
+            
+            if (myPartner) {
+                document.getElementById('myRank').textContent = `#${myPartner.rank}`;
+                document.getElementById('myStats').textContent = 
+                    `${myPartner.orders} سفارش • ${formatCurrency(myPartner.nmv)} تومان`;
+                
+                const goldPrize = BirthdayCampaignUtils.getGoldPrizeForRank(myPartner.rank);
+                document.getElementById('myGoldPrize').textContent = 
+                    BirthdayCampaignUtils.formatGoldAmount(goldPrize.grams);
+                document.getElementById('myGoldValue').textContent = 
+                    `≈ ${formatCurrency(BirthdayCampaignUtils.calculateCashEquivalent(goldPrize.grams, mockLeaderboardData.goldPricePerGram))} تومان`;
+            }
+            
+            renderLeaderboard(top100, myPartner);
+            document.getElementById('lastUpdate').textContent = 
+                `به‌روزرسانی: ${new Date().toLocaleTimeString('fa-IR')}`;
+        }
+
+        function renderLeaderboard(partners, myPartner) {
+            const tableBody = document.getElementById('leaderboardTable');
+            const cardsContainer = document.getElementById('leaderboardCards');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (partners.length === 0) {
+                tableBody.innerHTML = '';
+                cardsContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            tableBody.innerHTML = partners.map(partner => {
+                const isMe = myPartner && partner.id === myPartner.id;
+                const rankClass = partner.rank === 1 ? 'rank-1' : 
+                                 partner.rank === 2 ? 'rank-2' : 
+                                 partner.rank === 3 ? 'rank-3' : '';
+                const rowClass = isMe ? 'my-rank bg-primary/10' : '';
+                
+                return `
+                    <tr class="${rowClass}">
+                        <td class="px-4 py-3">
+                            <span class="rank-badge ${rankClass}">${partner.rank}</span>
+                        </td>
+                        <td class="px-4 py-3 text-right">
+                            <div class="font-medium">${partner.name}</div>
+                            <div class="text-xs text-gray-500">${partner.code}</div>
+                        </td>
+                        <td class="px-4 py-3 text-left font-medium">${partner.orders}</td>
+                        <td class="px-4 py-3 text-left font-bold">${formatCurrency(partner.nmv)}</td>
+                        <td class="px-4 py-3 text-left">
+                            <div class="font-semibold text-yellow-600">${BirthdayCampaignUtils.formatGoldAmount(partner.goldPrize)}</div>
+                            <div class="text-xs text-gray-500">${partner.goldPrizeDescription}</div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            cardsContainer.innerHTML = partners.map(partner => {
+                const isMe = myPartner && partner.id === myPartner.id;
+                const rankClass = partner.rank === 1 ? 'rank-1' : 
+                                 partner.rank === 2 ? 'rank-2' : 
+                                 partner.rank === 3 ? 'rank-3' : '';
+                const cardClass = isMe ? 'bg-primary/5 border-2 border-primary' : '';
+                
+                return `
+                    <div class="p-4 ${cardClass}">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="rank-badge ${rankClass}">${partner.rank}</span>
+                                <div>
+                                    <div class="font-medium">${partner.name}</div>
+                                    <div class="text-xs text-gray-500">${partner.code}</div>
+                                </div>
+                            </div>
+                            ${isMe ? '<span class="text-xs bg-primary text-white px-2 py-1 rounded">شما</span>' : ''}
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-sm">
+                            <div>
+                                <div class="text-xs text-gray-500">سفارش</div>
+                                <div class="font-semibold">${partner.orders}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-500">فروش</div>
+                                <div class="font-semibold">${formatCurrency(partner.nmv)}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-500">طلا</div>
+                                <div class="font-semibold text-yellow-600">${BirthdayCampaignUtils.formatGoldAmount(partner.goldPrize)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function formatCurrency(amount) {
+            return amount.toLocaleString('fa-IR');
+        }
+
+        function refreshLeaderboard() {
+            document.getElementById('lastUpdate').textContent = 'در حال به‌روزرسانی...';
+            document.getElementById('lastUpdate').classList.add('updating');
+            setTimeout(() => {
+                loadLeaderboard();
+                document.getElementById('lastUpdate').classList.remove('updating');
+            }, 1000);
+        }
+
+        function updateTimeRemaining() {
+            const timeRemaining = BirthdayCampaignUtils.getTimeUntilEnd(mockLeaderboardData.campaignEndDate);
+            const timeEl = document.getElementById('timeRemaining');
+            
+            if (timeRemaining.ended) {
+                timeEl.textContent = 'کمپین به پایان رسید';
+            } else {
+                timeEl.textContent = `${timeRemaining.days} روز ${timeRemaining.hours} ساعت ${timeRemaining.minutes} دقیقه`;
+            }
+        }
+
+        document.getElementById('searchInput')?.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = leaderboardData.slice(0, 100).filter(p => 
+                p.name.toLowerCase().includes(searchTerm) || 
+                p.code.toLowerCase().includes(searchTerm)
+            );
+            renderLeaderboard(filtered, leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId));
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLeaderboard();
+            updateTimeRemaining();
+            setInterval(updateTimeRemaining, 60000);
+            setInterval(refreshLeaderboard, 1800000);
+        });
+    </script>
+</body>
+</html>
+
