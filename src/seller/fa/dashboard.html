@@ -71,6 +71,9 @@
                             <a href="earnings-history.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
                                 💰 تاریخچه درآمد
                             </a>
+                            <a href="spin-wheel.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+                                🎰 گردونه
+                            </a>
                         </nav>
                     </div>
                     <div class="flex items-center gap-3">
@@ -99,6 +102,32 @@
         <section class="mb-6">
             <h1 class="text-2xl font-bold mb-1">خوش آمدید، <span id="sellerName">علی</span>! 👋</h1>
             <p class="text-gray-600 text-[15px]">درآمدها و کمپین‌های فعال خود را پیگیری کنید</p>
+        </section>
+
+        <!-- Birthday Campaign Banner -->
+        <section class="mb-6 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 p-6 rounded-xl shadow-lg">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex-1">
+                    <h2 class="text-2xl font-bold text-white mb-2">🎂 کمپین تولد فعال است!</h2>
+                    <p class="text-white opacity-90 mb-4">برای جوایز طلایی رقابت کن و گردونه رو بچرخون تا پول نقد و محصولات پریمیوم برنده شی!</p>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="leaderboard.html" class="px-4 py-2 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+                            🏆 جدول رتبه‌بندی
+                        </a>
+                        <a href="spin-wheel.html" class="px-4 py-2 bg-yellow-700 text-white font-semibold rounded-lg hover:bg-yellow-800 transition-colors">
+                            🎰 گردونه شانس
+                        </a>
+                        <a href="birthday-campaign.html" class="px-4 py-2 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-yellow-600 transition-colors">
+                            📖 بیشتر بدانید
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm p-4 rounded-lg text-white text-center min-w-[120px]">
+                    <div class="text-sm opacity-90 mb-1">رتبه من</div>
+                    <div class="text-3xl font-bold" id="birthdayRank">#-</div>
+                    <div class="text-xs opacity-80 mt-1" id="birthdaySpins">۰ چرخش</div>
+                </div>
+            </div>
         </section>
 
         <!-- Today's Earnings Widget -->
@@ -668,9 +697,9 @@
             <span class="text-2xl">📊</span>
             <span class="text-[11px] font-medium">امروز</span>
         </a>
-        <a href="earnings-history.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
-            <span class="text-2xl">💰</span>
-            <span class="text-[11px] font-medium">درآمدها</span>
+        <a href="spin-wheel.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
+            <span class="text-2xl">🎰</span>
+            <span class="text-[11px] font-medium">گردونه</span>
         </a>
         <a href="profile.html" class="flex-1 flex flex-col items-center gap-1 p-2 text-gray-500 no-underline transition-colors hover:text-primary">
             <span class="text-2xl">⚙️</span>
@@ -678,6 +707,7 @@
         </a>
     </nav>
 
+    <script src="../../birthday-campaign-utils.js"></script>
     <script src="../script.js"></script>
     <script>
         function toggleFilters() {
@@ -688,11 +718,33 @@
             }
         }
 
+        // Load birthday campaign data
+        function loadBirthdayCampaignData() {
+            // Mock data - in real app, fetch from API
+            const mockData = {
+                myRank: 42,
+                availableSpins: 3,
+                totalSpins: 8
+            };
+            
+            const rankEl = document.getElementById('birthdayRank');
+            const spinsEl = document.getElementById('birthdaySpins');
+            
+            if (rankEl) {
+                rankEl.textContent = `#${mockData.myRank}`;
+            }
+            
+            if (spinsEl) {
+                spinsEl.textContent = `${mockData.availableSpins} چرخش موجود`;
+            }
+        }
+
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof loadSellerData === 'function') loadSellerData();
             if (typeof setupFilters === 'function') setupFilters();
             if (typeof startRealtimeUpdates === 'function') startRealtimeUpdates();
+            loadBirthdayCampaignData();
         });
     </script>
 </body>
