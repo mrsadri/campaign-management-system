@@ -178,6 +178,42 @@
             </div>
         </section>
 
+        <!-- Scoring Logic Transparency -->
+        <section class="glass-card p-5 rounded-xl mb-6 shadow-md border border-gray-200/50">
+            <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                    <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-2">
+                        📊 نحوه محاسبه رتبه‌بندی
+                        <span class="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-1 rounded-full cursor-help" 
+                              title="رتبه‌بندی بر اساس ارزش خالص کالا (NMV) از سفارشات تکمیل شده در طول دوره کمپین محاسبه می‌شود.">
+                            ℹ️
+                        </span>
+                    </h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        رتبه‌بندی بر اساس <strong>ارزش خالص کالا (NMV)</strong> از سفارشات تکمیل شده تعیین می‌شود. 
+                        NMV بالاتر = رتبه بالاتر. رتبه‌بندی هر چند دقیقه به‌روز می‌شود و در پایان کمپین ریست می‌گردد.
+                        <button onclick="document.getElementById('scoringDetails').classList.toggle('hidden')" 
+                                class="text-primary font-medium hover:underline ml-1">
+                            بیشتر بدانید ←
+                        </button>
+                    </p>
+                    <div id="scoringDetails" class="hidden mt-3 p-3 bg-blue-50 rounded-lg text-xs text-gray-700">
+                        <p class="mb-2"><strong>فرمول امتیازدهی:</strong></p>
+                        <ul class="list-disc list-inside space-y-1 text-gray-600" dir="rtl">
+                            <li>هر سفارش تکمیل شده NMV خود را به مجموع شما اضافه می‌کند</li>
+                            <li>رتبه‌بندی بر اساس مجموع NMV مرتب می‌شود (بالاتر به پایین)</li>
+                            <li>در صورت تساوی، سفارشات زودتر برنده می‌شوند</li>
+                            <li>فقط سفارشات تکمیل شده در طول دوره کمپین محاسبه می‌شوند</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-left">
+                    <div class="text-xs text-gray-500 mb-1">آخرین بروزرسانی</div>
+                    <div class="text-sm font-medium text-gray-700" id="lastUpdatedTime">همین حالا</div>
+                </div>
+            </div>
+        </section>
+
         <!-- My Rank Spotlight -->
         <section class="glass-card p-6 rounded-2xl mb-8 shadow-lg border border-gray-200/50" id="myRankCard">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -186,17 +222,22 @@
                         <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center text-white text-3xl font-bold shadow-lg pulse-ring">
                             <span id="myRankNumber">#۴۲</span>
                         </div>
-                        <div class="absolute -bottom-2 -left-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-sm shadow-md">
+                        <div class="absolute -bottom-2 -left-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-sm shadow-md" id="rankChangeIcon">
                             📈
                         </div>
                     </div>
                     <div>
                         <div class="text-sm text-gray-500 mb-1">رتبه فعلی شما</div>
-                        <h2 class="text-2xl font-bold text-gray-900 mb-1">به تلاشت ادامه بده!</h2>
-                        <div class="flex items-center gap-3 text-sm">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-1" id="myRankMessage">به تلاشت ادامه بده!</h2>
+                        <div class="flex items-center gap-3 text-sm mb-2">
                             <span class="text-gray-600"><span class="font-semibold text-gray-900" id="myOrders">۱۵</span> سفارش</span>
                             <span class="text-gray-300">•</span>
                             <span class="text-gray-600"><span class="font-semibold text-gray-900" id="myNMV">۱۲.۵M</span> تومان NMV</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs" id="rankMovement">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                                <span>↑</span> <span id="rankChangeText">۲ رتبه پیشرفت امروز</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -208,8 +249,8 @@
                     </div>
                     <div class="text-center px-6 py-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200">
                         <div class="text-sm text-green-700 mb-1">🎯 هدف بعدی</div>
-                        <div class="text-2xl font-bold text-green-600">رتبه #۴۰</div>
-                        <div class="text-xs text-green-600/80">+۲ رتبه تا ارتقا</div>
+                        <div class="text-2xl font-bold text-green-600" id="nextTargetRank">رتبه #۴۰</div>
+                        <div class="text-xs text-green-600/80" id="pointsToNextRank">+۱۲ امتیاز برای رسیدن</div>
                     </div>
                 </div>
             </div>
@@ -333,14 +374,38 @@
             </div>
         </section>
 
+        <!-- Campaign Reset Info -->
+        <section class="glass-card p-5 rounded-xl mb-6 shadow-md border border-blue-200/50 bg-blue-50/50">
+            <div class="flex items-center gap-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">
+                    🔄
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-sm font-bold text-gray-900 mb-1">رتبه‌بندی روزانه ریست می‌شود</h3>
+                    <p class="text-xs text-gray-600">
+                        رتبه‌بندی هر شب در نیمه‌شب ریست می‌شود. رتبه‌بندی نهایی کمپین در پایان کمپین تعیین می‌گردد (<span id="resetDate"></span>). 
+                        همه هر روز شانس تازه‌ای دارند!
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <!-- Full Leaderboard -->
         <section class="glass-card rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden">
             <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900">جدول کامل رتبه‌بندی</h3>
-                    <p class="text-sm text-gray-500">۱۰۰ شریک برتر</p>
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-900" id="leaderboardTitle">منطقه رقابتی شما</h3>
+                    <p class="text-sm text-gray-500" id="leaderboardSubtitle">برترین‌ها و رقبای نزدیک</p>
                 </div>
                 <div class="flex items-center gap-3 w-full md:w-auto">
+                    <div class="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
+                        <button onclick="setLeaderboardView('context')" id="viewContextBtn" class="px-3 py-1.5 text-xs font-medium rounded-md bg-white text-gray-900 shadow-sm transition-all">
+                            نزدیک من
+                        </button>
+                        <button onclick="setLeaderboardView('top')" id="viewTopBtn" class="px-3 py-1.5 text-xs font-medium rounded-md text-gray-600 hover:text-gray-900 transition-all">
+                            برترین ۲۰
+                        </button>
+                    </div>
                     <div class="relative flex-1 md:flex-none">
                         <input type="text" id="searchInput" placeholder="جستجوی شریک..." 
                                class="w-full md:w-64 pr-10 pl-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
@@ -349,6 +414,21 @@
                     <button onclick="refreshLeaderboard()" class="p-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors" title="بروزرسانی">
                         🔄
                     </button>
+                </div>
+            </div>
+            
+            <!-- Tier Indicators -->
+            <div class="px-5 py-3 bg-gradient-to-r from-amber-50 via-gray-50 to-orange-50 border-b border-gray-200">
+                <div class="flex items-center justify-between text-xs">
+                    <div class="flex items-center gap-1 text-amber-700">
+                        <span>🥇</span> <span>رده طلایی (۱۰-۱)</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-blue-700">
+                        <span>⭐</span> <span>رده نقرهای (۵۰-۱۱)</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-purple-700">
+                        <span>🎖️</span> <span>رده برنزی (۱۰۰-۵۱)</span>
+                    </div>
                 </div>
             </div>
             
@@ -370,10 +450,13 @@
                 </table>
             </div>
 
-            <!-- Load More -->
-            <div class="p-4 text-center border-t border-gray-100">
+            <!-- Load More / View More Options -->
+            <div class="p-4 text-center border-t border-gray-100 flex flex-col gap-2">
                 <button onclick="loadMorePartners()" class="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors" id="loadMoreBtn">
                     بارگذاری بیشتر
+                </button>
+                <button onclick="scrollToMyRank()" id="scrollToRankBtn" class="hidden px-6 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary font-medium rounded-xl transition-colors">
+                    👆 برو به رتبه من
                 </button>
             </div>
         </section>
@@ -423,6 +506,8 @@
 
         let leaderboardData = [];
         let displayedCount = 20;
+        let currentView = 'context'; // 'context' or 'top'
+        let lastRankChange = { rank: null, change: 0 }; // Store previous rank for movement indicator
 
         function loadLeaderboard() {
             leaderboardData = mockLeaderboardData.partners
@@ -437,10 +522,77 @@
             
             const myPartner = leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId);
             if (myPartner) {
+                // Calculate rank change
+                const rankChange = lastRankChange.rank ? lastRankChange.rank - myPartner.rank : 0;
+                lastRankChange = { rank: myPartner.rank, change: rankChange };
+                
                 updateMyRank(myPartner);
+                updatePointsToNextRank(myPartner);
+                addPersonalAchievements(myPartner);
             }
             
-            renderLeaderboard(leaderboardData.slice(0, displayedCount), myPartner);
+            // Update last updated time
+            updateLastUpdatedTime();
+            
+            // Render leaderboard based on current view
+            renderLeaderboardForView(myPartner);
+        }
+
+        function renderLeaderboardForView(myPartner) {
+            let partnersToShow = [];
+            
+            if (currentView === 'context' && myPartner) {
+                // Show context-aware view: user + 5 above + 5 below
+                const myIndex = leaderboardData.findIndex(p => p.id === myPartner.id);
+                const startIndex = Math.max(0, myIndex - 5);
+                const endIndex = Math.min(leaderboardData.length, myIndex + 6);
+                
+                // Always include top 3 if not already included
+                const top3 = leaderboardData.slice(0, 3);
+                const contextRange = leaderboardData.slice(startIndex, endIndex);
+                
+                // Merge and deduplicate
+                const combined = [...top3];
+                contextRange.forEach(p => {
+                    if (!combined.find(ep => ep.id === p.id)) {
+                        combined.push(p);
+                    }
+                });
+                
+                partnersToShow = combined.sort((a, b) => a.rank - b.rank);
+            } else {
+                // Show top performers
+                partnersToShow = leaderboardData.slice(0, displayedCount);
+            }
+            
+            renderLeaderboard(partnersToShow, myPartner);
+        }
+
+        function setLeaderboardView(view) {
+            currentView = view;
+            const contextBtn = document.getElementById('viewContextBtn');
+            const topBtn = document.getElementById('viewTopBtn');
+            const title = document.getElementById('leaderboardTitle');
+            const subtitle = document.getElementById('leaderboardSubtitle');
+            
+            if (view === 'context') {
+                contextBtn.classList.add('bg-white', 'text-gray-900', 'shadow-sm');
+                contextBtn.classList.remove('text-gray-600');
+                topBtn.classList.remove('bg-white', 'text-gray-900', 'shadow-sm');
+                topBtn.classList.add('text-gray-600');
+                title.textContent = 'منطقه رقابتی شما';
+                subtitle.textContent = 'برترین‌ها و رقبای نزدیک';
+            } else {
+                topBtn.classList.add('bg-white', 'text-gray-900', 'shadow-sm');
+                topBtn.classList.remove('text-gray-600');
+                contextBtn.classList.remove('bg-white', 'text-gray-900', 'shadow-sm');
+                contextBtn.classList.add('text-gray-600');
+                title.textContent = 'رتبه‌بندی برتر';
+                subtitle.textContent = 'فقط برترین‌ها';
+            }
+            
+            const myPartner = leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId);
+            renderLeaderboardForView(myPartner);
         }
 
         function getGoldPrizeForRank(rank) {
@@ -483,10 +635,116 @@
             document.getElementById('myOrders').textContent = toPersianNum(myPartner.orders);
             document.getElementById('myNMV').textContent = formatCurrency(myPartner.nmv);
             document.getElementById('myGoldPrize').textContent = myPartner.goldPrize.label;
+            
+            // Update rank movement indicator
+            const rankChange = lastRankChange.change;
+            const rankChangeIcon = document.getElementById('rankChangeIcon');
+            const rankMovementDiv = document.getElementById('rankMovement');
+            
+            if (rankChange > 0) {
+                rankChangeIcon.textContent = '📈';
+                rankMovementDiv.innerHTML = `
+                    <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                        <span>↑</span> <span id="rankChangeText">${toPersianNum(rankChange)} رتبه پیشرفت</span>
+                    </span>
+                `;
+            } else if (rankChange < 0) {
+                rankChangeIcon.textContent = '📉';
+                rankMovementDiv.innerHTML = `
+                    <span class="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded-full">
+                        <span>↓</span> <span id="rankChangeText">${toPersianNum(Math.abs(rankChange))} رتبه نزول</span>
+                    </span>
+                `;
+            } else {
+                rankChangeIcon.textContent = '➡️';
+                rankMovementDiv.innerHTML = `
+                    <span class="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 rounded-full">
+                        <span>➡️</span> <span id="rankChangeText">بدون تغییر</span>
+                    </span>
+                `;
+            }
+            
+            // Update motivational message
+            const rankMessage = document.getElementById('myRankMessage');
+            if (myPartner.rank <= 10) {
+                rankMessage.textContent = 'عملکرد فوق‌العاده!';
+            } else if (myPartner.rank <= 50) {
+                rankMessage.textContent = 'به تلاشت ادامه بده!';
+            } else {
+                rankMessage.textContent = 'در حال پیشرفت هستی!';
+            }
+        }
+
+        function updatePointsToNextRank(myPartner) {
+            const myRank = myPartner.rank;
+            
+            if (myRank === 1) {
+                // Already at top
+                document.getElementById('nextTargetRank').textContent = '🏆 #۱';
+                document.getElementById('pointsToNextRank').textContent = 'شما در رتبه اول هستید!';
+                return;
+            }
+            
+            // Find the next rank to achieve
+            const nextRankPartner = leaderboardData[myRank - 2]; // -2 because array is 0-indexed and we're at myRank-1
+            if (!nextRankPartner) return;
+            
+            const nmvGap = nextRankPartner.nmv - myPartner.nmv;
+            const nextTarget = myRank - 1;
+            
+            document.getElementById('nextTargetRank').textContent = `رتبه #${toPersianNum(nextTarget)}`;
+            
+            if (nmvGap > 0) {
+                document.getElementById('pointsToNextRank').textContent = `+${formatCurrency(nmvGap)} NMV برای رسیدن`;
+            } else {
+                document.getElementById('pointsToNextRank').textContent = 'تقریباً رسیدی!';
+            }
+        }
+
+        function updateLastUpdatedTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('lastUpdatedTime').textContent = `بروزرسانی ${toPersianNum(timeStr)}`;
+        }
+
+        function updateCampaignResetDate() {
+            const endDate = new Date(mockLeaderboardData.campaignEndDate);
+            const dateStr = endDate.toLocaleDateString('fa-IR', { month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('resetDate').textContent = dateStr;
+        }
+
+        function scrollToMyRank() {
+            const myRow = document.querySelector('.my-rank-highlight');
+            if (myRow) {
+                myRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                myRow.style.animation = 'pulse 2s';
+                setTimeout(() => {
+                    myRow.style.animation = '';
+                }, 2000);
+            }
+        }
+
+        // Generate random profile picture URL for partner (consistent based on ID)
+        function getPartnerAvatarUrl(partnerId, partnerName) {
+            // Use DiceBear API for random but consistent avatars based on partner ID
+            // This ensures each partner always gets the same avatar
+            const seed = partnerId || partnerName;
+            return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
         }
 
         function renderLeaderboard(partners, myPartner) {
             const tableBody = document.getElementById('leaderboardTable');
+            
+            if (!partners || partners.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="px-4 py-8 text-center text-gray-500">
+                            هنوز رتبه‌بندی موجود نیست.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
             
             tableBody.innerHTML = partners.map(partner => {
                 const isMe = myPartner && partner.id === myPartner.id;
@@ -498,8 +756,21 @@
                                 partner.rank === 3 ? '🥉' : toPersianNum(partner.rank);
                 const rowClass = isMe ? 'my-rank-highlight' : '';
                 
+                // Get avatar URL for partner
+                const avatarUrl = getPartnerAvatarUrl(partner.id, partner.name);
+                
+                // Determine tier
+                let tierBadge = '';
+                if (partner.rank <= 10) {
+                    tierBadge = '<span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">طلا</span>';
+                } else if (partner.rank <= 50) {
+                    tierBadge = '<span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">نقره</span>';
+                } else if (partner.rank <= 100) {
+                    tierBadge = '<span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">برنز</span>';
+                }
+                
                 return `
-                    <tr class="${rowClass} leaderboard-row transition-all duration-200 hover:bg-gray-50">
+                    <tr class="${rowClass} leaderboard-row transition-all duration-200 hover:bg-gray-50" id="${isMe ? 'myRankRow' : ''}">
                         <td class="px-4 py-4">
                             <div class="flex items-center justify-center w-10 h-10 ${partner.rank <= 3 ? 'text-xl' : 'text-sm font-bold'} ${rankClass} bg-gray-50 rounded-lg">
                                 ${rankIcon}
@@ -507,14 +778,19 @@
                         </td>
                         <td class="px-4 py-4">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full flex items-center justify-center text-primary font-bold">
-                                    ${partner.name.charAt(partner.name.length - 1)}
-                                </div>
-                                <div>
-                                    <div class="font-medium text-gray-900">${partner.name}</div>
+                                <img src="${avatarUrl}" 
+                                     alt="${partner.name}" 
+                                     class="w-10 h-10 rounded-full object-cover border-2 border-gray-200 hover:border-primary transition-colors" 
+                                     title="${partner.name}"
+                                     onerror="this.onerror=null; this.src='https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(partner.name)}&backgroundColor=2563eb'">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-medium text-gray-900">${partner.name}</div>
+                                        ${tierBadge}
+                                    </div>
                                     <div class="text-xs text-gray-500">${partner.code}</div>
                                 </div>
-                                ${isMe ? '<span class="text-xs bg-primary text-white px-2 py-0.5 rounded-full mr-2">شما</span>' : ''}
+                                ${isMe ? '<span class="text-xs bg-primary text-white px-2 py-0.5 rounded-full mr-2 font-semibold">شما</span>' : ''}
                             </div>
                         </td>
                         <td class="px-4 py-4 text-left">
@@ -531,16 +807,73 @@
                     </tr>
                 `;
             }).join('');
+            
+            // Show/hide scroll to rank button based on view
+            const scrollBtn = document.getElementById('scrollToRankBtn');
+            if (currentView === 'top' && myPartner && partners.length > 10) {
+                // Check if user's rank is visible
+                const isVisible = partners.find(p => p.id === myPartner.id);
+                if (!isVisible) {
+                    scrollBtn.classList.remove('hidden');
+                } else {
+                    scrollBtn.classList.add('hidden');
+                }
+            } else {
+                scrollBtn.classList.add('hidden');
+            }
         }
 
         function loadMorePartners() {
-            displayedCount += 20;
-            const myPartner = leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId);
-            renderLeaderboard(leaderboardData.slice(0, Math.min(displayedCount, 100)), myPartner);
+            if (currentView === 'context') {
+                // In context view, switch to top view with more items
+                displayedCount += 20;
+                currentView = 'top';
+                setLeaderboardView('top');
+            } else {
+                displayedCount += 20;
+                const myPartner = leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId);
+                renderLeaderboard(leaderboardData.slice(0, Math.min(displayedCount, 100)), myPartner);
+            }
             
             if (displayedCount >= 100) {
                 document.getElementById('loadMoreBtn').style.display = 'none';
             }
+        }
+
+        // Add micro-feedback: Personal achievements section
+        function addPersonalAchievements(myPartner) {
+            if (!myPartner) return;
+            
+            // Check if achievements section already exists
+            if (document.getElementById('personalAchievements')) return;
+            
+            const achievements = [];
+            if (myPartner.rank <= 10) achievements.push({ icon: '🏆', text: 'جزو ۱۰ نفر برتر!' });
+            if (myPartner.rank <= 50) achievements.push({ icon: '⭐', text: 'دستاورد ۵۰ نفر برتر' });
+            if (myPartner.orders >= 30) achievements.push({ icon: '🎯', text: 'میلی‌استون ۳۰+ سفارش' });
+            if (myPartner.nmv >= 30000000) achievements.push({ icon: '💎', text: 'مشارکت‌کننده با ارزش بالا' });
+            
+            if (achievements.length === 0) return;
+            
+            const achievementsHTML = `
+                <section id="personalAchievements" class="glass-card p-5 rounded-xl mb-6 shadow-md border border-purple-200/50 bg-gradient-to-r from-purple-50 to-pink-50">
+                    <h3 class="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
+                        🎉 دستاوردهای شما
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${achievements.map(a => `
+                            <span class="inline-flex items-center gap-1 px-3 py-1.5 bg-white/80 backdrop-blur-sm rounded-lg text-sm font-medium text-purple-700 border border-purple-200">
+                                <span>${a.icon}</span>
+                                <span>${a.text}</span>
+                            </span>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+            
+            // Insert after my rank card
+            const myRankCard = document.getElementById('myRankCard');
+            myRankCard.insertAdjacentHTML('afterend', achievementsHTML);
         }
 
         function toPersianNum(num) {
@@ -595,9 +928,18 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            updateCampaignResetDate();
             loadLeaderboard();
             updateTimeRemaining();
+            
+            // Set up intervals
             setInterval(updateTimeRemaining, 60000);
+            setInterval(() => {
+                const myPartner = leaderboardData.find(p => p.id === mockLeaderboardData.currentPartnerId);
+                if (myPartner) {
+                    addPersonalAchievements(myPartner);
+                }
+            }, 2000);
         });
     </script>
 </body>
